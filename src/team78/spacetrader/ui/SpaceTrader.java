@@ -36,7 +36,7 @@ public class SpaceTrader {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Sets the content to the welcome screen
-        frame.getContentPane().add(createWelcomePanel());
+        frame.getContentPane().add(createWelcomePanel(), BorderLayout.CENTER);
 
         // Sets the frame to windowed fullscreen
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -49,7 +49,7 @@ public class SpaceTrader {
     }
 
     /**
-     * Creates the welcome panel
+     * Creates the welcome panel with all of the content necessary for the welcome screen
      *
      * @return the welcome panel
      */
@@ -57,11 +57,21 @@ public class SpaceTrader {
         // Panel that contains all of the content for the welcome screen
         JPanel welcomePanel = new JPanel();
 
+        welcomePanel.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.NONE;
+
         // Creates and adds the welcome header to the panel
-        welcomePanel.add(createHeader("Welcome to Space Trader!"));
+        c.gridx = 0;
+        c.gridy = 0;
+        c.insets = new Insets(0, 0, 20, 0);
+        welcomePanel.add(createHeader("Welcome to Space Trader!"), c);
 
         // Creates the start button
         JButton startButton = new JButton("START");
+
+        // Sets the button's font
+        startButton.setFont(new Font(startButton.getFont().getName(), Font.BOLD, 20));
 
         // Adds a listener to start the game when the button is pressed
         startButton.addActionListener(new ActionListener() {
@@ -77,13 +87,17 @@ public class SpaceTrader {
         });
 
         // Adds the start button to the panel
-        welcomePanel.add(startButton);
+        c.gridx = 0;
+        c.gridy = 1;
+        c.insets = new Insets(20, 0, 0, 0);
+        welcomePanel.add(startButton, c);
 
         return welcomePanel;
     }
 
     /**
-     * Creates the initial configuration panel
+     * Creates the initial configuration panel with all of the content necessary for the
+     * configuration screen
      *
      * @return the initial configuration panel
      */
@@ -97,7 +111,7 @@ public class SpaceTrader {
     }
 
     /**
-     * Creates the final panel that displays the player's configuration
+     * Creates the final panel for the screen that displays the player's configuration
      *
      * @return the configuration display panel
      */
@@ -118,8 +132,12 @@ public class SpaceTrader {
      * @return a JLabel with the header formatting
      */
     private JLabel createHeader(String text) {
+        // Creates the label
         JLabel header = new JLabel(text);
-        header.setFont(new Font(header.getFont().getName(), Font.BOLD, 32));
+
+        // Sets the label's font
+        header.setFont(new Font(header.getFont().getName(), Font.BOLD, 36));
+
         return header;
     }
 
