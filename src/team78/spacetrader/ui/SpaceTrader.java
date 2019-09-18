@@ -22,8 +22,17 @@ public class SpaceTrader {
     // Configuration values
     private String name;
     private Difficulty difficulty;
-    private int[] skillPoints;
+    /*
+    Pilot = 0
+    Fighter = 1
+    Merchant = 2
+    Eng = 3
+     */
+    private int[] skillPoints = new int[4];
     private int credits;
+
+    private int expendablePoints;
+    private boolean selectedRoute;
 
     /**
      * Creates a new Space Trader game by initializing the GUI with the welcome screen
@@ -82,7 +91,7 @@ public class SpaceTrader {
                 frame.repaint();
 
                 // Sets the content to the configuration screen
-                frame.getContentPane().add(createConfigurationPanel());
+                frame.getContentPane().add(createConfigurationPanel(), BorderLayout.CENTER);
             }
         });
 
@@ -106,6 +115,134 @@ public class SpaceTrader {
         // - Name
         // - Difficulty
         // - Skill Points
+
+        JPanel configPanel = new JPanel();
+
+        configPanel.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.NONE;
+
+        // Creates and adds the welcome header to the panel
+        c.gridx = 0;
+        c.gridy = 0;
+        c.insets = new Insets(0, 0, 20, 0);
+        configPanel.add(createHeader("Configuration Page!"), c);
+
+        JTextArea text = new JTextArea("Enter Player Name", 20, 40);
+        text.setEditable(true);
+        frame.getContentPane().add(text, BorderLayout.CENTER);
+
+        JLabel label = new JLabel("Configuration Panel", JLabel.CENTER);
+        frame.getContentPane().add(label, BorderLayout.SOUTH);
+        JButton easyButton = new JButton("EASY"),
+                mediumButton = new JButton("MEDIUM"),
+                hardButton = new JButton("HARD");
+
+        JLabel numOfPoints = new JLabel("Points: " + expendablePoints);
+        expendablePoints = 0;
+        selectedRoute = false;
+        easyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                difficulty = Difficulty.EASY;
+                if (!selectedRoute) {
+                    expendablePoints = 16;
+                    selectedRoute = true;
+                    numOfPoints.setText("Points: " + expendablePoints);
+                }
+            }
+        });
+
+        mediumButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                difficulty = Difficulty.MEDIUM;
+                if (!selectedRoute) {
+                    expendablePoints = 12;
+                    selectedRoute = true;
+                    numOfPoints.setText("Points: " + expendablePoints);
+                }
+            }
+        });
+        hardButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                difficulty = Difficulty.HARD;
+                if (!selectedRoute) {
+                    expendablePoints = 8;
+                    selectedRoute = true;
+                    numOfPoints.setText("Points: " + expendablePoints);
+                }
+            }
+        });
+
+        JButton pilotButton = new JButton("Pilot"),
+                fighterButton = new JButton("Fighter"),
+                merchantButton = new JButton("Merchant"),
+                engineerButton = new JButton("Engineer");
+
+        pilotButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (expendablePoints > 0) {
+                    skillPoints[0]++;
+                    expendablePoints--;
+                    numOfPoints.setText("Points: " + expendablePoints);
+                }
+            }
+        });
+        fighterButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (expendablePoints > 0) {
+                    skillPoints[1]++;
+                    expendablePoints--;
+                    numOfPoints.setText("Points: " + expendablePoints);
+                }
+            }
+        });
+        merchantButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (expendablePoints > 0) {
+                    skillPoints[2]++;
+                    expendablePoints--;
+                    numOfPoints.setText("Points: " + expendablePoints);
+                }
+            }
+        });
+
+        engineerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (expendablePoints > 0) {
+                    skillPoints[3]++;
+                    expendablePoints--;
+                    numOfPoints.setText("Points: " + expendablePoints);
+                }
+            }
+        });
+
+
+
+        JPanel rightPanel = new JPanel();
+        rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
+        rightPanel.add(easyButton);
+        rightPanel.add(mediumButton);
+        rightPanel.add(hardButton);
+
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
+        bottomPanel.add(pilotButton);
+        bottomPanel.add(fighterButton);
+        bottomPanel.add(merchantButton);
+        bottomPanel.add(engineerButton);
+        bottomPanel.add(numOfPoints);
+
+        frame.getContentPane().add(rightPanel, BorderLayout.EAST);
+        frame.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
+        frame.pack();
+        frame.show();
 
         return null;
     }
