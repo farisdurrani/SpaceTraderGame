@@ -223,7 +223,14 @@ public class SpaceTrader {
             }
         });
 
-
+        JButton doneButton = new JButton("Done");
+        doneButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                name = text.toString();
+                frame.getContentPane().add(createConfigurationDisplayPanel(), BorderLayout.CENTER);
+            }
+        });
 
         JPanel rightPanel = new JPanel();
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
@@ -238,6 +245,7 @@ public class SpaceTrader {
         bottomPanel.add(merchantButton);
         bottomPanel.add(engineerButton);
         bottomPanel.add(numOfPoints);
+        bottomPanel.add(doneButton);
 
         frame.getContentPane().add(rightPanel, BorderLayout.EAST);
         frame.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
