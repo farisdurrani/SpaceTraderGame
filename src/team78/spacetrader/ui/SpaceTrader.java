@@ -87,6 +87,7 @@ public class SpaceTrader {
                 frame.getContentPane().add(createConfigurationPanel(), BorderLayout.CENTER);
                 frame.setVisible(true);
 
+                // Focuses the name input
                 frame.transferFocusUpCycle();
             }
         });
