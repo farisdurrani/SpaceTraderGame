@@ -86,6 +86,8 @@ public class SpaceTrader {
                 // Sets the content to the configuration screen
                 frame.getContentPane().add(createConfigurationPanel(), BorderLayout.CENTER);
                 frame.setVisible(true);
+
+                frame.transferFocusUpCycle();
             }
         });
 
