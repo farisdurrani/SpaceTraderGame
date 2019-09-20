@@ -1,4 +1,4 @@
-package team78.spacetrader.ui;
+//package team78.spacetrader.ui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -145,11 +145,12 @@ public class SpaceTrader {
             @Override
             public void actionPerformed(ActionEvent e) {
                 difficulty = Difficulty.EASY;
-                if (!selectedRoute) {
-                    expendablePoints = 16;
-                    selectedRoute = true;
-                    numOfPoints.setText("Points: " + expendablePoints);
-                }
+                //if (!selectedRoute) {
+                expendablePoints = 16;
+                credits = 1000;
+                selectedRoute = true;
+                numOfPoints.setText("Points: " + expendablePoints);
+                //}
             }
         });
 
@@ -157,22 +158,24 @@ public class SpaceTrader {
             @Override
             public void actionPerformed(ActionEvent e) {
                 difficulty = Difficulty.MEDIUM;
-                if (!selectedRoute) {
-                    expendablePoints = 12;
-                    selectedRoute = true;
-                    numOfPoints.setText("Points: " + expendablePoints);
-                }
+                //if (!selectedRoute) {
+                expendablePoints = 12;
+                credits = 500;
+                selectedRoute = true;
+                numOfPoints.setText("Points: " + expendablePoints);
+                //}
             }
         });
         hardButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 difficulty = Difficulty.HARD;
-                if (!selectedRoute) {
-                    expendablePoints = 8;
-                    selectedRoute = true;
-                    numOfPoints.setText("Points: " + expendablePoints);
-                }
+                //if (!selectedRoute) {
+                expendablePoints = 8;
+                credits = 100;
+                selectedRoute = true;
+                numOfPoints.setText("Points: " + expendablePoints);
+                //}
             }
         });
 
@@ -227,8 +230,9 @@ public class SpaceTrader {
         doneButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                name = text.toString();
-                frame.getContentPane().add(createConfigurationDisplayPanel(), BorderLayout.CENTER);
+                // Sets configuration screen to display panel
+                name = text.getText();
+                frame.add(createConfigurationDisplayPanel(), BorderLayout.CENTER);
             }
         });
 
@@ -250,7 +254,7 @@ public class SpaceTrader {
         frame.getContentPane().add(rightPanel, BorderLayout.EAST);
         frame.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
         frame.pack();
-        frame.show();
+        frame.setVisible(true);
 
         return null;
     }
@@ -260,12 +264,50 @@ public class SpaceTrader {
      *
      * @return the configuration display panel
      */
+
     private JPanel createConfigurationDisplayPanel() {
         //TODO Create panel that displays the player's configuration from the previous frame:
         // - Name
         // - Difficulty
         // - Skill Points
         // - Credits (calculated based on the difficulty setting)
+
+        // Contents of dialog box - name, difficulty, skill points, credits
+        String name4036 = "Name: " + name;
+        String difficulty4036 = "Difficulty: " + difficulty;
+        String skillPoints4036 = "Skill Points: " + skillPoints.toString();
+        String credits4036 = "Credits: " + credits;
+        JLabel display4036 = new JLabel("<html>" + name4036 + "<br/>" + 
+        	difficulty4036 + "<br/>" + skillPoints4036 + "<br/>" + 
+        	credits4036 + "<br/> <br/>" + "Confirm your configuration?" +
+        	"</html>", SwingConstants.CENTER);
+
+        // Create a panel to store details and button
+        JPanel panel4036 = new JPanel();
+        panel4036.setLayout(new BoxLayout(panel4036, BoxLayout.Y_AXIS));
+
+        // Create a dialog box
+        JDialog configDisplayPanel = new JDialog(frame, "Confirm Details", true);
+        configDisplayPanel.add(panel4036);
+
+        // Create Yes Button
+        JButton yesButton = new JButton("Yes");
+        yesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Closes dialog screen
+                configDisplayPanel.setVisible(false);
+            }
+        });
+
+        panel4036.add(display4036);
+        panel4036.add(yesButton);
+        configDisplayPanel.pack();
+        configDisplayPanel.setVisible(true);
+
+        frame.getContentPane().add(configDisplayPanel);
+        frame.pack();
+        frame.setVisible(true);
 
         return null;
     }
