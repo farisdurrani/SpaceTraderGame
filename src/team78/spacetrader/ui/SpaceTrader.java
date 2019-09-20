@@ -106,7 +106,7 @@ public class SpaceTrader {
         JPanel configPanel = new JPanel();
         configPanel.setLayout(new GridBagLayout());
 
-        // Creates and adds the welcome header to the panel
+        // Creates and adds the configuration header to the panel
         addComponent(configPanel, createHeader1("Player Configuration"), 1, 0, new Insets(0, 0, 20, 0));
 
         // Creates and adds the player name input label
@@ -257,50 +257,56 @@ public class SpaceTrader {
      */
 
     private JPanel createConfigurationDisplayPanel() {
-        //TODO Create panel that displays the player's configuration from the previous frame:
-        // - Name
-        // - Difficulty
-        // - Skill Points
-        // - Credits (calculated based on the difficulty setting)
+        // Creates the panel that will contain all of the content for the configuration display panel
+        JPanel configDisplayPanel = new JPanel();
+        configDisplayPanel.setLayout(new GridBagLayout());
 
-        // Contents of dialog box - name, difficulty, skill points, credits
-        String name4036 = "Name: " + name;
-        String difficulty4036 = "Difficulty: " + difficulty;
-        String skillPoints4036 = "Skill Points: " + skillPoints.toString();
-        String credits4036 = "Credits: " + credits;
-        JLabel display4036 = new JLabel("<html>" + name4036 + "<br/>" + 
-        	difficulty4036 + "<br/>" + skillPoints4036 + "<br/>" + 
-        	credits4036 + "<br/> <br/>" + "Confirm your configuration?" +
-        	"</html>", SwingConstants.CENTER);
+        // Creates and adds the configuration display header to the panel
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 0;
+        c.insets = new Insets(0, 0, 20, 0);
+        c.gridwidth = 2;
+        addComponent(configDisplayPanel, createHeader1("Player Configuration"), c);
 
-        // Create a panel to store details and button
-        JPanel panel4036 = new JPanel();
-        panel4036.setLayout(new BoxLayout(panel4036, BoxLayout.Y_AXIS));
+        // Creates and adds the configuration labels to the panel
+        c.gridx = 0;
+        c.gridy = 1;
+        c.insets = new Insets(10, 0, 0, 10);
+        c.anchor = GridBagConstraints.LINE_START;
+        addComponent(configDisplayPanel, createHeader2("Name:"), c);
+        c.gridy = 2;
+        addComponent(configDisplayPanel, createHeader2("Difficulty:"), c);
+        c.gridy = 4;
+        c.gridheight = 2;
+        addComponent(configDisplayPanel, createHeader2("Skill Points:"), c);
+        c.gridy = 7;
+        c.gridheight = 1;
+        addComponent(configDisplayPanel, createHeader2("Credits:"), c);
 
-        // Create a dialog box
-        JDialog configDisplayPanel = new JDialog(frame, "Confirm Details", true);
-        configDisplayPanel.add(panel4036);
+        // Creates and adds the configuration values to the panel
+        c.gridx = 1;
+        c.gridy = 1;
+        c.insets = new Insets(10, 0, 0, 10);
+        c.anchor = GridBagConstraints.LINE_END;
+        addComponent(configDisplayPanel, createHeader2(name, Font.PLAIN), c);
+        c.gridy = 2;
+        addComponent(configDisplayPanel, createHeader2(difficulty.toString().charAt(0)
+                + difficulty.toString().substring(1).toLowerCase(), Font.PLAIN), c);
+        c.gridy = 3;
+        addComponent(configDisplayPanel, createHeader2("Pilot: " + skillPoints[0], Font.PLAIN), c);
+        c.gridy = 4;
+        c.insets = new Insets(2, 0, 0, 10);
+        addComponent(configDisplayPanel, createHeader2("Fighter: " + skillPoints[1], Font.PLAIN), c);
+        c.gridy = 5;
+        addComponent(configDisplayPanel, createHeader2("Merchant: " + skillPoints[2], Font.PLAIN), c);
+        c.gridy = 6;
+        addComponent(configDisplayPanel, createHeader2("Engineer: " + skillPoints[3], Font.PLAIN), c);
+        c.gridy = 7;
+        c.insets = new Insets(10, 0, 0, 10);
+        addComponent(configDisplayPanel, createHeader2("$" + credits, Font.PLAIN), c);
 
-        // Create Yes Button
-        JButton yesButton = new JButton("Yes");
-        yesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Closes dialog screen
-                configDisplayPanel.setVisible(false);
-            }
-        });
-
-        panel4036.add(display4036);
-        panel4036.add(yesButton);
-        configDisplayPanel.pack();
-        configDisplayPanel.setVisible(true);
-
-        frame.getContentPane().add(configDisplayPanel);
-        frame.pack();
-        frame.setVisible(true);
-
-        return null;
+        return configDisplayPanel;
     }
 
     /**
@@ -331,6 +337,22 @@ public class SpaceTrader {
 
         // Sets the label's font
         header.setFont(new Font(header.getFont().getName(), Font.BOLD, 28));
+
+        return header;
+    }
+
+    /**
+     * Creates a secondary header with consistent formatting
+     *
+     * @param text the text to use for the header
+     * @return a JLabel with the secondary header formatting
+     */
+    private JLabel createHeader2(String text, int style) {
+        // Creates the label
+        JLabel header = new JLabel(text);
+
+        // Sets the label's font
+        header.setFont(new Font(header.getFont().getName(), style, 28));
 
         return header;
     }
@@ -376,11 +398,21 @@ public class SpaceTrader {
      */
     private void addComponent(JPanel panel, JComponent component, int gridx, int gridy, Insets padding) {
         GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.NONE;
         c.gridx = gridx;
         c.gridy = gridy;
         c.insets = padding;
         panel.add(component, c);
+    }
+
+    /**
+     * Adds a component to the panel using the given custom Grid Bag constraints
+     *
+     * @param panel the panel to add the component to
+     * @param component the component to add
+     * @param constraints the custom grid bag constraints
+     */
+    private void addComponent(JPanel panel, JComponent component, GridBagConstraints constraints) {
+        panel.add(component, constraints);
     }
 
     /**
