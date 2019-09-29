@@ -1,4 +1,4 @@
-package team78.spacetrader.ui;
+package spacetrader.ui;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -8,13 +8,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
-
-/**
- * Provides options for difficulties
- */
-enum Difficulty {
-    EASY, MEDIUM, HARD;
-}
 
 /**
  * This class handles the GUI for the Space Trader game.
@@ -70,7 +63,8 @@ public class SpaceTrader {
         welcomePanel.setLayout(new GridBagLayout());
 
         // Creates and adds the welcome header to the panel
-        addComponent(welcomePanel, createHeader1("Welcome to Space Trader!"), 0, 0, new Insets(0, 0, 20, 0));
+        addComponent(welcomePanel, createHeader1("Welcome to Space Trader!"),
+                0, 0, new Insets(0, 0, 20, 0));
 
         // Creates the start button
         JButton startButton = createButton("START");
@@ -110,7 +104,8 @@ public class SpaceTrader {
         configPanel.setLayout(new GridBagLayout());
 
         // Creates and adds the configuration header to the panel
-        addComponent(configPanel, createHeader1("Player Configuration"), 1, 0, new Insets(0, 0, 20, 0));
+        addComponent(configPanel, createHeader1("Player Configuration"),
+                1, 0, new Insets(0, 0, 20, 0));
 
         // Creates and adds the player name input label
         JLabel nameLabel = createHeader2("Player Name:");
@@ -147,7 +142,6 @@ public class SpaceTrader {
         for (int i = 0; i < skillLabels.length; i++) {
             // Adds the skill label to the panel
             addComponent(configPanel, skillLabels[i], 1, 5 + i, new Insets(10, 10, 10, 10));
-
             // Creates and adds the subtract button to the panel
             JButton skillSubtract = createButton("-");
             skillSubtractButtons.put(skillSubtract, i);
@@ -157,14 +151,14 @@ public class SpaceTrader {
                     int i = skillSubtractButtons.get((JButton) e.getSource());
                     if (skillPoints[i] > 0) {
                         skillPoints[i]--;
-                        skillLabels[i].setText(skillLabels[i].getText().split(":")[0] + ": " + skillPoints[i]);
+                        skillLabels[i].setText(skillLabels[i].getText().split(":")[0]
+                                + ": " + skillPoints[i]);
                         expendablePoints++;
                         availablePoints.setText("Points: " + expendablePoints);
                     }
                 }
             });
             addComponent(configPanel, skillSubtract, 0, 5 + i, new Insets(10, 10, 10, 10));
-
             // Creates and adds the add button to the panel
             JButton skillAdd = createButton("+");
             skillAddButtons.put(skillAdd, i);
@@ -174,7 +168,8 @@ public class SpaceTrader {
                     int i = skillAddButtons.get((JButton) e.getSource());
                     if (expendablePoints > 0) {
                         skillPoints[i]++;
-                        skillLabels[i].setText(skillLabels[i].getText().split(":")[0] + ": " + skillPoints[i]);
+                        skillLabels[i].setText(skillLabels[i].getText().split(":")[0]
+                                + ": " + skillPoints[i]);
                         expendablePoints--;
                         availablePoints.setText("Points: " + expendablePoints);
                     }
@@ -260,7 +255,8 @@ public class SpaceTrader {
      */
 
     private JPanel createConfigurationDisplayPanel() {
-        // Creates the panel that will contain all of the content for the configuration display panel
+        // Creates the panel that will contain all of the content for the configuration display
+        // panel
         JPanel configDisplayPanel = new JPanel();
         configDisplayPanel.setLayout(new GridBagLayout());
 
@@ -300,11 +296,14 @@ public class SpaceTrader {
         addComponent(configDisplayPanel, createHeader2("Pilot: " + skillPoints[0], Font.PLAIN), c);
         c.gridy = 4;
         c.insets = new Insets(2, 0, 0, 10);
-        addComponent(configDisplayPanel, createHeader2("Fighter: " + skillPoints[1], Font.PLAIN), c);
+        addComponent(configDisplayPanel, createHeader2("Fighter: " + skillPoints[1],
+                Font.PLAIN), c);
         c.gridy = 5;
-        addComponent(configDisplayPanel, createHeader2("Merchant: " + skillPoints[2], Font.PLAIN), c);
+        addComponent(configDisplayPanel, createHeader2("Merchant: " + skillPoints[2],
+                Font.PLAIN), c);
         c.gridy = 6;
-        addComponent(configDisplayPanel, createHeader2("Engineer: " + skillPoints[3], Font.PLAIN), c);
+        addComponent(configDisplayPanel, createHeader2("Engineer: " + skillPoints[3],
+                Font.PLAIN), c);
         c.gridy = 7;
         c.insets = new Insets(10, 0, 0, 10);
         addComponent(configDisplayPanel, createHeader2("$" + credits, Font.PLAIN), c);
@@ -348,6 +347,7 @@ public class SpaceTrader {
      * Creates a secondary header with consistent formatting
      *
      * @param text the text to use for the header
+     * @param style the style for the font
      * @return a JLabel with the secondary header formatting
      */
     private JLabel createHeader2(String text, int style) {
@@ -384,7 +384,8 @@ public class SpaceTrader {
      */
     private JButton createButton(String text) {
         JButton button = new JButton(text);
-        button.setBorder(new CompoundBorder(new LineBorder(Color.BLUE, 5), new EmptyBorder(5, 10, 5, 10)));
+        button.setBorder(new CompoundBorder(new LineBorder(Color.BLUE, 5),
+                new EmptyBorder(5, 10, 5, 10)));
         button.setBorderPainted(false);
         button.setFont(new Font(button.getFont().getName(), Font.BOLD, 20));
         return button;
@@ -399,7 +400,8 @@ public class SpaceTrader {
      * @param gridy the y position in  the grid
      * @param padding the grid padding
      */
-    private void addComponent(JPanel panel, JComponent component, int gridx, int gridy, Insets padding) {
+    private void addComponent(JPanel panel, JComponent component, int gridx, int gridy,
+                              Insets padding) {
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = gridx;
         c.gridy = gridy;

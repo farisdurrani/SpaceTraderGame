@@ -1,4 +1,4 @@
-package team78.spacetrader.backend;
+package spacetrader.backend;
 
 public class Region {
     private String name;
