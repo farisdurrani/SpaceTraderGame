@@ -31,4 +31,31 @@ public class Region {
         this.coordinate = coordinate;
         this.techLevel = techLevel;
     }
+
+    /**
+     * Gets the name of the region
+     *
+     * @return the name of the region
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Gets the coordinates of the region
+     *
+     * @return the coordinates of the region
+     */
+    public Coordinate getCoordinate() {
+        return coordinate;
+    }
+
+    /**
+     * Gets the tech level of the region
+     *
+     * return the tech level of the region
+     */
+    public TechLevel getTechLevel() {
+        return techLevel;
+    }
 }
