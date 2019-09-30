@@ -1,5 +1,7 @@
 package spacetrader.ui;
 
+import spacetrader.backend.Player;
+
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -28,6 +30,8 @@ public class SpaceTrader {
     private int[] skillPoints;
     private int credits;
     private int expendablePoints;
+
+    public Player mainPlayer;
 
     /**
      * Creates a new Space Trader game by initializing the GUI with the welcome screen
@@ -255,6 +259,13 @@ public class SpaceTrader {
      */
 
     private JPanel createConfigurationDisplayPanel() {
+        //Sets the player's stats
+        mainPlayer.setPilotPoints(skillPoints[0]);
+        mainPlayer.setFighterPoints(skillPoints[1]);
+        mainPlayer.setMerchantPoints(skillPoints[2]);
+        mainPlayer.setEngineerPoints(skillPoints[3]);
+        mainPlayer.setCurrentCredits(credits);
+
         // Creates the panel that will contain all of the content for the configuration display
         // panel
         JPanel configDisplayPanel = new JPanel();

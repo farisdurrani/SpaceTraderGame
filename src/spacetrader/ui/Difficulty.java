@@ -3,6 +3,6 @@ package spacetrader.ui;
 /**
  * Provides options for difficulties
  */
-enum Difficulty {
+public enum Difficulty {
     EASY, MEDIUM, HARD;
 }

@@ -31,4 +31,13 @@ public class Universe {
             regions[i] = new Region(regionNames[i], coordinate, techLevel);
         }
     }
+
+    /**
+     * Gets all the regions
+     *
+     * @return regions the array of regions
+     */
+    public Region[] getRegionList() {
+        return regions;
+    }
 }
