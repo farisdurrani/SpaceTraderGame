@@ -6,12 +6,12 @@ public class Player {
 
     private Region currentRegion;
 
-    private int currentCredits = 0;
+    private int currentCredits;
 
-    private int pilotPoints = 0;
-    private int fighterPoints = 0;
-    private int merchantPoints = 0;
-    private int engineerPoints = 0;
+    private int pilotPoints;
+    private int fighterPoints;
+    private int merchantPoints;
+    private int engineerPoints;
 
     public Player(String name, int pilotPoints, int fighterPoints, int merchantPoints, int engineerPoints) {
         this.name = name;
@@ -20,6 +20,8 @@ public class Player {
         this.fighterPoints = fighterPoints;
         this.merchantPoints = merchantPoints;
         this.engineerPoints = engineerPoints;
+
+        this.currentCredits = 0;
     }
 
     //<editor-fold desc="Getters and Setters">

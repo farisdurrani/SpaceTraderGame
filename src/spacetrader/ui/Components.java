@@ -1,5 +1,7 @@
 package spacetrader.ui;
 
+import spacetrader.backend.Region;
+
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -7,6 +9,57 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class Components {
+
+    /**
+     * Adds a component to the panel using the given Grid Bag Constants
+     *
+     * @param panel the panel to add the component to
+     * @param component the component to add
+     * @param gridx the x position in the grid
+     * @param gridy the y position in the grid
+     * @param padding the grid padding
+     */
+    public static void addComponent(JPanel panel, JComponent component, int gridx, int gridy,
+                                    Insets padding) {
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = gridx;
+        c.gridy = gridy;
+        c.insets = padding;
+        panel.add(component, c);
+    }
+
+    /**
+     * Adds a component to the panel using the given Grid Bag Constants
+     *
+     * @param panel the panel to add the component to
+     * @param component the component to add
+     * @param gridx the x position in the grid
+     * @param gridy the y position in the grid
+     * @param gridwidth the width in the grid
+     * @param gridheight the height in the grid
+     * @param padding the grid padding
+     */
+    public static void addComponent(JPanel panel, JComponent component, int gridx, int gridy,
+                                    Insets padding, int gridwidth, int gridheight) {
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = gridx;
+        c.gridy = gridy;
+        c.insets = padding;
+        c.gridwidth = gridwidth;
+        c.gridheight = gridheight;
+        panel.add(component, c);
+    }
+
+    /**
+     * Adds a component to the panel using the given custom Grid Bag constraints
+     *
+     * @param panel the panel to add the component to
+     * @param component the component to add
+     * @param constraints the custom grid bag constraints
+     */
+    public static void addComponent(JPanel panel, JComponent component, GridBagConstraints constraints) {
+        panel.add(component, constraints);
+    }
 
     /**
      * Creates a primary header with consistent formatting
@@ -89,31 +142,20 @@ public class Components {
     }
 
     /**
-     * Adds a component to the panel using the given Grid Bag Constants
+     * Creates the display for a given region
      *
-     * @param panel the panel to add the component to
-     * @param component the component to add
-     * @param gridx the x position in the grid
-     * @param gridy the y position in  the grid
-     * @param padding the grid padding
+     * @param region the region
+     * @return a JPanel with the content for the given region
      */
-    public static void addComponent(JPanel panel, JComponent component, int gridx, int gridy,
-                              Insets padding) {
-        GridBagConstraints c = new GridBagConstraints();
-        c.gridx = gridx;
-        c.gridy = gridy;
-        c.insets = padding;
-        panel.add(component, c);
-    }
+    public static JPanel createRegion(Region region) {
+        JPanel regionPanel = new JPanel();
+        regionPanel.setLayout(new GridBagLayout());
 
-    /**
-     * Adds a component to the panel using the given custom Grid Bag constraints
-     *
-     * @param panel the panel to add the component to
-     * @param component the component to add
-     * @param constraints the custom grid bag constraints
-     */
-    public static void addComponent(JPanel panel, JComponent component, GridBagConstraints constraints) {
-        panel.add(component, constraints);
+        addComponent(regionPanel, createHeader1(region.getName()), 0, 0, new Insets(0, 0, 20, 0));
+
+        addComponent(regionPanel, createHeader2(region.getTechLevel().toString()), 0, 1, new Insets(0, 0,10, 0));
+        addComponent(regionPanel, createHeader2(region.getCoordinate().toString()), 0, 2, new Insets(0, 0,10, 0));
+
+        return regionPanel;
     }
 }

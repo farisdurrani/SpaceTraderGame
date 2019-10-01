@@ -1,12 +1,11 @@
 package spacetrader.ui;
 
+import spacetrader.backend.Coordinate;
 import spacetrader.backend.Game;
 import spacetrader.backend.Player;
+import spacetrader.backend.Region;
 
 import javax.swing.*;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,7 +31,7 @@ public class SpaceTrader {
     private Game game;
     private Difficulty difficulty;
 
-    private Player mainPlayer;
+    private Player player;
 
     /**
      * Creates a new Space Trader game by initializing the GUI with the welcome screen
@@ -237,11 +236,11 @@ public class SpaceTrader {
         confirm.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Creates the game with the selected difficulty
-                game = new Game(difficulty);
-
                 // Creates the player with its name and stats
-                mainPlayer = new Player(nameInput.getText(), skillPoints[0], skillPoints[1], skillPoints[2], skillPoints[3]);
+                player = new Player(nameInput.getText(), skillPoints[0], skillPoints[1], skillPoints[2], skillPoints[3]);
+
+                // Creates the game with the selected difficulty
+                game = new Game(player, difficulty);
 
                 // Removes the content from the configuration screen
                 frame.getContentPane().removeAll();
@@ -298,27 +297,65 @@ public class SpaceTrader {
         c.gridy = 1;
         c.insets = new Insets(10, 0, 0, 10);
         c.anchor = GridBagConstraints.LINE_END;
-        Components.addComponent(configDisplayPanel, Components.createHeader2(mainPlayer.getName(), Font.PLAIN), c);
+        Components.addComponent(configDisplayPanel, Components.createHeader2(player.getName(), Font.PLAIN), c);
         c.gridy = 2;
         Components.addComponent(configDisplayPanel, Components.createHeader2(game.getGameDifficulty().toString().charAt(0)
                 + game.getGameDifficulty().toString().substring(1).toLowerCase(), Font.PLAIN), c);
         c.gridy = 3;
-        Components.addComponent(configDisplayPanel, Components.createHeader2("Pilot: " + mainPlayer.getPilotPoints(), Font.PLAIN), c);
+        Components.addComponent(configDisplayPanel, Components.createHeader2("Pilot: " + player.getPilotPoints(), Font.PLAIN), c);
         c.gridy = 4;
         c.insets = new Insets(2, 0, 0, 10);
-        Components.addComponent(configDisplayPanel, Components.createHeader2("Fighter: " + mainPlayer.getFighterPoints(),
+        Components.addComponent(configDisplayPanel, Components.createHeader2("Fighter: " + player.getFighterPoints(),
                 Font.PLAIN), c);
         c.gridy = 5;
-        Components.addComponent(configDisplayPanel, Components.createHeader2("Merchant: " + mainPlayer.getMerchantPoints(),
+        Components.addComponent(configDisplayPanel, Components.createHeader2("Merchant: " + player.getMerchantPoints(),
                 Font.PLAIN), c);
         c.gridy = 6;
-        Components.addComponent(configDisplayPanel, Components.createHeader2("Engineer: " + mainPlayer.getEngineerPoints(),
+        Components.addComponent(configDisplayPanel, Components.createHeader2("Engineer: " + player.getEngineerPoints(),
                 Font.PLAIN), c);
         c.gridy = 7;
         c.insets = new Insets(10, 0, 0, 10);
-        Components.addComponent(configDisplayPanel, Components.createHeader2("$" + mainPlayer.getCurrentCredits(), Font.PLAIN), c);
+        Components.addComponent(configDisplayPanel, Components.createHeader2("$" + player.getCurrentCredits(), Font.PLAIN), c);
+
+        JButton startGame = Components.createButton("START GAME");
+        startGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Starts the game
+                game.startGame();
+
+                // Removes the content from the configuration screen
+                frame.getContentPane().removeAll();
+                frame.repaint();
+
+                // Sets the content to the configuration display screen
+                frame.getContentPane().add(createRegionPanel(), BorderLayout.CENTER);
+                frame.setVisible(true);
+            }
+        });
+        Components.addComponent(configDisplayPanel, startGame, 0, 8, new Insets(30, 10, 10, 10), 2, 1);
 
         return configDisplayPanel;
+    }
+
+    public JPanel createRegionPanel() {
+        JPanel regionPanel = new JPanel();
+        regionPanel.setLayout(new GridBagLayout());
+
+        Region[] regions = game.getRegions();
+        Region currentRegion = player.getCurrentRegion();
+
+        Components.addComponent(regionPanel, Components.createRegion(currentRegion), 0, 0, new Insets(0, 0, 20, 0), 9, 1);
+
+        Components.addComponent(regionPanel, Components.createHeader1("Travel To:"), 0, 1, new Insets(0, 0, 0, 0), 9, 1);
+        int i = 0;
+        for (Region region : regions) {
+            if (region != currentRegion) {
+                Components.addComponent(regionPanel, Components.createButton(region.getName() + " (" + (int) (Coordinate.distance(region.getCoordinate(), currentRegion.getCoordinate())) + ")"), i++, 2, new Insets(0, 5, 0, 5));
+            }
+        }
+
+        return regionPanel;
     }
 
     /**

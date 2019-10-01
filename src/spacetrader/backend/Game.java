@@ -5,7 +5,9 @@ import spacetrader.ui.Difficulty;
 import java.util.Random;
 
 public class Game {
+    private Player player;
     private Difficulty gameDifficulty;
+    private Universe universe;
     private String[] regionNames =
             {
                     "Achilles",
@@ -24,12 +26,19 @@ public class Game {
     /**
      * Creates a new game object with the selected game difficulty
      *
+     * @param player the player of the game
      * @param gameDifficulty the game difficulty
      */
-    public Game(Difficulty gameDifficulty) {
+    public Game(Player player, Difficulty gameDifficulty) {
+        this.player = player;
         this.gameDifficulty = gameDifficulty;
     }
 
+    /**
+     * Returns the game difficulty
+     *
+     * @return the game difficulty
+     */
     public Difficulty getGameDifficulty() {
         return gameDifficulty;
     }
@@ -37,19 +46,28 @@ public class Game {
     /**
      * Method that instantiates the universe and sets the players credits and
      * starting universe
-     * @param mainPlayer player from the
      */
-    public void StartGame(Player mainPlayer) {
-        Universe universe = new Universe(regionNames);
-        Random rand = new Random();
+    public void startGame() {
+        universe = new Universe(regionNames);
 
-        mainPlayer.setCurrentRegion(universe.getRegionList()[rand.nextInt(10)]);
         if (gameDifficulty == Difficulty.EASY) {
-            mainPlayer.setCurrentCredits(1000);
+            player.setCurrentCredits(1000);
         } else if (gameDifficulty == Difficulty.MEDIUM) {
-            mainPlayer.setCurrentCredits(500);
+            player.setCurrentCredits(500);
         } else if (gameDifficulty == Difficulty.HARD) {
-            mainPlayer.setCurrentCredits(100);
+            player.setCurrentCredits(100);
         }
+
+        player.setCurrentRegion(universe.getRegionList()[(int)(Math.random() * regionNames.length)]);
     }
+
+    /**
+     * Returns the game regions
+     *
+     * @return the game regions
+     */
+    public Region[] getRegions() {
+        return universe.getRegionList();
+    }
+
 }
