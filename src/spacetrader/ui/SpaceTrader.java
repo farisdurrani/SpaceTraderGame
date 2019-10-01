@@ -1,5 +1,6 @@
 package spacetrader.ui;
 
+import spacetrader.backend.Game;
 import spacetrader.backend.Player;
 
 import javax.swing.*;
@@ -19,8 +20,6 @@ public class SpaceTrader {
     private JFrame frame;
 
     // Configuration values
-    private String name;
-    private Difficulty difficulty;
     /*
     Pilot = 0
     Fighter = 1
@@ -29,6 +28,9 @@ public class SpaceTrader {
      */
     private int[] skillPoints;
     private int expendablePoints;
+
+    private Game game;
+    private Difficulty difficulty;
 
     private Player mainPlayer;
 
@@ -235,10 +237,11 @@ public class SpaceTrader {
         confirm.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                name = nameInput.getText();
+                // Creates the game with the selected difficulty
+                game = new Game(difficulty);
 
-                //Sets the player's stats
-                mainPlayer = new Player(name, skillPoints[0], skillPoints[1], skillPoints[2], skillPoints[3]);
+                // Creates the player with its name and stats
+                mainPlayer = new Player(nameInput.getText(), skillPoints[0], skillPoints[1], skillPoints[2], skillPoints[3]);
 
                 // Removes the content from the configuration screen
                 frame.getContentPane().removeAll();
@@ -295,21 +298,21 @@ public class SpaceTrader {
         c.gridy = 1;
         c.insets = new Insets(10, 0, 0, 10);
         c.anchor = GridBagConstraints.LINE_END;
-        addComponent(configDisplayPanel, createHeader2(name, Font.PLAIN), c);
+        addComponent(configDisplayPanel, createHeader2(mainPlayer.getName(), Font.PLAIN), c);
         c.gridy = 2;
-        addComponent(configDisplayPanel, createHeader2(difficulty.toString().charAt(0)
-                + difficulty.toString().substring(1).toLowerCase(), Font.PLAIN), c);
+        addComponent(configDisplayPanel, createHeader2(game.getGameDifficulty().toString().charAt(0)
+                + game.getGameDifficulty().toString().substring(1).toLowerCase(), Font.PLAIN), c);
         c.gridy = 3;
-        addComponent(configDisplayPanel, createHeader2("Pilot: " + skillPoints[0], Font.PLAIN), c);
+        addComponent(configDisplayPanel, createHeader2("Pilot: " + mainPlayer.getPilotPoints(), Font.PLAIN), c);
         c.gridy = 4;
         c.insets = new Insets(2, 0, 0, 10);
-        addComponent(configDisplayPanel, createHeader2("Fighter: " + skillPoints[1],
+        addComponent(configDisplayPanel, createHeader2("Fighter: " + mainPlayer.getFighterPoints(),
                 Font.PLAIN), c);
         c.gridy = 5;
-        addComponent(configDisplayPanel, createHeader2("Merchant: " + skillPoints[2],
+        addComponent(configDisplayPanel, createHeader2("Merchant: " + mainPlayer.getMerchantPoints(),
                 Font.PLAIN), c);
         c.gridy = 6;
-        addComponent(configDisplayPanel, createHeader2("Engineer: " + skillPoints[3],
+        addComponent(configDisplayPanel, createHeader2("Engineer: " + mainPlayer.getEngineerPoints(),
                 Font.PLAIN), c);
         c.gridy = 7;
         c.insets = new Insets(10, 0, 0, 10);

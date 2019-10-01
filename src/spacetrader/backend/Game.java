@@ -22,6 +22,19 @@ public class Game {
             };
 
     /**
+     * Creates a new game object with the selected game difficulty
+     *
+     * @param gameDifficulty the game difficulty
+     */
+    public Game(Difficulty gameDifficulty) {
+        this.gameDifficulty = gameDifficulty;
+    }
+
+    public Difficulty getGameDifficulty() {
+        return gameDifficulty;
+    }
+
+    /**
      * Method that instantiates the universe and sets the players credits and
      * starting universe
      * @param mainPlayer player from the
