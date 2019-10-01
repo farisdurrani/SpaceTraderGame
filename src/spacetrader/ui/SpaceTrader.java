@@ -28,10 +28,9 @@ public class SpaceTrader {
     Eng = 3
      */
     private int[] skillPoints;
-    private int credits;
     private int expendablePoints;
 
-    public Player mainPlayer;
+    private Player mainPlayer;
 
     /**
      * Creates a new Space Trader game by initializing the GUI with the welcome screen
@@ -238,6 +237,9 @@ public class SpaceTrader {
             public void actionPerformed(ActionEvent e) {
                 name = nameInput.getText();
 
+                //Sets the player's stats
+                mainPlayer = new Player(name, skillPoints[0], skillPoints[1], skillPoints[2], skillPoints[3]);
+
                 // Removes the content from the configuration screen
                 frame.getContentPane().removeAll();
                 frame.repaint();
@@ -259,12 +261,6 @@ public class SpaceTrader {
      */
 
     private JPanel createConfigurationDisplayPanel() {
-        //Sets the player's stats
-        mainPlayer.setPilotPoints(skillPoints[0]);
-        mainPlayer.setFighterPoints(skillPoints[1]);
-        mainPlayer.setMerchantPoints(skillPoints[2]);
-        mainPlayer.setEngineerPoints(skillPoints[3]);
-        mainPlayer.setCurrentCredits(credits);
 
         // Creates the panel that will contain all of the content for the configuration display
         // panel
@@ -317,7 +313,7 @@ public class SpaceTrader {
                 Font.PLAIN), c);
         c.gridy = 7;
         c.insets = new Insets(10, 0, 0, 10);
-        addComponent(configDisplayPanel, createHeader2("$" + credits, Font.PLAIN), c);
+        addComponent(configDisplayPanel, createHeader2("$" + mainPlayer.getCurrentCredits(), Font.PLAIN), c);
 
         return configDisplayPanel;
     }
@@ -441,13 +437,10 @@ public class SpaceTrader {
     private void setDifficulty(Difficulty difficulty, JLabel availablePoints, JLabel[] skills) {
         if (difficulty == Difficulty.EASY) {
             expendablePoints = 16;
-            credits = 1000;
         } else if (difficulty == Difficulty.MEDIUM) {
             expendablePoints = 12;
-            credits = 500;
         } else if (difficulty == Difficulty.HARD) {
             expendablePoints = 8;
-            credits = 100;
         }
         this.difficulty = difficulty;
         availablePoints.setText("Points: " + expendablePoints);

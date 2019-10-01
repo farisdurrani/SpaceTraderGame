@@ -2,6 +2,8 @@ package spacetrader.backend;
 
 public class Player {
 
+    private String name;
+
     private Region currentRegion;
 
     private int currentCredits = 0;
@@ -10,6 +12,15 @@ public class Player {
     private int fighterPoints = 0;
     private int merchantPoints = 0;
     private int engineerPoints = 0;
+
+    public Player(String name, int pilotPoints, int fighterPoints, int merchantPoints, int engineerPoints) {
+        this.name = name;
+
+        this.pilotPoints = pilotPoints;
+        this.fighterPoints = fighterPoints;
+        this.merchantPoints = merchantPoints;
+        this.engineerPoints = engineerPoints;
+    }
 
     //<editor-fold desc="Getters and Setters">
 
@@ -59,6 +70,14 @@ public class Player {
      */
     public void setEngineerPoints(int engineerPoints) {
         this.engineerPoints = engineerPoints;
+    }
+
+    /**
+     * Public getter that returns the player's name
+     * @return player's name
+     */
+    public String getName() {
+        return name;
     }
 
     /**

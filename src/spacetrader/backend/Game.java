@@ -31,6 +31,12 @@ public class Game {
         Random rand = new Random();
 
         mainPlayer.setCurrentRegion(universe.getRegionList()[rand.nextInt(10)]);
-
+        if (gameDifficulty == Difficulty.EASY) {
+            mainPlayer.setCurrentCredits(1000);
+        } else if (gameDifficulty == Difficulty.MEDIUM) {
+            mainPlayer.setCurrentCredits(500);
+        } else if (gameDifficulty == Difficulty.HARD) {
+            mainPlayer.setCurrentCredits(100);
+        }
     }
 }
