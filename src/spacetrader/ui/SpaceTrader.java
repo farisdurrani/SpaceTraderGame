@@ -338,7 +338,7 @@ public class SpaceTrader {
         return configDisplayPanel;
     }
 
-    public JPanel createRegionPanel() {
+    private JPanel createRegionPanel() {
         JPanel regionPanel = new JPanel();
         regionPanel.setLayout(new GridBagLayout());
 
@@ -351,7 +351,23 @@ public class SpaceTrader {
         int i = 0;
         for (Region region : regions) {
             if (region != currentRegion) {
-                Components.addComponent(regionPanel, Components.createButton(region.getName() + " (" + (int) (Coordinate.distance(region.getCoordinate(), currentRegion.getCoordinate())) + ")"), i++, 2, new Insets(0, 5, 0, 5));
+                JButton regionButton = Components.createButton(region.getName() + " (" + (int) (Coordinate.distance(region.getCoordinate(), currentRegion.getCoordinate())) + ")");
+                regionButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // Moves to a new region
+                        game.goToRegion(region);
+
+                        // Removes the content from the configuration screen
+                        frame.getContentPane().removeAll();
+                        frame.repaint();
+
+                        // Sets the content to the configuration display screen
+                        frame.getContentPane().add(createRegionPanel(), BorderLayout.CENTER);
+                        frame.setVisible(true);
+                    }
+                });
+                Components.addComponent(regionPanel, regionButton, i++, 2, new Insets(0, 5, 0, 5));
             }
         }
 

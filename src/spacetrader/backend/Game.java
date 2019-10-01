@@ -70,4 +70,13 @@ public class Game {
         return universe.getRegionList();
     }
 
+    /**
+     * Moves the player to a new region
+     *
+     * @param region the new region
+     */
+    public void goToRegion(Region region) {
+        player.setCurrentRegion(region);
+    }
+
 }
