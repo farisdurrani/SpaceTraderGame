@@ -1,4 +1,4 @@
-package spacetrader.ui;
+package spacetrader.backend;
 
 /**
  * Provides options for difficulties

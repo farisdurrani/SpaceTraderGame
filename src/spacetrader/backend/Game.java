@@ -1,9 +1,5 @@
 package spacetrader.backend;
 
-import spacetrader.ui.Difficulty;
-
-import java.util.Random;
-
 public class Game {
     private Player player;
     private Difficulty gameDifficulty;

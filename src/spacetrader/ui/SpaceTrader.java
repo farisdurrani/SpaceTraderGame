@@ -1,9 +1,6 @@
 package spacetrader.ui;
 
-import spacetrader.backend.Coordinate;
-import spacetrader.backend.Game;
-import spacetrader.backend.Player;
-import spacetrader.backend.Region;
+import spacetrader.backend.*;
 
 import javax.swing.*;
 import java.awt.*;
