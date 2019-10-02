@@ -9,7 +9,7 @@ public class Coordinate {
      * Creates a new coordinate object with random coordinates
      */
     public Coordinate() {
-        this((int) (Math.random() * 1000), (int) (Math.random() * 1000));
+        this((int) (Math.random() * 400) - 200, (int) (Math.random() * 400) - 200);
     }
 
     /**
