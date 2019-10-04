@@ -5,19 +5,19 @@ public class Game {
     private Difficulty gameDifficulty;
     private Universe universe;
     private String[] regionNames =
-            {
-                    "Achilles",
-                    "Icarus",
-                    "Pandora",
-                    "Orion",
-                    "Serpens",
-                    "Ursa",
-                    "Cassiopeia",
-                    "Lyra",
-                    "Cygnus",
-                    "Leo"
+    {
+        "Achilles",
+        "Icarus",
+        "Pandora",
+        "Orion",
+        "Serpens",
+        "Ursa",
+        "Cassiopeia",
+        "Lyra",
+        "Cygnus",
+        "Leo"
 
-            };
+    };
 
     /**
      * Creates a new game object with the selected game difficulty
@@ -54,7 +54,8 @@ public class Game {
             player.setCurrentCredits(100);
         }
 
-        player.setCurrentRegion(universe.getRegionList()[(int)(Math.random() * regionNames.length)]);
+        player.setCurrentRegion(universe.getRegionList()[(int) (Math.random()
+                * regionNames.length)]);
     }
 
     /**

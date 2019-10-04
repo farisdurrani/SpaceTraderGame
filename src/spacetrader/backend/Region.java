@@ -53,7 +53,7 @@ public class Region {
     /**
      * Gets the tech level of the region
      *
-     * return the tech level of the region
+     * @return the tech level of the region
      */
     public TechLevel getTechLevel() {
         return techLevel;

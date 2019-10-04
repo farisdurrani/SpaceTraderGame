@@ -35,9 +35,9 @@ public class Components {
      * @param component the component to add
      * @param gridx the x position in the grid
      * @param gridy the y position in the grid
+     * @param padding the grid padding
      * @param gridwidth the width in the grid
      * @param gridheight the height in the grid
-     * @param padding the grid padding
      */
     public static void addComponent(JPanel panel, JComponent component, int gridx, int gridy,
                                     Insets padding, int gridwidth, int gridheight) {
@@ -51,13 +51,38 @@ public class Components {
     }
 
     /**
+     * Adds a component to the panel using the given Grid Bag Constants
+     *
+     * @param panel the panel to add the component to
+     * @param component the component to add
+     * @param gridx the x position in the grid
+     * @param gridy the y position in the grid
+     * @param padding the grid padding
+     * @param gridwidth the width in the grid
+     * @param gridheight the height in the grid
+     * @param anchor the location to anchor the component
+     */
+    public static void addComponent(JPanel panel, JComponent component, int gridx, int gridy,
+                                    Insets padding, int gridwidth, int gridheight, int anchor) {
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = gridx;
+        c.gridy = gridy;
+        c.insets = padding;
+        c.gridwidth = gridwidth;
+        c.gridheight = gridheight;
+        c.anchor = anchor;
+        panel.add(component, c);
+    }
+
+    /**
      * Adds a component to the panel using the given custom Grid Bag constraints
      *
      * @param panel the panel to add the component to
      * @param component the component to add
      * @param constraints the custom grid bag constraints
      */
-    public static void addComponent(JPanel panel, JComponent component, GridBagConstraints constraints) {
+    public static void addComponent(JPanel panel, JComponent component,
+                                    GridBagConstraints constraints) {
         panel.add(component, constraints);
     }
 
@@ -153,8 +178,10 @@ public class Components {
 
         addComponent(regionPanel, createHeader1(region.getName()), 0, 0, new Insets(0, 0, 20, 0));
 
-        addComponent(regionPanel, createHeader2(region.getTechLevel().toString()), 0, 1, new Insets(0, 0,10, 0));
-        addComponent(regionPanel, createHeader2(region.getCoordinate().toString()), 0, 2, new Insets(0, 0,10, 0));
+        addComponent(regionPanel, createHeader2(region.getTechLevel().toString()), 0, 1,
+                new Insets(0, 0, 10, 0));
+        addComponent(regionPanel, createHeader2(region.getCoordinate().toString()), 0, 2,
+                new Insets(0, 0, 10, 0));
 
         return regionPanel;
     }

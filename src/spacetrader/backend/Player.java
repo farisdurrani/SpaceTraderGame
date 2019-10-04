@@ -13,7 +13,8 @@ public class Player {
     private int merchantPoints;
     private int engineerPoints;
 
-    public Player(String name, int pilotPoints, int fighterPoints, int merchantPoints, int engineerPoints) {
+    public Player(String name, int pilotPoints, int fighterPoints, int merchantPoints,
+                  int engineerPoints) {
         this.name = name;
 
         this.pilotPoints = pilotPoints;
@@ -36,7 +37,8 @@ public class Player {
 
     /**
      * Public setter to set the players region
-     * @param currentRegion
+     *
+     * @param currentRegion current region
      */
     public void setCurrentRegion(Region currentRegion) {
         this.currentRegion = currentRegion;
@@ -44,7 +46,8 @@ public class Player {
 
     /**
      * Public setter to set the players pilot points
-     * @param pilotPoints
+     *
+     * @param pilotPoints pilot points
      */
     public void setPilotPoints(int pilotPoints) {
         this.pilotPoints = pilotPoints;
@@ -52,7 +55,8 @@ public class Player {
 
     /**
      * Public setter to set the players fighter points
-     * @param fighterPoints
+     *
+     * @param fighterPoints fighter points
      */
     public void setFighterPoints(int fighterPoints) {
         this.fighterPoints = fighterPoints;
@@ -60,7 +64,8 @@ public class Player {
 
     /**
      * Public setter to set the players merchant points
-     * @param merchantPoints
+     *
+     * @param merchantPoints merchant points
      */
     public void setMerchantPoints(int merchantPoints) {
         this.merchantPoints = merchantPoints;
@@ -68,7 +73,8 @@ public class Player {
 
     /**
      * Public setter to set the players engineer points
-     * @param engineerPoints
+     *
+     * @param engineerPoints engineer points
      */
     public void setEngineerPoints(int engineerPoints) {
         this.engineerPoints = engineerPoints;
