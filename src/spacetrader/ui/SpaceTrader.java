@@ -13,25 +13,34 @@ import java.util.HashMap;
  */
 public class SpaceTrader {
 
+    /** The main frame.*/
     private JFrame frame;
 
-    // Configuration values
-    /*
-    Pilot = 0
-    Fighter = 1
-    Merchant = 2
-    Eng = 3
+    /**
+     * Configuration values:
+     *
+     * Pilot = 0
+     * Fighter = 1
+     * Merchant = 2
+     * Eng = 3.
      */
     private int[] skillPoints;
+    /** Points can be used to acquire Pilot, Fighter, Merchant, Eng.*/
     private int expendablePoints;
+    /** Credits are currency which can be used to buy goods.*/
+    private int expendableCredits;
 
+    /** Shall serve as the main backend class.*/
     private Game game;
+    /** Difficulty of game ranging from Easy, Medium, and Hard.*/
     private Difficulty difficulty;
 
+    /** The human player.*/
     private Player player;
 
     /**
-     * Creates a new Space Trader game by initializing the GUI with the welcome screen
+     * Creates a new Space Trader game by initializing the GUI with the
+     * welcome screen.
      */
     public SpaceTrader() {
         // Creates a new frame
@@ -54,7 +63,8 @@ public class SpaceTrader {
     }
 
     /**
-     * Creates the welcome panel with all of the content necessary for the welcome screen
+     * Creates the welcome panel with all of the content necessary for the
+     * welcome screen.
      *
      * @return the welcome panel
      */
@@ -64,8 +74,8 @@ public class SpaceTrader {
         welcomePanel.setLayout(new GridBagLayout());
 
         // Creates and adds the welcome header to the panel
-        Components.addComponent(welcomePanel, Components.createHeader1("Welcome to Space Trader!"),
-                0, 0, new Insets(0, 0, 20, 0));
+        Components.addComponent(welcomePanel, Components.createHeader1(
+                "Welcome to Space Trader!"), 0, 0, new Insets(0, 0, 20, 0));
 
         // Creates the start button
         JButton startButton = Components.createButton("START");
@@ -79,7 +89,8 @@ public class SpaceTrader {
                 frame.repaint();
 
                 // Sets the content to the configuration screen
-                frame.getContentPane().add(createConfigurationPanel(), BorderLayout.CENTER);
+                frame.getContentPane().add(createConfigurationPanel(),
+                        BorderLayout.CENTER);
                 frame.setVisible(true);
 
                 // Focuses the name input
@@ -88,19 +99,21 @@ public class SpaceTrader {
         });
 
         // Adds the start button to the panel
-        Components.addComponent(welcomePanel, startButton, 0, 1, new Insets(20, 0, 0, 0));
+        Components.addComponent(welcomePanel, startButton, 0, 1,
+                new Insets(20, 0, 0, 0));
 
         return welcomePanel;
     }
 
     /**
-     * Creates the initial configuration panel with all of the content necessary for the
-     * configuration screen
+     * Creates the initial configuration panel with all of the content necessary
+     * for the configuration screen.
      *
      * @return the initial configuration panel
      */
     private JPanel createConfigurationPanel() {
-        // Creates the panel that will contain all of the content for the configuration panel
+        // Creates the panel that will contain all of the content for the
+        // configuration panel
         JPanel configPanel = new JPanel();
         configPanel.setLayout(new GridBagLayout());
 
@@ -110,12 +123,15 @@ public class SpaceTrader {
 
         // Creates and adds the player name input label
         JLabel nameLabel = Components.createHeader2("Player Name:");
-        Components.addComponent(configPanel, nameLabel, 0, 1, new Insets(10, 10, 10, 10));
+        Components.addComponent(configPanel, nameLabel, 0, 1,
+                new Insets(10, 10, 10, 10));
 
         // Creates and adds the player name input field
         JTextField nameInput = new JTextField(30);
-        nameInput.setFont(new Font(nameInput.getFont().getName(), Font.PLAIN, 20));
-        Components.addComponent(configPanel, nameInput, 1, 1, new Insets(10, 10, 10, 10));
+        nameInput.setFont(new Font(nameInput.getFont().getName(),
+                Font.PLAIN, 20));
+        Components.addComponent(configPanel, nameInput, 1, 1,
+                new Insets(10, 10, 10, 10));
 
         // Initializes the configuration values
         expendablePoints = 0;
@@ -123,9 +139,19 @@ public class SpaceTrader {
         for (int i = 0; i < skillPoints.length; i++) {
             skillPoints[i] = 0;
         }
+
+        // Creates and adds the label that displays the credits the player will
+        // receive
+        JLabel availableCredits = Components.createHeader2("Credits: $"
+                + expendableCredits);
+        Components.addComponent(configPanel, availableCredits, 1, 4,
+                new Insets(30, 10, 10, 10));
+
         // Creates and adds the label that displays the available points
-        JLabel availablePoints = Components.createHeader2("Available Points: " + expendablePoints);
-        Components.addComponent(configPanel, availablePoints, 1, 4, new Insets(30, 10, 10, 10));
+        JLabel availablePoints = Components.createHeader2("Points: "
+                + expendablePoints);
+        Components.addComponent(configPanel, availablePoints, 1, 5,
+                new Insets(10, 10, 10, 10));
 
         // Creates the labels for each skill
         JLabel[] skillLabels = new JLabel[skillPoints.length];
@@ -133,13 +159,15 @@ public class SpaceTrader {
         skillLabels[1] = Components.createHeader3("Fighter: 0");
         skillLabels[2] = Components.createHeader3("Merchant: 0");
         skillLabels[3] = Components.createHeader3("Engineer: 0");
-        // Holds a mapping of each button to the corresponding skill index for future use
+        // Holds a mapping of each button to the corresponding skill index for
+        // future use
         HashMap<JButton, Integer> skillSubtractButtons = new HashMap<>();
         HashMap<JButton, Integer> skillAddButtons = new HashMap<>();
-        // Loops through each skill to add the label and subtract/add buttons to the panel
+        // Loops through each skill to add the label and subtract/add buttons
+        // to the panel
         for (int i = 0; i < skillLabels.length; i++) {
             // Adds the skill label to the panel
-            Components.addComponent(configPanel, skillLabels[i], 1, 5 + i,
+            Components.addComponent(configPanel, skillLabels[i], 1, 6 + i,
                     new Insets(10, 10, 10, 10));
             // Creates and adds the subtract button to the panel
             JButton skillSubtract = Components.createButton("-");
@@ -157,7 +185,7 @@ public class SpaceTrader {
                     }
                 }
             });
-            Components.addComponent(configPanel, skillSubtract, 0, 5 + i,
+            Components.addComponent(configPanel, skillSubtract, 0, 6 + i,
                     new Insets(10, 10, 10, 10));
             // Creates and adds the add button to the panel
             JButton skillAdd = Components.createButton("+");
@@ -175,12 +203,15 @@ public class SpaceTrader {
                     }
                 }
             });
-            Components.addComponent(configPanel, skillAdd, 2, 5 + i, new Insets(10, 10, 10, 10));
+            Components.addComponent(configPanel, skillAdd, 2, 6 + i,
+                    new Insets(10, 10, 10, 10));
         }
 
-        // Creates and adds the label for the difficulty selction
-        JLabel difficultyLabel = Components.createHeader2("Select Difficulty: ");
-        Components.addComponent(configPanel, difficultyLabel, 1, 2, new Insets(30, 10, 10, 10));
+        // Creates and adds the label for the difficulty selection
+        JLabel difficultyLabel = Components.createHeader2(
+                "Select Difficulty: ");
+        Components.addComponent(configPanel, difficultyLabel, 1, 2,
+                new Insets(30, 10, 10, 10));
 
         // Creates the difficulty buttons
         JButton easyButton = Components.createButton("EASY");
@@ -189,7 +220,8 @@ public class SpaceTrader {
 
         // Sets the default difficulty to medium
         mediumButton.setBorderPainted(true);
-        setDifficulty(Difficulty.MEDIUM, availablePoints, skillLabels);
+        setDifficulty(Difficulty.MEDIUM, availablePoints, availableCredits,
+                skillLabels);
 
         // Adds functionality to the easy button and adds it to the panel
         easyButton.addActionListener(new ActionListener() {
@@ -198,10 +230,12 @@ public class SpaceTrader {
                 easyButton.setBorderPainted(true);
                 mediumButton.setBorderPainted(false);
                 hardButton.setBorderPainted(false);
-                setDifficulty(Difficulty.EASY, availablePoints, skillLabels);
+                setDifficulty(Difficulty.EASY, availablePoints,
+                        availableCredits, skillLabels);
             }
         });
-        Components.addComponent(configPanel, easyButton, 0, 3, new Insets(10, 10, 10, 10));
+        Components.addComponent(configPanel, easyButton, 0, 3,
+                new Insets(10, 10, 10, 10));
 
         // Adds functionality to the medium button and adds it to the panel
         mediumButton.addActionListener(new ActionListener() {
@@ -210,10 +244,12 @@ public class SpaceTrader {
                 easyButton.setBorderPainted(false);
                 mediumButton.setBorderPainted(true);
                 hardButton.setBorderPainted(false);
-                setDifficulty(Difficulty.MEDIUM, availablePoints, skillLabels);
+                setDifficulty(Difficulty.MEDIUM, availablePoints,
+                        availableCredits, skillLabels);
             }
         });
-        Components.addComponent(configPanel, mediumButton, 1, 3, new Insets(10, 10, 10, 10));
+        Components.addComponent(configPanel, mediumButton, 1, 3,
+                new Insets(10, 10, 10, 10));
 
         // Adds functionality to the hard button and adds it to the panel
         hardButton.addActionListener(new ActionListener() {
@@ -222,86 +258,117 @@ public class SpaceTrader {
                 easyButton.setBorderPainted(false);
                 mediumButton.setBorderPainted(false);
                 hardButton.setBorderPainted(true);
-                setDifficulty(Difficulty.HARD, availablePoints, skillLabels);
+                setDifficulty(Difficulty.HARD, availablePoints,
+                        availableCredits, skillLabels);
             }
         });
-        Components.addComponent(configPanel, hardButton, 2, 3, new Insets(10, 10, 10, 10));
+        Components.addComponent(configPanel, hardButton, 2, 3,
+                new Insets(10, 10, 10, 10));
 
-        // Creates and adds the confirm button that takes the user to the next page
+        // Creates and adds the confirm button that takes the user to the
+        // next page
         JButton confirm = Components.createButton("CONFIRM");
         confirm.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Creates the player with its name and stats
-                player = new Player(nameInput.getText(), skillPoints[0], skillPoints[1],
-                        skillPoints[2], skillPoints[3]);
+                player = new Player(nameInput.getText(), skillPoints[0],
+                        skillPoints[1], skillPoints[2], skillPoints[3]);
+                // Sets credit amount for player according to difficulty level
+                if (difficulty == Difficulty.EASY) {
+                    player.setCurrentCredits(expendableCredits);
+                } else if (difficulty == Difficulty.MEDIUM) {
+                    player.setCurrentCredits(expendableCredits);
+                } else if (difficulty == Difficulty.HARD) {
+                    player.setCurrentCredits(expendableCredits);
+                }
                 // Creates the game with the selected difficulty
                 game = new Game(player, difficulty);
                 // Removes the content from the configuration screen
                 frame.getContentPane().removeAll();
                 frame.repaint();
                 // Sets the content to the configuration display screen
-                frame.getContentPane().add(createConfigurationDisplayPanel(), BorderLayout.CENTER);
+                frame.getContentPane().add(createConfigurationDisplayPanel(),
+                        BorderLayout.CENTER);
                 frame.setVisible(true);
             }
         });
-        Components.addComponent(configPanel, confirm, 1, 10, new Insets(30, 10, 10, 10));
+        Components.addComponent(configPanel, confirm, 1, 11,
+                new Insets(30, 10, 10, 10));
 
         return configPanel;
     }
 
     /**
-     * Creates the final panel for the screen that displays the player's configuration
+     * Creates the final panel for the screen that displays the player's
+     * configuration.
      *
      * @return the configuration display panel
      */
 
     private JPanel createConfigurationDisplayPanel() {
 
-        // Creates the panel that will contain all of the content for the configuration display
-        // panel
+        // Creates the panel that will contain all of the content for the
+        // configuration display panel
         JPanel configDisplayPanel = new JPanel();
         configDisplayPanel.setLayout(new GridBagLayout());
 
         // Creates and adds the configuration display header to the panel
         Components.addComponent(configDisplayPanel,
-                Components.createHeader1("Player Configuration"), 0, 0,
+                Components.createHeader1("Player Configuration"), 2, 0,
                 new Insets(0, 0, 20, 0), 2, 1);
 
         // Creates and adds the configuration labels to the panel
         Components.addComponent(configDisplayPanel, Components.createHeader2("Name:"),
-                0, 1, new Insets(10, 0, 0, 10), 1, 1, GridBagConstraints.LINE_START);
+                2, 1, new Insets(10, 0, 0, 10), 1, 1, GridBagConstraints.LINE_START);
         Components.addComponent(configDisplayPanel, Components.createHeader2("Difficulty:"),
-                0, 2, new Insets(10, 0, 0, 10), 1, 1, GridBagConstraints.LINE_START);
+                2, 2, new Insets(10, 0, 0, 10), 1, 1, GridBagConstraints.LINE_START);
         Components.addComponent(configDisplayPanel, Components.createHeader2("Skill Points:"),
-                0, 4, new Insets(10, 0, 0, 10), 1, 2, GridBagConstraints.LINE_START);
+                2, 4, new Insets(10, 0, 0, 10), 1, 2, GridBagConstraints.LINE_START);
         Components.addComponent(configDisplayPanel, Components.createHeader2("Credits:"),
-                0, 7, new Insets(10, 0, 0, 10), 1, 1, GridBagConstraints.LINE_START);
+                2, 7, new Insets(10, 0, 0, 10), 1, 1, GridBagConstraints.LINE_START);
 
         // Creates and adds the configuration values to the panel
         Components.addComponent(configDisplayPanel,
-                Components.createHeader2(player.getName(), Font.PLAIN), 1, 1,
+                Components.createHeader2(player.getName(), Font.PLAIN), 3, 1,
                 new Insets(10, 0, 0, 10), 1, 1, GridBagConstraints.LINE_END);
         Components.addComponent(configDisplayPanel,
                 Components.createHeader2(game.getGameDifficulty().toString().charAt(0)
                         + game.getGameDifficulty().toString().substring(1).toLowerCase(),
-                        Font.PLAIN), 1, 2, new Insets(10, 0, 0, 10), 1, 1,
+                        Font.PLAIN), 3, 2, new Insets(10, 0, 0, 10), 1, 1,
                 GridBagConstraints.LINE_END);
         Components.addComponent(configDisplayPanel, Components.createHeader2("Pilot: "
-                        + player.getPilotPoints(), Font.PLAIN), 1, 3, new Insets(10, 0, 0, 10),
+                        + player.getPilotPoints(), Font.PLAIN), 3, 3, new Insets(10, 0, 0, 10),
                 1, 1, GridBagConstraints.LINE_END);
         Components.addComponent(configDisplayPanel, Components.createHeader2("Fighter: "
-                        + player.getFighterPoints(), Font.PLAIN), 1, 4, new Insets(2, 0, 0, 10),
+                        + player.getFighterPoints(), Font.PLAIN), 3, 4, new Insets(2, 0, 0, 10),
                 1, 1, GridBagConstraints.LINE_END);
         Components.addComponent(configDisplayPanel, Components.createHeader2("Merchant: "
-                        + player.getMerchantPoints(), Font.PLAIN), 1, 5, new Insets(2, 0, 0, 10),
+                        + player.getMerchantPoints(), Font.PLAIN), 3, 5, new Insets(2, 0, 0, 10),
                 1, 1, GridBagConstraints.LINE_END);
         Components.addComponent(configDisplayPanel, Components.createHeader2("Engineer: "
-                        + player.getEngineerPoints(), Font.PLAIN), 1, 6, new Insets(2, 0, 0, 10),
+                        + player.getEngineerPoints(), Font.PLAIN), 3, 6, new Insets(2, 0, 0, 10),
                 1, 1, GridBagConstraints.LINE_END);
         Components.addComponent(configDisplayPanel, Components.createHeader2("$"
-                        + player.getCurrentCredits(), Font.PLAIN), 1, 7, new Insets(10, 0, 0, 10),
+                        + player.getCurrentCredits(), Font.PLAIN), 3, 7, new Insets(10, 0, 0, 10),
                 1, 1, GridBagConstraints.LINE_END);
+
+        JButton goBack = Components.createButton("GO BACK");
+        goBack.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Removes the content from the configuration screen
+                frame.getContentPane().removeAll();
+                frame.repaint();
+
+                // Sets the content to the configuration screen
+                frame.getContentPane().add(createConfigurationPanel(),
+                        BorderLayout.CENTER);
+                frame.setVisible(true);
+            }
+        });
+        Components.addComponent(configDisplayPanel, goBack, 1, 12,
+                new Insets(30, 1, 10, 10), 2, 1);
 
         JButton startGame = Components.createButton("START GAME");
         startGame.addActionListener(new ActionListener() {
@@ -315,12 +382,13 @@ public class SpaceTrader {
                 frame.repaint();
 
                 // Sets the content to the configuration display screen
-                frame.getContentPane().add(createRegionPanel(), BorderLayout.CENTER);
+                frame.getContentPane().add(createRegionPanel(),
+                        BorderLayout.CENTER);
                 frame.setVisible(true);
             }
         });
-        Components.addComponent(configDisplayPanel, startGame, 0, 8,
-                new Insets(30, 10, 10, 10), 2, 1);
+        Components.addComponent(configDisplayPanel, startGame, 3, 12,
+                new Insets(30, 10, 10, 30), 2, 1);
 
         return configDisplayPanel;
     }
@@ -354,7 +422,8 @@ public class SpaceTrader {
                         frame.repaint();
 
                         // Sets the content to the configuration display screen
-                        frame.getContentPane().add(createRegionPanel(), BorderLayout.CENTER);
+                        frame.getContentPane().add(createRegionPanel(),
+                                BorderLayout.CENTER);
                         frame.setVisible(true);
                     }
                 });
@@ -367,22 +436,28 @@ public class SpaceTrader {
     }
 
     /**
-     * Sets the difficulty and updates all necessary values and labels
+     * Sets the difficulty and updates all necessary values and labels.
      *
      * @param difficulty the difficulty selected
      * @param availablePoints the label which displays the available points
+     * @param availableCredits the label which displays the available credits
      * @param skills the labels that display the points in each skill
      */
-    private void setDifficulty(Difficulty difficulty, JLabel availablePoints, JLabel[] skills) {
+    private void setDifficulty(Difficulty difficulty, JLabel availablePoints,
+                               JLabel availableCredits, JLabel[] skills) {
         if (difficulty == Difficulty.EASY) {
             expendablePoints = 16;
+            expendableCredits = 1000;
         } else if (difficulty == Difficulty.MEDIUM) {
             expendablePoints = 12;
+            expendableCredits = 500;
         } else if (difficulty == Difficulty.HARD) {
             expendablePoints = 8;
+            expendableCredits = 100;
         }
         this.difficulty = difficulty;
         availablePoints.setText("Points: " + expendablePoints);
+        availableCredits.setText("Credits: $" + expendableCredits);
         for (int i = 0; i < skillPoints.length; i++) {
             skillPoints[i] = 0;
             skills[i].setText(skills[i].getText().split(":")[0] + ": " + 0);
@@ -390,7 +465,7 @@ public class SpaceTrader {
     }
 
     /**
-     * Starts the Space Trader GUI
+     * Starts the Space Trader GUI.
      *
      * @param args unused
      */
