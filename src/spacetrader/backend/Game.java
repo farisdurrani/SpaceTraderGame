@@ -74,6 +74,8 @@ public class Game {
      * @param region the new region
      */
     public void goToRegion(int region) {
+        double distance = universe.getDistance(region);
+        double fuelCost = distance;
         universe.goToRegion(region);
     }
 

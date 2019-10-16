@@ -54,4 +54,11 @@ public class Universe {
             currentRegion = region;
         }
     }
+
+    public double getDistance(int region) {
+        if (region >= 0 && region < regions.length) {
+            return regions[currentRegion].distanceTo(regions[region]);
+        }
+        return -1.0;
+    }
 }

@@ -32,6 +32,7 @@ public class Region {
      */
     public Region(String name, Coordinate coordinate, TechLevel techLevel) {
         this.name = name;
+        this.id = nextID++;
         this.coordinate = coordinate;
         this.techLevel = techLevel;
     }
@@ -65,5 +66,9 @@ public class Region {
      */
     public TechLevel getTechLevel() {
         return techLevel;
+    }
+
+    public double distanceTo(Region region) {
+        return Coordinate.distance(this.coordinate, region.coordinate);
     }
 }
