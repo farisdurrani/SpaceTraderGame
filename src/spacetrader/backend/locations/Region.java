@@ -1,4 +1,4 @@
-package spacetrader.backend;
+package spacetrader.backend.locations;
 
 public class Region {
     private String name;
@@ -57,5 +57,15 @@ public class Region {
      */
     public TechLevel getTechLevel() {
         return techLevel;
+    }
+
+    /**
+     * Calculates the distance from this region to another region
+     *
+     * @param region the region to measure the distance to
+     * @return the distance to the given region
+     */
+    public double distanceTo(Region region) {
+        return Coordinate.distance(this.coordinate, region.coordinate);
     }
 }
