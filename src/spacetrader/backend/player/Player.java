@@ -117,6 +117,10 @@ public class Player {
     public int getEngineerPoints() {
         return engineerPoints;
     }
+
+    public Ship getShip() {
+        return ship;
+    }
     //</editor-fold>
 
 }

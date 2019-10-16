@@ -75,8 +75,11 @@ public class Game {
      */
     public void goToRegion(int region) {
         double distance = universe.getDistance(region);
-        double fuelCost = distance;
-        universe.goToRegion(region);
+        int fuelCost = (int) (distance * Math.pow(0.9, player.getPilotPoints()));
+        if (player.getShip().getCurrentFuel() >= fuelCost) {
+            player.getShip().alterCurrentFuel(-1 * fuelCost);
+            universe.goToRegion(region);
+        }
     }
 
     public String getPlayerName() {
