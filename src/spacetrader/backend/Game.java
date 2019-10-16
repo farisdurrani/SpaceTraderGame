@@ -103,26 +103,28 @@ public class Game {
 
     public static int getSkillPoints(Difficulty difficulty) {
         switch (difficulty) {
-            case EASY:
-                return 16;
-            case MEDIUM:
-                return 12;
-            case HARD:
-                return 8;
+        case EASY:
+            return 16;
+        case MEDIUM:
+            return 12;
+        case HARD:
+            return 8;
+        default:
+            return 0;
         }
-        return 0;
     }
 
     public static int getCredits(Difficulty difficulty) {
         switch (difficulty) {
-            case EASY:
-                return 1000;
-            case MEDIUM:
-                return 500;
-            case HARD:
-                return 100;
+        case EASY:
+            return 1000;
+        case MEDIUM:
+            return 500;
+        case HARD:
+            return 100;
+        default:
+            return 0;
         }
-        return 0;
     }
 
 }

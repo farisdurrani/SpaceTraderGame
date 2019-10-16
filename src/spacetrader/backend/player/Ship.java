@@ -2,7 +2,7 @@ package spacetrader.backend.player;
 
 public class Ship {
     private String type;
-    private int currentSpace;
+    private int currentUsedSpace;
     private int maxCargoSpace;
     private int currentFuel;
     private int maxFuelCapacity;
@@ -10,42 +10,47 @@ public class Ship {
     private int maxHealth;
 
     private String[] typeList = {
-            "Starship",
-            "Jet",
-            "Wasp",
-            "Ladybug"
+        "Starship",
+        "Jet",
+        "Wasp",
+        "Ladybug"
     };
 
     /**
      * Constructor for Ship that sets the type along with the variable changes
      * that the type entails
-     * @param typeEnum ShipType enum for the switch statement
+     * @param shipType ShipType enum for the switch statement
      */
-    public Ship(ShipType typeEnum) {
-        switch (typeEnum) {
-            case STARSHIP:
-                maxCargoSpace = 500;
-                maxFuelCapacity = 500;
-                maxHealth = 500;
-                break;
-            case JET:
-                maxCargoSpace = 100;
-                maxFuelCapacity = 100;
-                maxHealth = 100;
-                break;
-            case WASP:
-                maxCargoSpace = 100;
-                maxFuelCapacity = 200;
-                maxHealth = 50;
-                break;
-            case LADYBUG:
-                maxCargoSpace = 200;
-                maxFuelCapacity = 50;
-                maxHealth = 150;
-                break;
+    public Ship(ShipType shipType) {
+        switch (shipType) {
+        case STARSHIP:
+            maxCargoSpace = 500;
+            maxFuelCapacity = 500;
+            maxHealth = 500;
+            break;
+        case JET:
+            maxCargoSpace = 100;
+            maxFuelCapacity = 100;
+            maxHealth = 100;
+            break;
+        case WASP:
+            maxCargoSpace = 100;
+            maxFuelCapacity = 200;
+            maxHealth = 50;
+            break;
+        case LADYBUG:
+            maxCargoSpace = 200;
+            maxFuelCapacity = 50;
+            maxHealth = 150;
+            break;
+        default:
+            maxCargoSpace = 0;
+            maxFuelCapacity = 0;
+            maxHealth = 0;
         }
-        currentSpace = 0;
-        currentSpace = 0;
+        currentUsedSpace = 0;
+        currentFuel = maxFuelCapacity;
+        currentHealth = maxHealth;
     }
 
     /**
@@ -68,8 +73,8 @@ public class Ship {
      * Current space getter function
      * @return current sapce as an int
      */
-    public int getCurrentSpace() {
-        return currentSpace;
+    public int getCurrentUsedSpace() {
+        return currentUsedSpace;
     }
 
     /**
@@ -118,14 +123,14 @@ public class Ship {
      * the player cannot add any more items or there's max space available
      */
     public boolean alterCurrentSpace(int variable) {
-        if (currentSpace + variable > maxFuelCapacity) {
-            currentSpace = maxFuelCapacity;
+        if (currentUsedSpace + variable > maxCargoSpace) {
+            currentUsedSpace = maxCargoSpace;
             return true;
-        } else if (currentSpace + variable < 0) {
-            currentSpace = 0;
+        } else if (currentUsedSpace + variable < 0) {
+            currentUsedSpace = 0;
             return false;
         } else {
-            currentSpace += variable;
+            currentUsedSpace += variable;
             return true;
         }
     }
