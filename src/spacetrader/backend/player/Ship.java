@@ -23,6 +23,11 @@ public class Ship {
      */
     public Ship(ShipType shipType) {
         switch (shipType) {
+        case STARTER:
+            maxCargoSpace = 100;
+            maxFuelCapacity = 50;
+            maxHealth = 50;
+            break;
         case STARSHIP:
             maxCargoSpace = 500;
             maxFuelCapacity = 500;

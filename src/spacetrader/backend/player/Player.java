@@ -11,6 +11,8 @@ public class Player {
     private int merchantPoints;
     private int engineerPoints;
 
+    private Ship ship;
+
     public Player(String name, int pilotPoints, int fighterPoints, int merchantPoints,
                   int engineerPoints) {
         this.name = name;
@@ -21,6 +23,8 @@ public class Player {
         this.engineerPoints = engineerPoints;
 
         this.credits = 0;
+
+        this.ship = new Ship(ShipType.STARTER);
     }
 
     //<editor-fold desc="Getters and Setters">
