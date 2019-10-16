@@ -13,6 +13,15 @@ public class Player {
 
     private Ship ship;
 
+    /**
+     * Creates a new Player
+     *
+     * @param name the player's name
+     * @param pilotPoints pilot points
+     * @param fighterPoints fighter points
+     * @param merchantPoints merchant points
+     * @param engineerPoints engineer points
+     */
     public Player(String name, int pilotPoints, int fighterPoints, int merchantPoints,
                   int engineerPoints) {
         this.name = name;
@@ -71,15 +80,17 @@ public class Player {
     }
 
     /**
-     * Public getter that returns the player's name
-     * @return player's name
+     * Gets the player's name
+     *
+     * @return the player's name
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Public getter that returns the current amount of credits
+     * Gets the current amount of credits
+     *
      * @return number of credits
      */
     public int getCredits() {
@@ -87,37 +98,46 @@ public class Player {
     }
 
     /**
-     * Public getter that returns the pilot points
-     * @return pilot points
+     * Gets the pilot points
+     *
+     * @return the pilot points
      */
     public int getPilotPoints() {
         return this.pilotPoints;
     }
 
     /**
-     * Public getter that returns the fighter points
-     * @return fighter points
+     * Gets the fighter points
+     *
+     * @return the fighter points
      */
     public int getFighterPoints() {
         return this.fighterPoints;
     }
 
     /**
-     * Public getter that returns the merchant points
-     * @return merchant points
+     * Gets the merchant points
+     *
+     * @return the merchant points
      */
     public int getMerchantPoints() {
         return this.merchantPoints;
     }
 
     /**
-     * Public getter that returns engineer points
-     * @return engineer points
+     * Gets the engineer points
+     *
+     * @return the engineer points
      */
     public int getEngineerPoints() {
         return engineerPoints;
     }
 
+    /**
+     * Gets the player's ship
+     *
+     * @return the player's ship
+     */
     public Ship getShip() {
         return ship;
     }

@@ -46,6 +46,11 @@ public class Region {
         return name;
     }
 
+    /**
+     * Gets the ID of the region
+     *
+     * @return the ID of the region
+     */
     public int getID() {
         return id;
     }
@@ -68,6 +73,12 @@ public class Region {
         return techLevel;
     }
 
+    /**
+     * Calculates the distance from this region to another region
+     *
+     * @param region the region to measure the distance to
+     * @return the distance to the given region
+     */
     public double distanceTo(Region region) {
         return Coordinate.distance(this.coordinate, region.coordinate);
     }

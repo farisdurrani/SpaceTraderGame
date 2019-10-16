@@ -51,6 +51,11 @@ public class SpaceTrader {
         frame.setVisible(true);
     }
 
+    /**
+     * Clears the current window and displays a panel as the new content
+     *
+     * @param panel panel to be displayed
+     */
     private void displayPanel(JPanel panel) {
         // Removes the content from the previous screen
         frame.getContentPane().removeAll();
@@ -334,6 +339,11 @@ public class SpaceTrader {
         return configDisplayPanel;
     }
 
+    /**
+     * Creates the region panel for the current region
+     *
+     * @return the region panel for the current region
+     */
     private JPanel createRegionPanel() {
         JPanel regionPanel = new JPanel();
         regionPanel.setLayout(new GridBagLayout());
@@ -358,18 +368,11 @@ public class SpaceTrader {
                         // Moves to a new region
                         game.goToRegion(region.getID());
 
-                        // Removes the content from the configuration screen
-                        frame.getContentPane().removeAll();
-                        frame.repaint();
-
-                        // Sets the content to the configuration display screen
-                        frame.getContentPane().add(createRegionPanel(),
-                                BorderLayout.CENTER);
-                        frame.setVisible(true);
+                        // Displays the next region screen
+                        displayPanel(createRegionPanel());
                     }
                 });
-                Components.addComponent(regionPanel, regionButton, i++, 2,
-                        new Insets(0, 5, 0, 5));
+                Components.addComponent(regionPanel, regionButton, i++, 2, new Insets(0, 5, 0, 5));
             }
         }
 
