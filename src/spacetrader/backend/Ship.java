@@ -1,7 +1,5 @@
 package spacetrader.backend;
 
-import java.util.Random;
-
 public class Ship {
     private String type;
     private int currentSpace;

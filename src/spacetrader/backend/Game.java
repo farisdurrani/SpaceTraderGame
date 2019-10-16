@@ -16,7 +16,6 @@ public class Game {
         "Lyra",
         "Cygnus",
         "Leo"
-
     };
 
     /**
@@ -28,6 +27,16 @@ public class Game {
     public Game(Player player, Difficulty gameDifficulty) {
         this.player = player;
         this.gameDifficulty = gameDifficulty;
+
+        // Sets the player's credits based on the game difficulty
+        switch (gameDifficulty) {
+            case EASY:
+                this.player.setCurrentCredits(1000);
+            case MEDIUM:
+                this.player.setCurrentCredits(500);
+            case HARD:
+                this.player.setCurrentCredits(100);
+        }
     }
 
     /**
@@ -46,16 +55,7 @@ public class Game {
     public void startGame() {
         universe = new Universe(regionNames);
 
-        if (gameDifficulty == Difficulty.EASY) {
-            player.setCurrentCredits(1000);
-        } else if (gameDifficulty == Difficulty.MEDIUM) {
-            player.setCurrentCredits(500);
-        } else if (gameDifficulty == Difficulty.HARD) {
-            player.setCurrentCredits(100);
-        }
-
-        player.setCurrentRegion(universe.getRegionList()[(int) (Math.random()
-                * regionNames.length)]);
+        universe.goToRegion((int) (Math.random() * universe.getNumberOfRegions()));
     }
 
     /**
@@ -67,13 +67,41 @@ public class Game {
         return universe.getRegionList();
     }
 
+    public Region getCurrentRegion() {
+        return universe.getCurrentRegion();
+    }
+
     /**
      * Moves the player to a new region
      *
      * @param region the new region
      */
-    public void goToRegion(Region region) {
-        player.setCurrentRegion(region);
+    public void goToRegion(int region) {
+        universe.goToRegion(region);
+    }
+
+    public String getPlayerName() {
+        return player.getName();
+    }
+
+    public int getPilotPoints() {
+        return player.getPilotPoints();
+    }
+
+    public int getFighterPoints() {
+        return player.getFighterPoints();
+    }
+
+    public int getMerchantPoints() {
+        return player.getMerchantPoints();
+    }
+
+    public int getEngineerPoints() {
+        return player.getEngineerPoints();
+    }
+
+    public int getCurrentCredits() {
+        return player.getCurrentCredits();
     }
 
 }

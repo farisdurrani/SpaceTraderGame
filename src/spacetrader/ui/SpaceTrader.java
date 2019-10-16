@@ -16,27 +16,14 @@ public class SpaceTrader {
     /** The main frame.*/
     private JFrame frame;
 
-    /**
-     * Configuration values:
-     *
-     * Pilot = 0
-     * Fighter = 1
-     * Merchant = 2
-     * Eng = 3.
-     */
-    private int[] skillPoints;
-    /** Points can be used to acquire Pilot, Fighter, Merchant, Eng.*/
+    // Variables needed to setup configuration for a new player
+    private int[] skillPoints; // Pilot, Fighter, Merchant, Engineer
     private int expendablePoints;
-    /** Credits are currency which can be used to buy goods.*/
     private int expendableCredits;
-
-    /** Shall serve as the main backend class.*/
-    private Game game;
-    /** Difficulty of game ranging from Easy, Medium, and Hard.*/
     private Difficulty difficulty;
 
-    /** The human player.*/
-    private Player player;
+    // Game class that should be called for all game logic
+    private Game game;
 
     /**
      * Creates a new Space Trader game by initializing the GUI with the
@@ -271,22 +258,14 @@ public class SpaceTrader {
         confirm.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Creates the player with its name and stats
-                player = new Player(nameInput.getText(), skillPoints[0],
-                        skillPoints[1], skillPoints[2], skillPoints[3]);
-                // Sets credit amount for player according to difficulty level
-                if (difficulty == Difficulty.EASY) {
-                    player.setCurrentCredits(expendableCredits);
-                } else if (difficulty == Difficulty.MEDIUM) {
-                    player.setCurrentCredits(expendableCredits);
-                } else if (difficulty == Difficulty.HARD) {
-                    player.setCurrentCredits(expendableCredits);
-                }
                 // Creates the game with the selected difficulty
-                game = new Game(player, difficulty);
+                game = new Game(new Player(nameInput.getText(), skillPoints[0], skillPoints[1],
+                        skillPoints[2], skillPoints[3]), difficulty);
+
                 // Removes the content from the configuration screen
                 frame.getContentPane().removeAll();
                 frame.repaint();
+
                 // Sets the content to the configuration display screen
                 frame.getContentPane().add(createConfigurationDisplayPanel(),
                         BorderLayout.CENTER);
@@ -330,7 +309,7 @@ public class SpaceTrader {
 
         // Creates and adds the configuration values to the panel
         Components.addComponent(configDisplayPanel,
-                Components.createHeader2(player.getName(), Font.PLAIN), 3, 1,
+                Components.createHeader2(game.getPlayerName(), Font.PLAIN), 3, 1,
                 new Insets(10, 0, 0, 10), 1, 1, GridBagConstraints.LINE_END);
         Components.addComponent(configDisplayPanel,
                 Components.createHeader2(game.getGameDifficulty().toString().charAt(0)
@@ -338,19 +317,19 @@ public class SpaceTrader {
                         Font.PLAIN), 3, 2, new Insets(10, 0, 0, 10), 1, 1,
                 GridBagConstraints.LINE_END);
         Components.addComponent(configDisplayPanel, Components.createHeader2("Pilot: "
-                        + player.getPilotPoints(), Font.PLAIN), 3, 3, new Insets(10, 0, 0, 10),
+                        + game.getPilotPoints(), Font.PLAIN), 3, 3, new Insets(10, 0, 0, 10),
                 1, 1, GridBagConstraints.LINE_END);
         Components.addComponent(configDisplayPanel, Components.createHeader2("Fighter: "
-                        + player.getFighterPoints(), Font.PLAIN), 3, 4, new Insets(2, 0, 0, 10),
+                        + game.getFighterPoints(), Font.PLAIN), 3, 4, new Insets(2, 0, 0, 10),
                 1, 1, GridBagConstraints.LINE_END);
         Components.addComponent(configDisplayPanel, Components.createHeader2("Merchant: "
-                        + player.getMerchantPoints(), Font.PLAIN), 3, 5, new Insets(2, 0, 0, 10),
+                        + game.getMerchantPoints(), Font.PLAIN), 3, 5, new Insets(2, 0, 0, 10),
                 1, 1, GridBagConstraints.LINE_END);
         Components.addComponent(configDisplayPanel, Components.createHeader2("Engineer: "
-                        + player.getEngineerPoints(), Font.PLAIN), 3, 6, new Insets(2, 0, 0, 10),
+                        + game.getEngineerPoints(), Font.PLAIN), 3, 6, new Insets(2, 0, 0, 10),
                 1, 1, GridBagConstraints.LINE_END);
         Components.addComponent(configDisplayPanel, Components.createHeader2("$"
-                        + player.getCurrentCredits(), Font.PLAIN), 3, 7, new Insets(10, 0, 0, 10),
+                        + game.getCurrentCredits(), Font.PLAIN), 3, 7, new Insets(10, 0, 0, 10),
                 1, 1, GridBagConstraints.LINE_END);
 
         JButton goBack = Components.createButton("GO BACK");
@@ -398,7 +377,7 @@ public class SpaceTrader {
         regionPanel.setLayout(new GridBagLayout());
 
         Region[] regions = game.getRegions();
-        Region currentRegion = player.getCurrentRegion();
+        Region currentRegion = game.getCurrentRegion();
 
         Components.addComponent(regionPanel, Components.createRegion(currentRegion), 0, 0,
                 new Insets(0, 0, 20, 0), 9, 1);
@@ -415,7 +394,7 @@ public class SpaceTrader {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         // Moves to a new region
-                        game.goToRegion(region);
+                        game.goToRegion(region.getID());
 
                         // Removes the content from the configuration screen
                         frame.getContentPane().removeAll();

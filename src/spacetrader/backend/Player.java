@@ -4,8 +4,6 @@ public class Player {
 
     private String name;
 
-    private Region currentRegion;
-
     private int currentCredits;
 
     private int pilotPoints;
@@ -33,15 +31,6 @@ public class Player {
      */
     public void setCurrentCredits(int currentCredits) {
         this.currentCredits = currentCredits;
-    }
-
-    /**
-     * Public setter to set the players region
-     *
-     * @param currentRegion current region
-     */
-    public void setCurrentRegion(Region currentRegion) {
-        this.currentRegion = currentRegion;
     }
 
     /**
@@ -86,14 +75,6 @@ public class Player {
      */
     public String getName() {
         return name;
-    }
-
-    /**
-     * Public getter that returns the current region
-     * @return current region
-     */
-    public Region getCurrentRegion() {
-        return currentRegion;
     }
 
     /**

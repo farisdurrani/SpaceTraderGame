@@ -2,6 +2,7 @@ package spacetrader.backend;
 
 public class Universe {
     private Region[] regions;
+    private int currentRegion;
 
     /**
      * Creates a new Universe with regions specified by the region names
@@ -12,7 +13,6 @@ public class Universe {
         regions = new Region[regionNames.length];
 
         for (int i = 0; i < regions.length; i++) {
-
             // Creates coordinates for each region randomly, validating that none of the regions are
             // within 5 in either the X or Y direction
             Coordinate coordinate = new Coordinate();
@@ -39,5 +39,19 @@ public class Universe {
      */
     public Region[] getRegionList() {
         return regions;
+    }
+
+    public int getNumberOfRegions() {
+        return regions.length;
+    }
+
+    public Region getCurrentRegion() {
+        return regions[currentRegion];
+    }
+
+    public void goToRegion(int region) {
+        if (region >= 0 && region < regions.length) {
+            currentRegion = region;
+        }
     }
 }
