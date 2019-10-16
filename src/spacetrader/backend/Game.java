@@ -52,7 +52,8 @@ public class Game {
     public void startGame() {
         universe = new Universe(regionNames);
 
-        universe.goToRegion((int) (Math.random() * universe.getNumberOfRegions()));
+        universe.goToRegion(universe.getRegionList()[(int) (Math.random()
+                * universe.getNumberOfRegions())]);
     }
 
     /**
@@ -79,7 +80,7 @@ public class Game {
      * @param region the new region
      * @return true if the player successfully travels to the given region, false otherwise
      */
-    public boolean goToRegion(int region) {
+    public boolean goToRegion(Region region) {
         double distance = universe.getDistance(region);
         if (distance < 0) {
             return false;
@@ -88,8 +89,7 @@ public class Game {
         int fuelCost = (int) (distance * Math.pow(0.9, player.getPilotPoints()));
         if (player.getShip().getCurrentFuel() >= fuelCost) {
             player.getShip().alterCurrentFuel(-1 * fuelCost);
-            universe.goToRegion(region);
-            return true;
+            return universe.goToRegion(region);
         }
         return false;
     }

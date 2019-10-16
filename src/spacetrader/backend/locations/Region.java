@@ -1,10 +1,7 @@
 package spacetrader.backend.locations;
 
 public class Region {
-    private static int nextID = 0;
-
     private String name;
-    private int id;
     private Coordinate coordinate;
     private TechLevel techLevel;
 
@@ -18,7 +15,6 @@ public class Region {
      */
     public Region(String name, int x, int y, TechLevel techLevel) {
         this.name = name;
-        this.id = nextID++;
         this.coordinate = new Coordinate(x, y);
         this.techLevel = techLevel;
     }
@@ -32,7 +28,6 @@ public class Region {
      */
     public Region(String name, Coordinate coordinate, TechLevel techLevel) {
         this.name = name;
-        this.id = nextID++;
         this.coordinate = coordinate;
         this.techLevel = techLevel;
     }
@@ -44,15 +39,6 @@ public class Region {
      */
     public String getName() {
         return name;
-    }
-
-    /**
-     * Gets the ID of the region
-     *
-     * @return the ID of the region
-     */
-    public int getID() {
-        return id;
     }
 
     /**

@@ -366,7 +366,7 @@ public class SpaceTrader {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         // Moves to a new region
-                        game.goToRegion(region.getID());
+                        game.goToRegion(region);
 
                         // Displays the next region screen
                         displayPanel(createRegionPanel());

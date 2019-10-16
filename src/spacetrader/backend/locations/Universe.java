@@ -1,5 +1,7 @@
 package spacetrader.backend.locations;
 
+import java.util.Arrays;
+
 public class Universe {
     private Region[] regions;
     private int currentRegion;
@@ -62,12 +64,17 @@ public class Universe {
     /**
      * Travels to the given region
      *
-     * @param region the ID of the region to travel to
+     * @param region the region to travel to
+     * @return true if the region is valid, false otherwise
      */
-    public void goToRegion(int region) {
-        if (region >= 0 && region < regions.length) {
-            currentRegion = region;
+    public boolean goToRegion(Region region) {
+        for (int i = 0; i < regions.length; i++) {
+            if (region == regions[i]) {
+                currentRegion = i;
+                return true;
+            }
         }
+        return false;
     }
 
     /**
@@ -76,9 +83,11 @@ public class Universe {
      * @param region the region to measure the distance to
      * @return the distance from the current region to the given region
      */
-    public double getDistance(int region) {
-        if (region >= 0 && region < regions.length) {
-            return regions[currentRegion].distanceTo(regions[region]);
+    public double getDistance(Region region) {
+        for (int i = 0; i < regions.length; i++) {
+            if (region == regions[i]) {
+                return regions[currentRegion].distanceTo(region);
+            }
         }
         return -1.0;
     }
