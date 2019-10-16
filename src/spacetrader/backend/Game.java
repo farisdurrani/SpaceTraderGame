@@ -1,5 +1,9 @@
 package spacetrader.backend;
 
+import spacetrader.backend.locations.Region;
+import spacetrader.backend.locations.Universe;
+import spacetrader.backend.player.Player;
+
 public class Game {
     private Player player;
     private Difficulty gameDifficulty;

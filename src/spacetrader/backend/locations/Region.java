@@ -1,4 +1,4 @@
-package spacetrader.backend;
+package spacetrader.backend.locations;
 
 public class Region {
     private static int nextID = 0;

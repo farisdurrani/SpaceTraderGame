@@ -1,6 +1,6 @@
 package spacetrader.ui;
 
-import spacetrader.backend.Region;
+import spacetrader.backend.locations.Region;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;

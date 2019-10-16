@@ -1,4 +1,4 @@
-package spacetrader.backend;
+package spacetrader.backend.locations;
 
 public class Universe {
     private Region[] regions;

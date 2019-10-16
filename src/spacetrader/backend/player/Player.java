@@ -1,4 +1,4 @@
-package spacetrader.backend;
+package spacetrader.backend.player;
 
 public class Player {
 
