@@ -1,5 +1,6 @@
 package spacetrader.ui;
 
+import org.jetbrains.annotations.NotNull;
 import spacetrader.backend.*;
 import spacetrader.backend.locations.Coordinate;
 import spacetrader.backend.locations.Region;
@@ -22,7 +23,6 @@ public class SpaceTrader {
     // Variables needed to setup configuration for a new player
     private int[] skillPoints; // Pilot, Fighter, Merchant, Engineer
     private int expendablePoints;
-    private int expendableCredits;
     private Difficulty difficulty;
 
     // Game class that should be called for all game logic
@@ -52,6 +52,19 @@ public class SpaceTrader {
         frame.setVisible(true);
     }
 
+    public void displayPanel(JPanel panel) {
+        // Removes the content from the previous screen
+        frame.getContentPane().removeAll();
+        frame.repaint();
+
+        // Sets the content to the next screen
+        frame.getContentPane().add(panel, BorderLayout.CENTER);
+        frame.setVisible(true);
+
+        // Focuses the name input
+        frame.transferFocusUpCycle();
+    }
+
     /**
      * Creates the welcome panel with all of the content necessary for the
      * welcome screen.
@@ -74,17 +87,8 @@ public class SpaceTrader {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Removes the content from the welcome screen
-                frame.getContentPane().removeAll();
-                frame.repaint();
-
-                // Sets the content to the configuration screen
-                frame.getContentPane().add(createConfigurationPanel(),
-                        BorderLayout.CENTER);
-                frame.setVisible(true);
-
-                // Focuses the name input
-                frame.transferFocusUpCycle();
+                // Displays the configuration screen
+                displayPanel(createConfigurationPanel());
             }
         });
 
@@ -133,13 +137,12 @@ public class SpaceTrader {
         // Creates and adds the label that displays the credits the player will
         // receive
         JLabel availableCredits = Components.createHeader2("Credits: $"
-                + expendableCredits);
+                + Game.getCredits(difficulty));
         Components.addComponent(configPanel, availableCredits, 1, 4,
                 new Insets(30, 10, 10, 10));
 
         // Creates and adds the label that displays the available points
-        JLabel availablePoints = Components.createHeader2("Points: "
-                + expendablePoints);
+        JLabel availablePoints = Components.createHeader2("Points: " + expendablePoints);
         Components.addComponent(configPanel, availablePoints, 1, 5,
                 new Insets(10, 10, 10, 10));
 
@@ -265,14 +268,8 @@ public class SpaceTrader {
                 game = new Game(new Player(nameInput.getText(), skillPoints[0], skillPoints[1],
                         skillPoints[2], skillPoints[3]), difficulty);
 
-                // Removes the content from the configuration screen
-                frame.getContentPane().removeAll();
-                frame.repaint();
-
-                // Sets the content to the configuration display screen
-                frame.getContentPane().add(createConfigurationDisplayPanel(),
-                        BorderLayout.CENTER);
-                frame.setVisible(true);
+                // Displays the configuration display screen
+                displayPanel(createConfigurationDisplayPanel());
             }
         });
         Components.addComponent(configPanel, confirm, 1, 11,
@@ -339,14 +336,8 @@ public class SpaceTrader {
         goBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Removes the content from the configuration screen
-                frame.getContentPane().removeAll();
-                frame.repaint();
-
-                // Sets the content to the configuration screen
-                frame.getContentPane().add(createConfigurationPanel(),
-                        BorderLayout.CENTER);
-                frame.setVisible(true);
+                // Displays the configuration screen
+                displayPanel(createConfigurationPanel());
             }
         });
         Components.addComponent(configDisplayPanel, goBack, 1, 12,
@@ -359,14 +350,8 @@ public class SpaceTrader {
                 // Starts the game
                 game.startGame();
 
-                // Removes the content from the configuration screen
-                frame.getContentPane().removeAll();
-                frame.repaint();
-
-                // Sets the content to the configuration display screen
-                frame.getContentPane().add(createRegionPanel(),
-                        BorderLayout.CENTER);
-                frame.setVisible(true);
+                // Displays the first region screen
+                displayPanel(createRegionPanel());
             }
         });
         Components.addComponent(configDisplayPanel, startGame, 3, 12,
@@ -427,19 +412,10 @@ public class SpaceTrader {
      */
     private void setDifficulty(Difficulty difficulty, JLabel availablePoints,
                                JLabel availableCredits, JLabel[] skills) {
-        if (difficulty == Difficulty.EASY) {
-            expendablePoints = 16;
-            expendableCredits = 1000;
-        } else if (difficulty == Difficulty.MEDIUM) {
-            expendablePoints = 12;
-            expendableCredits = 500;
-        } else if (difficulty == Difficulty.HARD) {
-            expendablePoints = 8;
-            expendableCredits = 100;
-        }
         this.difficulty = difficulty;
+        expendablePoints = Game.getSkillPoints(difficulty);
         availablePoints.setText("Points: " + expendablePoints);
-        availableCredits.setText("Credits: $" + expendableCredits);
+        availableCredits.setText("Credits: $" + Game.getCredits(difficulty));
         for (int i = 0; i < skillPoints.length; i++) {
             skillPoints[i] = 0;
             skills[i].setText(skills[i].getText().split(":")[0] + ": " + 0);

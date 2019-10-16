@@ -33,14 +33,7 @@ public class Game {
         this.gameDifficulty = gameDifficulty;
 
         // Sets the player's credits based on the game difficulty
-        switch (gameDifficulty) {
-            case EASY:
-                this.player.setCurrentCredits(1000);
-            case MEDIUM:
-                this.player.setCurrentCredits(500);
-            case HARD:
-                this.player.setCurrentCredits(100);
-        }
+        this.player.setCurrentCredits(Game.getCredits(gameDifficulty));
     }
 
     /**
@@ -106,6 +99,30 @@ public class Game {
 
     public int getCurrentCredits() {
         return player.getCurrentCredits();
+    }
+
+    public static int getSkillPoints(Difficulty difficulty) {
+        switch (difficulty) {
+            case EASY:
+                return 16;
+            case MEDIUM:
+                return 12;
+            case HARD:
+                return 8;
+        }
+        return 0;
+    }
+
+    public static int getCredits(Difficulty difficulty) {
+        switch (difficulty) {
+            case EASY:
+                return 1000;
+            case MEDIUM:
+                return 500;
+            case HARD:
+                return 100;
+        }
+        return 0;
     }
 
 }
