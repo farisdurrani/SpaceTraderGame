@@ -4,7 +4,7 @@ public class Player {
 
     private String name;
 
-    private int currentCredits;
+    private int credits;
 
     private int pilotPoints;
     private int fighterPoints;
@@ -20,53 +20,50 @@ public class Player {
         this.merchantPoints = merchantPoints;
         this.engineerPoints = engineerPoints;
 
-        this.currentCredits = 0;
+        this.credits = 0;
     }
 
     //<editor-fold desc="Getters and Setters">
 
     /**
-     * Public setter to set the players credits
-     * @param currentCredits credits
+     * Modify the player's credits
+     *
+     * @param newCredits credits to add to the player's credits
      */
-    public void setCurrentCredits(int currentCredits) {
-        this.currentCredits = currentCredits;
+    public void changeCredits(int newCredits) {
+        if (newCredits + credits >= 0) {
+            credits += newCredits;
+        } else {
+            credits = 0;
+        }
     }
 
     /**
-     * Public setter to set the players pilot points
-     *
-     * @param pilotPoints pilot points
+     * Add an additional skill point to the Pilot category
      */
-    public void setPilotPoints(int pilotPoints) {
-        this.pilotPoints = pilotPoints;
+    public void incrementPilotPoints() {
+        this.pilotPoints++;
     }
 
     /**
-     * Public setter to set the players fighter points
-     *
-     * @param fighterPoints fighter points
+     * Add an additional skill point to the Fighter category
      */
-    public void setFighterPoints(int fighterPoints) {
-        this.fighterPoints = fighterPoints;
+    public void setFighterPoints() {
+        this.fighterPoints++;
     }
 
     /**
-     * Public setter to set the players merchant points
-     *
-     * @param merchantPoints merchant points
+     * Add an additional skill point to the Merchant category
      */
-    public void setMerchantPoints(int merchantPoints) {
-        this.merchantPoints = merchantPoints;
+    public void setMerchantPoints() {
+        this.merchantPoints++;
     }
 
     /**
-     * Public setter to set the players engineer points
-     *
-     * @param engineerPoints engineer points
+     * Add an additional skill point to the Engineer category
      */
-    public void setEngineerPoints(int engineerPoints) {
-        this.engineerPoints = engineerPoints;
+    public void setEngineerPoints() {
+        this.engineerPoints++;
     }
 
     /**
@@ -81,8 +78,8 @@ public class Player {
      * Public getter that returns the current amount of credits
      * @return number of credits
      */
-    public int getCurrentCredits() {
-        return currentCredits;
+    public int getCredits() {
+        return credits;
     }
 
     /**

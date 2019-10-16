@@ -1,6 +1,5 @@
 package spacetrader.ui;
 
-import org.jetbrains.annotations.NotNull;
 import spacetrader.backend.*;
 import spacetrader.backend.locations.Coordinate;
 import spacetrader.backend.locations.Region;
@@ -312,8 +311,8 @@ public class SpaceTrader {
                 Components.createHeader2(game.getPlayerName(), Font.PLAIN), 3, 1,
                 new Insets(10, 0, 0, 10), 1, 1, GridBagConstraints.LINE_END);
         Components.addComponent(configDisplayPanel,
-                Components.createHeader2(game.getGameDifficulty().toString().charAt(0)
-                        + game.getGameDifficulty().toString().substring(1).toLowerCase(),
+                Components.createHeader2(game.getDifficulty().toString().charAt(0)
+                        + game.getDifficulty().toString().substring(1).toLowerCase(),
                         Font.PLAIN), 3, 2, new Insets(10, 0, 0, 10), 1, 1,
                 GridBagConstraints.LINE_END);
         Components.addComponent(configDisplayPanel, Components.createHeader2("Pilot: "
@@ -329,7 +328,7 @@ public class SpaceTrader {
                         + game.getEngineerPoints(), Font.PLAIN), 3, 6, new Insets(2, 0, 0, 10),
                 1, 1, GridBagConstraints.LINE_END);
         Components.addComponent(configDisplayPanel, Components.createHeader2("$"
-                        + game.getCurrentCredits(), Font.PLAIN), 3, 7, new Insets(10, 0, 0, 10),
+                        + game.getCredits(), Font.PLAIN), 3, 7, new Insets(10, 0, 0, 10),
                 1, 1, GridBagConstraints.LINE_END);
 
         JButton goBack = Components.createButton("GO BACK");

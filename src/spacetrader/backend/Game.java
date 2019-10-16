@@ -6,7 +6,7 @@ import spacetrader.backend.player.Player;
 
 public class Game {
     private Player player;
-    private Difficulty gameDifficulty;
+    private Difficulty difficulty;
     private Universe universe;
     private String[] regionNames =
     {
@@ -26,14 +26,14 @@ public class Game {
      * Creates a new game object with the selected game difficulty
      *
      * @param player the player of the game
-     * @param gameDifficulty the game difficulty
+     * @param difficulty the game difficulty
      */
-    public Game(Player player, Difficulty gameDifficulty) {
+    public Game(Player player, Difficulty difficulty) {
         this.player = player;
-        this.gameDifficulty = gameDifficulty;
+        this.difficulty = difficulty;
 
         // Sets the player's credits based on the game difficulty
-        this.player.setCurrentCredits(Game.getCredits(gameDifficulty));
+        this.player.changeCredits(Game.getCredits(difficulty));
     }
 
     /**
@@ -41,8 +41,8 @@ public class Game {
      *
      * @return the game difficulty
      */
-    public Difficulty getGameDifficulty() {
-        return gameDifficulty;
+    public Difficulty getDifficulty() {
+        return difficulty;
     }
 
     /**
@@ -97,8 +97,8 @@ public class Game {
         return player.getEngineerPoints();
     }
 
-    public int getCurrentCredits() {
-        return player.getCurrentCredits();
+    public int getCredits() {
+        return player.getCredits();
     }
 
     public static int getSkillPoints(Difficulty difficulty) {

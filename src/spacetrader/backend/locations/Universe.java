@@ -25,8 +25,8 @@ public class Universe {
             }
 
             // Gets a random tech level for each region
-            TechLevel techLevel = TechLevel.values()[(int)
-                    (Math.random() * TechLevel.values().length)];
+            TechLevel techLevel = TechLevel.values()[(int) (Math.random()
+                    * TechLevel.values().length)];
 
             regions[i] = new Region(regionNames[i], coordinate, techLevel);
         }
