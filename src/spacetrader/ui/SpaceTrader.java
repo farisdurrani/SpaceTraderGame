@@ -129,14 +129,10 @@ public class SpaceTrader {
         // Initializes the configuration values
         expendablePoints = 0;
         skillPoints = new int[4];
-        for (int i = 0; i < skillPoints.length; i++) {
-            skillPoints[i] = 0;
-        }
 
         // Creates and adds the label that displays the credits the player will
         // receive
-        JLabel availableCredits = Components.createHeader2("Credits: $"
-                + Game.getCredits(difficulty));
+        JLabel availableCredits = Components.createHeader2("Credits: $0");
         Components.addComponent(configPanel, availableCredits, 1, 4,
                 new Insets(30, 10, 10, 10));
 
