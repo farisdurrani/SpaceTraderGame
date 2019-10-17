@@ -1,15 +1,12 @@
 package spacetrader.ui;
 
 import spacetrader.backend.Game;
-import spacetrader.backend.locations.Region;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Components {
 
@@ -254,13 +251,19 @@ public class Components {
 
         addComponent(regionPanel, createHeader1("Region"), 0, 0, new Insets(0, 0, 20, 0), 2, 1);
 
-        addComponent(regionPanel, createHeader2("Name:"), 0, 1, new Insets(10, 0, 0, 10), GridBagConstraints.LINE_START);
-        addComponent(regionPanel, createHeader2("Tech Level:"), 0, 2, new Insets(10, 0, 0, 10), GridBagConstraints.LINE_START);
-        addComponent(regionPanel, createHeader2("Location:"), 0, 3, new Insets(10, 0, 0, 10), GridBagConstraints.LINE_START);
+        addComponent(regionPanel, createHeader2("Name:"), 0, 1, new Insets(10, 0, 0, 10),
+                GridBagConstraints.LINE_START);
+        addComponent(regionPanel, createHeader2("Tech Level:"), 0, 2, new Insets(10, 0, 0, 10),
+                GridBagConstraints.LINE_START);
+        addComponent(regionPanel, createHeader2("Location:"), 0, 3, new Insets(10, 0, 0, 10),
+                GridBagConstraints.LINE_START);
 
-        addComponent(regionPanel, createHeader2(game.getCurrentRegion().getName(), Font.PLAIN), 1, 1, new Insets(10, 0, 0, 10), GridBagConstraints.LINE_END);
-        addComponent(regionPanel, createHeader2(game.getCurrentRegion().getTechLevel().toString(), Font.PLAIN), 1, 2, new Insets(10, 0, 0, 10), GridBagConstraints.LINE_END);
-        addComponent(regionPanel, createHeader2(game.getCurrentRegion().getCoordinate().toString(), Font.PLAIN), 1, 3, new Insets(10, 0, 0, 10), GridBagConstraints.LINE_END);
+        addComponent(regionPanel, createHeader2(game.getCurrentRegion().getName(), Font.PLAIN),
+                1, 1, new Insets(10, 0, 0, 10), GridBagConstraints.LINE_END);
+        addComponent(regionPanel, createHeader2(game.getCurrentRegion().getTechLevel().toString(),
+                Font.PLAIN), 1, 2, new Insets(10, 0, 0, 10), GridBagConstraints.LINE_END);
+        addComponent(regionPanel, createHeader2(game.getCurrentRegion().getCoordinate().toString(),
+                Font.PLAIN), 1, 3, new Insets(10, 0, 0, 10), GridBagConstraints.LINE_END);
 
         return regionPanel;
     }
@@ -271,15 +274,23 @@ public class Components {
 
         addComponent(gamePanel, createHeader1("Ship"), 0, 0, new Insets(0, 0, 20, 0), 2, 1);
 
-        addComponent(gamePanel, createHeader2("Type:"), 0, 1, new Insets(10, 0, 0, 10), GridBagConstraints.LINE_START);
-        addComponent(gamePanel, createHeader2("Fuel:"), 0, 2, new Insets(10, 0, 0, 10), GridBagConstraints.LINE_START);
-        addComponent(gamePanel, createHeader2("Health:"), 0, 3, new Insets(10, 0, 0, 10), GridBagConstraints.LINE_START);
-        addComponent(gamePanel, createHeader2("Capacity:"), 0, 4, new Insets(10, 0, 0, 10), GridBagConstraints.LINE_START);
+        addComponent(gamePanel, createHeader2("Type:"), 0, 1,
+                new Insets(10, 0, 0, 10), GridBagConstraints.LINE_START);
+        addComponent(gamePanel, createHeader2("Fuel:"), 0, 2,
+                new Insets(10, 0, 0, 10), GridBagConstraints.LINE_START);
+        addComponent(gamePanel, createHeader2("Health:"), 0, 3,
+                new Insets(10, 0, 0, 10), GridBagConstraints.LINE_START);
+        addComponent(gamePanel, createHeader2("Capacity:"), 0, 4,
+                new Insets(10, 0, 0, 10), GridBagConstraints.LINE_START);
 
-        addComponent(gamePanel, createHeader2(game.getShipType(), Font.PLAIN), 1, 1, new Insets(10, 0, 0, 10), GridBagConstraints.LINE_END);
-        addComponent(gamePanel, createHeader2(game.getFuel(), Font.PLAIN), 1, 2, new Insets(10, 0, 0, 10), GridBagConstraints.LINE_END);
-        addComponent(gamePanel, createHeader2(game.getHealth(), Font.PLAIN), 1, 3, new Insets(10, 0, 0, 10), GridBagConstraints.LINE_END);
-        addComponent(gamePanel, createHeader2(game.getCapacity(), Font.PLAIN), 1, 4, new Insets(10, 0, 0, 10), GridBagConstraints.LINE_END);
+        addComponent(gamePanel, createHeader2(game.getShipType(), Font.PLAIN), 1, 1,
+                new Insets(10, 0, 0, 10), GridBagConstraints.LINE_END);
+        addComponent(gamePanel, createHeader2(game.getFuel(), Font.PLAIN), 1, 2,
+                new Insets(10, 0, 0, 10), GridBagConstraints.LINE_END);
+        addComponent(gamePanel, createHeader2(game.getHealth(), Font.PLAIN), 1, 3,
+                new Insets(10, 0, 0, 10), GridBagConstraints.LINE_END);
+        addComponent(gamePanel, createHeader2(game.getCapacity(), Font.PLAIN), 1, 4,
+                new Insets(10, 0, 0, 10), GridBagConstraints.LINE_END);
 
         return gamePanel;
     }

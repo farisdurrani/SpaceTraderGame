@@ -1,7 +1,6 @@
 package spacetrader.ui;
 
 import spacetrader.backend.*;
-import spacetrader.backend.locations.Coordinate;
 import spacetrader.backend.locations.Region;
 import spacetrader.backend.player.Player;
 
@@ -272,7 +271,8 @@ public class SpaceTrader {
         configDisplayPanel.setLayout(new GridBagLayout());
 
         // Creates and adds the configuration display header to the panel
-        Components.addComponent(configDisplayPanel, Components.createPlayerPanel(game), 0, 0, new Insets(0, 0, 20, 0), 2, 1);
+        Components.addComponent(configDisplayPanel, Components.createPlayerPanel(game), 0, 0,
+                new Insets(0, 0, 20, 0), 2, 1);
 
         JButton goBack = Components.createButton("GO BACK");
         goBack.addActionListener(new ActionListener() {
@@ -314,12 +314,14 @@ public class SpaceTrader {
         Region[] regions = game.getRegions();
         Region currentRegion = game.getCurrentRegion();
 
-        Components.addComponent(regionPanel, Components.createPlayerPanel(game), 0, 0, new Insets(0, 0, 20, 10), 1, 1, GridBagConstraints.PAGE_START);
+        Components.addComponent(regionPanel, Components.createPlayerPanel(game), 0, 0,
+                new Insets(0, 0, 20, 10), 1, 1, GridBagConstraints.PAGE_START);
 
         Components.addComponent(regionPanel, Components.createRegionPanel(game), 1, 0,
                 new Insets(0, 10, 20, 10), 1, 1, GridBagConstraints.PAGE_START);
 
-        Components.addComponent(regionPanel, Components.createShipPanel(game), 2, 0, new Insets(0, 10, 20, 0), 1, 1, GridBagConstraints.PAGE_START);
+        Components.addComponent(regionPanel, Components.createShipPanel(game), 2, 0,
+                new Insets(0, 10, 20, 0), 1, 1, GridBagConstraints.PAGE_START);
 
         Components.addComponent(regionPanel, Components.createButton("Market"), 0, 1,
                 new Insets(30, 0, 0, 0), 1, 1);
@@ -350,7 +352,8 @@ public class SpaceTrader {
         Components.addComponent(regionPanel, Components.createRegionPanel(game), 0, 0,
                 new Insets(0, 0, 0, 10), GridBagConstraints.PAGE_START);
 
-        Components.addComponent(regionPanel, Components.createShipPanel(game), 1, 0, new Insets(0, 10, 0, 10), 1, 1, GridBagConstraints.PAGE_START);
+        Components.addComponent(regionPanel, Components.createShipPanel(game), 1, 0,
+                new Insets(0, 10, 0, 10), 1, 1, GridBagConstraints.PAGE_START);
 
         JPanel travelPanel = new JPanel();
         travelPanel.setLayout(new GridBagLayout());
@@ -373,7 +376,8 @@ public class SpaceTrader {
                             displayPanel(createMainGamePanel());
                         } else {
                             // Displays an error message
-                            Components.addComponent(regionPanel, notEnoughFuelError, 1, 1, new Insets(30, 0, 0, 0));
+                            Components.addComponent(regionPanel, notEnoughFuelError, 1, 1,
+                                    new Insets(30, 0, 0, 0));
                             displayPanel(regionPanel);
                         }
                     }
@@ -382,7 +386,8 @@ public class SpaceTrader {
             }
         }
 
-        Components.addComponent(regionPanel, travelPanel, 2, 0, new Insets(0, 10, 0, 0), GridBagConstraints.PAGE_START);
+        Components.addComponent(regionPanel, travelPanel, 2, 0, new Insets(0, 10, 0, 0),
+                GridBagConstraints.PAGE_START);
 
         return regionPanel;
     }
