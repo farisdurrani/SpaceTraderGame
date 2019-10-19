@@ -275,44 +275,8 @@ public class SpaceTrader {
         configDisplayPanel.setLayout(new GridBagLayout());
 
         // Creates and adds the configuration display header to the panel
-        Components.addComponent(configDisplayPanel,
-                Components.createHeader1("Player Configuration"), 2, 0,
+        Components.addComponent(configDisplayPanel, Components.createPlayerPanel(game), 0, 0,
                 new Insets(0, 0, 20, 0), 2, 1);
-
-        // Creates and adds the configuration labels to the panel
-        Components.addComponent(configDisplayPanel, Components.createHeader2("Name:"),
-                2, 1, new Insets(10, 0, 0, 10), 1, 1, GridBagConstraints.LINE_START);
-        Components.addComponent(configDisplayPanel, Components.createHeader2("Difficulty:"),
-                2, 2, new Insets(10, 0, 0, 10), 1, 1, GridBagConstraints.LINE_START);
-        Components.addComponent(configDisplayPanel, Components.createHeader2("Skill Points:"),
-                2, 4, new Insets(10, 0, 0, 10), 1, 2, GridBagConstraints.LINE_START);
-        Components.addComponent(configDisplayPanel, Components.createHeader2("Credits:"),
-                2, 7, new Insets(10, 0, 0, 10), 1, 1, GridBagConstraints.LINE_START);
-
-        // Creates and adds the configuration values to the panel
-        Components.addComponent(configDisplayPanel,
-                Components.createHeader2(game.getPlayerName(), Font.PLAIN), 3, 1,
-                new Insets(10, 0, 0, 10), 1, 1, GridBagConstraints.LINE_END);
-        Components.addComponent(configDisplayPanel,
-                Components.createHeader2(game.getDifficulty().toString().charAt(0)
-                        + game.getDifficulty().toString().substring(1).toLowerCase(),
-                        Font.PLAIN), 3, 2, new Insets(10, 0, 0, 10), 1, 1,
-                GridBagConstraints.LINE_END);
-        Components.addComponent(configDisplayPanel, Components.createHeader2("Pilot: "
-                        + game.getPilotPoints(), Font.PLAIN), 3, 3, new Insets(10, 0, 0, 10),
-                1, 1, GridBagConstraints.LINE_END);
-        Components.addComponent(configDisplayPanel, Components.createHeader2("Fighter: "
-                        + game.getFighterPoints(), Font.PLAIN), 3, 4, new Insets(2, 0, 0, 10),
-                1, 1, GridBagConstraints.LINE_END);
-        Components.addComponent(configDisplayPanel, Components.createHeader2("Merchant: "
-                        + game.getMerchantPoints(), Font.PLAIN), 3, 5, new Insets(2, 0, 0, 10),
-                1, 1, GridBagConstraints.LINE_END);
-        Components.addComponent(configDisplayPanel, Components.createHeader2("Engineer: "
-                        + game.getEngineerPoints(), Font.PLAIN), 3, 6, new Insets(2, 0, 0, 10),
-                1, 1, GridBagConstraints.LINE_END);
-        Components.addComponent(configDisplayPanel, Components.createHeader2("$"
-                        + game.getCredits(), Font.PLAIN), 3, 7, new Insets(10, 0, 0, 10),
-                1, 1, GridBagConstraints.LINE_END);
 
         JButton goBack = Components.createButton("GO BACK");
         goBack.addActionListener(new ActionListener() {
@@ -322,8 +286,8 @@ public class SpaceTrader {
                 displayPanel(createConfigurationPanel());
             }
         });
-        Components.addComponent(configDisplayPanel, goBack, 1, 12,
-                new Insets(30, 1, 10, 10), 2, 1);
+        Components.addComponent(configDisplayPanel, goBack, 0, 1,
+                new Insets(30, 1, 10, 10));
 
         JButton startGame = Components.createButton("START GAME");
         startGame.addActionListener(new ActionListener() {
@@ -333,11 +297,11 @@ public class SpaceTrader {
                 game.startGame();
 
                 // Displays the first region screen
-                displayPanel(createRegionPanel());
+                displayPanel(createMainGamePanel());
             }
         });
-        Components.addComponent(configDisplayPanel, startGame, 3, 12,
-                new Insets(30, 10, 10, 30), 2, 1);
+        Components.addComponent(configDisplayPanel, startGame, 1, 1,
+                new Insets(30, 10, 10, 30));
 
         return configDisplayPanel;
     }
@@ -347,81 +311,87 @@ public class SpaceTrader {
      *
      * @return the region panel for the current region
      */
-    private JPanel createRegionPanel() {
+    private JPanel createMainGamePanel() {
         JPanel regionPanel = new JPanel();
         regionPanel.setLayout(new GridBagLayout());
 
         Region[] regions = game.getRegions();
         Region currentRegion = game.getCurrentRegion();
 
-        Components.addComponent(regionPanel, Components.createHeader1("Ship"),
-                2, 0, new Insets(0, 0, 30, 0),
-                2, 1);
-        Components.addComponent(regionPanel, Components.createHeader2("Fuel: "
-                        + game.getPlayer().getShip().getCurrentFuel()
-                        + "/" + game.getPlayer().getShip().getMaxFuelCapacity())
-                , 2, 1,
-                new Insets(0, 0, 0, 0),
-                2, 1);
-        Components.addComponent(regionPanel, Components.createHeader2(
-                "Credits: $" + game.getCredits()), 2, 2,
-                new Insets(0, 0, 0, 0),
-                2, 1);
-        Components.addComponent(regionPanel, Components.createHeader2(
-                "Cargo Usage: "
-                        + game.getPlayer().getShip().getCurrentUsedSpace()
-                        + "/" + game.getPlayer().getShip().getMaxCargoSpace())
-                , 2, 3,
-                new Insets(0, 0, 0, 0),
-                2, 1);
+        Components.addComponent(regionPanel, Components.createPlayerPanel(game), 0, 0,
+                new Insets(0, 0, 20, 10), 1, 1, GridBagConstraints.PAGE_START);
 
-        Components.addComponent(regionPanel,
-                Components.createRegion(currentRegion), 5, 0,
-                new Insets(0, 0, 20, 0), 2, 5);
+        Components.addComponent(regionPanel, Components.createRegionPanel(game), 1, 0,
+                new Insets(0, 10, 20, 10), 1, 1, GridBagConstraints.PAGE_START);
 
+        Components.addComponent(regionPanel, Components.createShipPanel(game), 2, 0,
+                new Insets(0, 10, 20, 0), 1, 1, GridBagConstraints.PAGE_START);
 
-        // Button to go to Market
-        JButton market = Components.createButton("Market");
-        market.addActionListener(new ActionListener() {
+        Components.addComponent(regionPanel, Components.createButton("Market"), 0, 1,
+                new Insets(30, 0, 0, 0), 1, 1);
+        Components.addComponent(regionPanel, Components.createButton("Inventory"), 1, 1,
+                new Insets(30, 0, 0, 0), 1, 1);
+
+        JButton travelButton = Components.createButton("Travel");
+        travelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // go to Market
-                displayPanel(createMarketPanel());
+                // Displays the travel screen
+                displayPanel(createTravelPanel());
             }
         });
-        Components.addComponent(regionPanel,
-                market, 5, 2,
-                new Insets(10,0,20,0),2, 0);
+        Components.addComponent(regionPanel, travelButton, 2, 1,
+                new Insets(30, 0, 0, 0), 1, 1);
 
-        Components.addComponent(regionPanel, Components.createHeader1(
-                "Select Region to Travel To:"), 0, 6,
-                new Insets(40, 0, 10, 0), 9, 1);
+        return regionPanel;
+    }
 
-        int i = 0;
-        for (Region region : regions) {
-            if (region != currentRegion) {
-                JButton regionButton = Components.createButton(region.getName() + " ("
-                        + (int) (Coordinate.distance(region.getCoordinate(),
-                        currentRegion.getCoordinate())) + ")");
+    private JPanel createTravelPanel() {
+        JPanel regionPanel = new JPanel();
+        regionPanel.setLayout(new GridBagLayout());
+
+        Region[] regions = game.getRegions();
+        Region currentRegion = game.getCurrentRegion();
+
+        Components.addComponent(regionPanel, Components.createRegionPanel(game), 0, 0,
+                new Insets(0, 0, 0, 10), GridBagConstraints.PAGE_START);
+
+        Components.addComponent(regionPanel, Components.createShipPanel(game), 1, 0,
+                new Insets(0, 10, 0, 10), 1, 1, GridBagConstraints.PAGE_START);
+
+        JPanel travelPanel = new JPanel();
+        travelPanel.setLayout(new GridBagLayout());
+
+        JLabel notEnoughFuelError = Components.createError("Not Enough Fuel!");
+
+        Components.addComponent(travelPanel, Components.createHeader1("Travel To:"), 0, 0,
+                new Insets(0, 0, 10, 0));
+        int i = 1;
+        for (Region region : game.getRegions()) {
+            if (region != game.getCurrentRegion()) {
+                JButton regionButton = Components.createButton(region.getName() + " (Fuel Cost: "
+                        + game.getFuelCost(region) + ")");
                 regionButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         // Moves to a new region
-                        game.goToRegion(region);
-
-                        // Displays the next region screen
-                        displayPanel(createRegionPanel());
+                        if (game.goToRegion(region)) {
+                            // Displays the next region screen
+                            displayPanel(createMainGamePanel());
+                        } else {
+                            // Displays an error message
+                            Components.addComponent(regionPanel, notEnoughFuelError, 1, 1,
+                                    new Insets(30, 0, 0, 0));
+                            displayPanel(regionPanel);
+                        }
                     }
                 });
-                Components.addComponent(regionPanel, regionButton, i++, 7,
-                        new Insets(0, 5, 0, 5));
+                Components.addComponent(travelPanel, regionButton, 0, i++, new Insets(5, 0, 5, 0));
             }
-
-            game.setCurrentRegion(currentRegion);
-            game.setRegions(regions);
-
         }
 
+        Components.addComponent(regionPanel, travelPanel, 2, 0, new Insets(0, 10, 0, 0),
+                GridBagConstraints.PAGE_START);
 
         return regionPanel;
     }

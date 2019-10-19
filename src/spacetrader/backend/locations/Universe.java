@@ -1,7 +1,5 @@
 package spacetrader.backend.locations;
 
-import java.util.Arrays;
-
 public class Universe {
     private Region[] regions;
     private int currentRegionIndex;

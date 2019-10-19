@@ -87,6 +87,14 @@ public class Game {
         return universe.getCurrentRegion();
     }
 
+    public int getDistance(Region region) {
+        return (int) universe.getDistance(region);
+    }
+
+    public int getFuelCost(Region region) {
+        return (int) (getDistance(region) * Math.pow(0.9, player.getPilotPoints()));
+    }
+
     /**
      * Moves the player to a new region if they have enough fuel to get there
      *
@@ -94,12 +102,11 @@ public class Game {
      * @return true if the player successfully travels to the given region, false otherwise
      */
     public boolean goToRegion(Region region) {
-        double distance = universe.getDistance(region);
-        if (distance < 0) {
+        int fuelCost = getFuelCost(region);
+        if (fuelCost < 0) {
             return false;
         }
 
-        int fuelCost = (int) (distance * Math.pow(0.9, player.getPilotPoints()));
         if (player.getShip().getCurrentFuel() >= fuelCost) {
             player.getShip().alterCurrentFuel(-1 * fuelCost);
             return universe.goToRegion(region);
@@ -159,6 +166,22 @@ public class Game {
      */
     public int getCredits() {
         return player.getCredits();
+    }
+
+    public String getFuel() {
+        return player.getShip().getCurrentFuel() + "/" + player.getShip().getMaxFuelCapacity();
+    }
+
+    public String getHealth() {
+        return player.getShip().getCurrentHealth() + "/" + player.getShip().getMaxHealth();
+    }
+
+    public String getCapacity() {
+        return player.getShip().getCurrentUsedSpace() + "/" + player.getShip().getMaxCargoSpace();
+    }
+
+    public String getShipType() {
+        return player.getShip().getType();
     }
 
     /**

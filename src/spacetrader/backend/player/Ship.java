@@ -28,26 +28,31 @@ public class Ship {
             maxCargoSpace = 100;
             maxFuelCapacity = 100;
             maxHealth = 50;
+            type = "Starter";
             break;
         case STARSHIP:
             maxCargoSpace = 500;
             maxFuelCapacity = 500;
             maxHealth = 500;
+            type = "Starship";
             break;
         case JET:
             maxCargoSpace = 100;
             maxFuelCapacity = 100;
             maxHealth = 100;
+            type = "Jet";
             break;
         case WASP:
             maxCargoSpace = 100;
             maxFuelCapacity = 200;
             maxHealth = 50;
+            type = "Wasp";
             break;
         case LADYBUG:
             maxCargoSpace = 200;
             maxFuelCapacity = 50;
             maxHealth = 150;
+            type = "Ladybug";
             break;
         default:
             maxCargoSpace = 0;
@@ -75,12 +80,20 @@ public class Ship {
         return currentFuel;
     }
 
+    public int getMaxFuelCapacity() {
+        return maxFuelCapacity;
+    }
+
     /**
      * Maximum Fuel Capacity getter function
      * @return maximum fuel capacity as an int
      */
     public int getMaxFuelCapacity() {
         return maxFuelCapacity;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
     }
 
     /**
@@ -97,6 +110,14 @@ public class Ship {
      */
     public int getCurrentHealth() {
         return currentHealth;
+    }
+
+    public int getMaxCargoSpace() {
+        return maxCargoSpace;
+    }
+
+    public String getType() {
+        return type;
     }
 
     /**
