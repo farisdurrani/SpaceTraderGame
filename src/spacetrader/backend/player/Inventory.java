@@ -36,8 +36,9 @@ public class Inventory {
         if (item.getSize() * quantity + usedSpace <= size) {
             if (items.containsKey(item.getOfficialItemName())) {
                 items.put(item.getOfficialItemName(), items.get(item.getOfficialItemName()) + quantity);
+            } else {
+                items.put(item.getOfficialItemName(), quantity);
             }
-            items.put(item.getOfficialItemName(), quantity);
             usedSpace += item.getSize() * quantity;
             return true;
         }

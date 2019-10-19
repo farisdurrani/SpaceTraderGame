@@ -200,7 +200,7 @@ public class Game {
 
     public boolean buyItem(MarketItem item, int quantity) {
         int cost = getCost(item) * quantity;
-        if (cost < player.getCredits() && player.getShip().addItem(item, quantity)) {
+        if (cost <= player.getCredits() && player.getShip().addItem(item, quantity)) {
             player.changeCredits(-1 * cost);
             return true;
         }

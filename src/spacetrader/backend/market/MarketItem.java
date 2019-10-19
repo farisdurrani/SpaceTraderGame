@@ -28,6 +28,7 @@ public class MarketItem {
      * @param good the name of the market item to create
      **/
     MarketItem(MarketGoods good) {
+        size = 1;
         switch (good) {
             case FOOD:
                 officialItemName = "Food";
@@ -148,6 +149,7 @@ public class MarketItem {
     private void createPossibleTechLevels(boolean pre_ag, boolean agriculture, boolean medieval,
                                           boolean renaissance, boolean industrial, boolean modern,
                                           boolean futuristic) {
+        possibleTechLevels = new boolean[7];
         possibleTechLevels[0] = pre_ag;
         possibleTechLevels[1] = agriculture;
         possibleTechLevels[2] = medieval;

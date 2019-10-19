@@ -130,6 +130,9 @@ public class Ship {
     }
 
     public int getCurrentCount(MarketItem item) {
+        if (item.getOfficialItemName().equals("Fuel")) {
+            return currentFuel;
+        }
         return inventory.getCurrentCount(item);
     }
 
