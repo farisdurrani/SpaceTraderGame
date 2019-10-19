@@ -53,7 +53,11 @@ public class Inventory {
     public boolean removeItem(MarketItem item, int quantity) {
         if (items.containsKey(item.getOfficialItemName())
                 && items.get(item.getOfficialItemName()) >= quantity) {
-            items.put(item.getOfficialItemName(), items.get(item.getOfficialItemName()) - quantity);
+            if (items.get(item.getOfficialItemName()) - quantity == 0) {
+                items.remove(item.getOfficialItemName());
+            } else {
+                items.put(item.getOfficialItemName(), items.get(item.getOfficialItemName()) - quantity);
+            }
             usedSpace -= item.getSize() * quantity;
             return true;
         }
