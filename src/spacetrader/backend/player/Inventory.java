@@ -32,6 +32,10 @@ public class Inventory {
         return 0;
     }
 
+    public HashMap<String, Integer> getItems() {
+        return items;
+    }
+
     public boolean addItem(MarketItem item, int quantity) {
         if (item.getSize() * quantity + usedSpace <= size) {
             if (items.containsKey(item.getOfficialItemName())) {

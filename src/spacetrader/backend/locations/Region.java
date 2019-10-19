@@ -64,7 +64,7 @@ public class Region {
 
     public Market getMarket() {
         if (market == null) {
-            market = new Market(this);
+            market = new Market(techLevel);
         }
         return market;
     }

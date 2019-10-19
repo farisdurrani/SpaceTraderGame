@@ -2,6 +2,8 @@ package spacetrader.backend.player;
 
 import spacetrader.backend.market.MarketItem;
 
+import java.util.HashMap;
+
 public class Ship {
     private String type;
     private Inventory inventory;
@@ -134,6 +136,10 @@ public class Ship {
             return currentFuel;
         }
         return inventory.getCurrentCount(item);
+    }
+
+    public HashMap<String, Integer> getInventoryItems() {
+        return inventory.getItems();
     }
 
     public boolean addItem(MarketItem item, int quantity) {

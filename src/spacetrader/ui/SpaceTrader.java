@@ -336,7 +336,15 @@ public class SpaceTrader {
         Components.addComponent(regionPanel, marketButton, 0, 1,
                 new Insets(30, 0, 0, 0), 1, 1);
 
-        Components.addComponent(regionPanel, Components.createButton("Inventory"), 1, 1,
+        JButton inventoryButton = Components.createButton("Inventory");
+        inventoryButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Displays the inventory screen
+                displayPanel(createInventoryPanel());
+            }
+        });
+        Components.addComponent(regionPanel, inventoryButton, 1, 1,
                 new Insets(30, 0, 0, 0), 1, 1);
 
         JButton travelButton = Components.createButton("Travel");
@@ -429,9 +437,9 @@ public class SpaceTrader {
                 new Insets(0, 0, 20, 10), 2, 1, GridBagConstraints.PAGE_START);
 
         Components.addComponent(marketPanel, Components.createRegionPanel(game), 2, 0,
-                new Insets(0, 0, 20, 10), 2, 1, GridBagConstraints.PAGE_START);
+                new Insets(0, 0, 20, 10), 3, 1, GridBagConstraints.PAGE_START);
 
-        Components.addComponent(marketPanel, Components.createShipPanel(game), 4, 0,
+        Components.addComponent(marketPanel, Components.createShipPanel(game), 5, 0,
                 new Insets(0, 10, 20, 0), 2, 1, GridBagConstraints.PAGE_START);
 
         int y = 1;
@@ -450,7 +458,7 @@ public class SpaceTrader {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (game.buyItem(marketItem, 1)) {
-                       displayPanel(createMarketPanel());
+                        displayPanel(createMarketPanel());
                     }
                 }
             });
@@ -506,6 +514,46 @@ public class SpaceTrader {
 
         return marketPanel;
     }
+
+    /**
+     * Creates the market panel for the current region displaying items to
+     * buy / sell
+     *
+     * @return the market panel for the current region
+     */
+    private JPanel createInventoryPanel() {
+        JPanel inventoryPanel = new JPanel();
+        inventoryPanel.setLayout(new GridBagLayout());
+
+        Components.addComponent(inventoryPanel, Components.createPlayerPanel(game), 0, 0,
+                new Insets(0, 0, 20, 10), 1, 1, GridBagConstraints.PAGE_START);
+
+        Components.addComponent(inventoryPanel, Components.createRegionPanel(game), 1, 0,
+                new Insets(0, 0, 20, 10), 1, 1, GridBagConstraints.PAGE_START);
+
+        Components.addComponent(inventoryPanel, Components.createShipPanel(game), 2, 0,
+                new Insets(0, 10, 20, 0), 1, 1, GridBagConstraints.PAGE_START);
+
+        int y = 1;
+        for (String item : game.getInventoryItems().keySet()) {
+            Components.addComponent(inventoryPanel, Components.createHeader2(item + ": "
+                    + game.getInventoryItems().get(item)), 0, y, new Insets(0, 0, 0, 0), 3, 1);
+            y++;
+        }
+
+        JButton backButton = Components.createButton("BACK");
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Displays the region screen
+                displayPanel(createMainGamePanel());
+            }
+        });
+        Components.addComponent(inventoryPanel, backButton, 3, y, new Insets(30, 0, 0, 0), 2, 1);
+
+        return inventoryPanel;
+    }
+
     /**
      * Sets the difficulty and updates all necessary values and labels.
      *

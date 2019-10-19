@@ -6,6 +6,8 @@ import spacetrader.backend.locations.Universe;
 import spacetrader.backend.market.MarketItem;
 import spacetrader.backend.player.Player;
 
+import java.util.HashMap;
+
 public class Game {
     private Player player;
     private Difficulty difficulty;
@@ -196,6 +198,10 @@ public class Game {
 
     public int getCurrentCount(MarketItem item) {
         return player.getShip().getCurrentCount(item);
+    }
+
+    public HashMap<String, Integer> getInventoryItems() {
+        return player.getShip().getInventoryItems();
     }
 
     public boolean buyItem(MarketItem item, int quantity) {

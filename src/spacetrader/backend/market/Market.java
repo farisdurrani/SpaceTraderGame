@@ -27,35 +27,34 @@ public class Market {
     /**
      * Creates a Market object based on the current region's tech level.
      *
-     * @param region the region the player is currently in
+     * @param techLevel the tech level of the region the player is currently in
      * */
-    public Market(Region region) {
-        TechLevel techlevel = region.getTechLevel();
-        if (techlevel.equals(TechLevel.PRE_AG)) {
+    public Market(TechLevel techLevel) {
+        if (techLevel.equals(TechLevel.PRE_AG)) {
             regionPriceMultiplier = 0.4;
             techLevelIndex = 0;
             addMarketItems();
-        } else if (techlevel.equals(TechLevel.AGRICULTURE)) {
+        } else if (techLevel.equals(TechLevel.AGRICULTURE)) {
             regionPriceMultiplier = 0.5;
             techLevelIndex = 1;
             addMarketItems();
-        } else if (techlevel.equals(TechLevel.MEDIEVAL)) {
+        } else if (techLevel.equals(TechLevel.MEDIEVAL)) {
             regionPriceMultiplier = 0.6;
             techLevelIndex = 2;
             addMarketItems();
-        } else if (techlevel.equals(TechLevel.RENAISSANCE)) {
+        } else if (techLevel.equals(TechLevel.RENAISSANCE)) {
             regionPriceMultiplier = 0.7;
             techLevelIndex = 3;
             addMarketItems();
-        } else if (techlevel.equals(TechLevel.INDUSTRIAL)) {
+        } else if (techLevel.equals(TechLevel.INDUSTRIAL)) {
             regionPriceMultiplier = 0.8;
             techLevelIndex = 4;
             addMarketItems();
-        } else if (techlevel.equals(TechLevel.MODERN)) {
+        } else if (techLevel.equals(TechLevel.MODERN)) {
             regionPriceMultiplier = 0.9;
             techLevelIndex = 5;
             addMarketItems();
-        } else if (techlevel.equals(TechLevel.FUTURISTIC)) {
+        } else if (techLevel.equals(TechLevel.FUTURISTIC)) {
             regionPriceMultiplier = 1.0;
             techLevelIndex = 6;
             addMarketItems();
