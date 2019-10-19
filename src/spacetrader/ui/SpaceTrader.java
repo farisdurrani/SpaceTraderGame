@@ -445,13 +445,15 @@ public class SpaceTrader {
         int y = 1;
         for (MarketItem marketItem : currentMarket.getMarketItemsInRegion()) {
 
-            JLabel inventoryOfItem = Components.createHeader2("Inventory: " + game.getCurrentCount(marketItem));
+            JLabel inventoryOfItem = Components.createHeader2("Inventory: "
+                    + game.getCurrentCount(marketItem));
 
             Components.addComponent(marketPanel,
                     Components.createHeader2(marketItem.getOfficialItemName()), 0, y,
                     new Insets(0, 0, 0, 5));
             int itemPrice = game.getCost(marketItem);
-            Components.addComponent(marketPanel, Components.createHeader2("$" + itemPrice), 1, y, new Insets(0, 5, 0, 5));
+            Components.addComponent(marketPanel, Components.createHeader2("$" + itemPrice),
+                    1, y, new Insets(0, 5, 0, 5));
 
             JButton buy1 = Components.createButton("Buy 1");
             buy1.addActionListener(new ActionListener() {

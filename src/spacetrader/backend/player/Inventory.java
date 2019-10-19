@@ -11,7 +11,7 @@ public class Inventory {
     private int usedSpace;
     private HashMap<String, Integer> items;
 
-    public Inventory (int size) {
+    public Inventory(int size) {
         this.size = size;
         this.usedSpace = 0;
         items = new HashMap<>();
@@ -39,7 +39,8 @@ public class Inventory {
     public boolean addItem(MarketItem item, int quantity) {
         if (item.getSize() * quantity + usedSpace <= size) {
             if (items.containsKey(item.getOfficialItemName())) {
-                items.put(item.getOfficialItemName(), items.get(item.getOfficialItemName()) + quantity);
+                items.put(item.getOfficialItemName(),
+                        items.get(item.getOfficialItemName()) + quantity);
             } else {
                 items.put(item.getOfficialItemName(), quantity);
             }
@@ -50,7 +51,8 @@ public class Inventory {
     }
 
     public boolean removeItem(MarketItem item, int quantity) {
-        if (items.containsKey(item.getOfficialItemName()) && items.get(item.getOfficialItemName()) >= quantity) {
+        if (items.containsKey(item.getOfficialItemName())
+                && items.get(item.getOfficialItemName()) >= quantity) {
             items.put(item.getOfficialItemName(), items.get(item.getOfficialItemName()) - quantity);
             usedSpace -= item.getSize() * quantity;
             return true;

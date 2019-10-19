@@ -1,6 +1,5 @@
 package spacetrader.backend.market;
 
-import spacetrader.backend.locations.Region;
 import spacetrader.backend.locations.TechLevel;
 
 import java.util.ArrayList;

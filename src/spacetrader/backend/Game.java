@@ -11,8 +11,6 @@ import java.util.HashMap;
 public class Game {
     private Player player;
     private Difficulty difficulty;
-    private Region[] regions;
-    private Region currentRegion;
     private Universe universe;
     private String[] regionNames =
     {
@@ -61,25 +59,12 @@ public class Game {
     }
 
     /**
-     * Sets the game regions.
-     * */
-    public void setRegions(Region[] regions) {
-        this.regions = regions;
-    }
-    /**
      * Gets the game regions.
      *
      * @return the game regions
      */
     public Region[] getRegions() {
         return universe.getRegionList();
-    }
-
-    /**
-     * Sets the current region.
-     * */
-    public void setCurrentRegion(Region currentRegion) {
-        this.currentRegion = currentRegion;
     }
 
     /**
@@ -96,7 +81,8 @@ public class Game {
     }
 
     public int getCost(MarketItem item) {
-        return item.calculateItemPrice(player, universe.getCurrentRegion().getMarket().getRegionPriceMultiplier());
+        return item.calculateItemPrice(player,
+                universe.getCurrentRegion().getMarket().getRegionPriceMultiplier());
     }
 
     public int getDistance(Region region) {

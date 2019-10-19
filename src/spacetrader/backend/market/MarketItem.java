@@ -30,92 +30,92 @@ public class MarketItem {
     MarketItem(MarketGoods good) {
         size = 1;
         switch (good) {
-            case FOOD:
-                officialItemName = "Food";
-                // base price = 1 - 30
-                basePrice = produceBasePrice(1, 30);
-                // available in all tech levels
-                createPossibleTechLevels(true, true, true, true, true, true, true);
-                break;
-            case MEDICINE:
-                officialItemName = "Medicine";
-                // base price = 10 - 50
-                basePrice = produceBasePrice(10, 50);
-                // not available in PRE_AG, AGRICULTURE
-                createPossibleTechLevels(false, false, true, true, true, true, true);
-                break;
-            case WEAPONS:
-                officialItemName = "Weapons";
-                // base price = 30 - 70
-                basePrice = produceBasePrice(30, 70);
-                // available in all tech levels
-                createPossibleTechLevels(true, true, true, true, true, true, true);
-                break;
-            case GOLD:
-                officialItemName = "Gold";
-                // base price = 100 - 200
-                basePrice = produceBasePrice(100, 200);
-                // not available in PRE-AG, AGRICULTURE
-                createPossibleTechLevels(false, false, true, true, true, true, true);
-                break;
-            case WOOD:
-                officialItemName = "Wood";
-                // base price = 1 - 30
-                basePrice = produceBasePrice(1, 30);
-                // not available in FUTURISTIC
-                createPossibleTechLevels(true, true, true, true, true, true, false);
-                break;
-            case COMPUTERS:
-                officialItemName = "Computers";
-                // base price = 40 - 100
-                basePrice = produceBasePrice(40, 100);
-                // only available in MODERN, FUTURISTIC
-                createPossibleTechLevels(false, false, false, false, false, true, true);
-                break;
-            case ROBOTS:
-                officialItemName = "Robots";
-                // base price = 60 - 120
-                basePrice = produceBasePrice(60, 120);
-                // only available in MODERN, FUTURISTIC
-                createPossibleTechLevels(false, false, false, false, false, true, true);
-                break;
-            case COTTON:
-                officialItemName = "Cotton";
-                // base price = 10 - 30
-                basePrice = produceBasePrice(10, 30);
-                // only available in MEDIEVAL - FUTURISTIC inclusive
-                createPossibleTechLevels(false, false, true, true, true, true, false);
-                break;
-            case MACHINE_GUNS:
-                officialItemName = "Machine Guns";
-                // base price = 70 - 100
-                basePrice = produceBasePrice(70, 100);
-                // only available in INDUSTRIAL, MODERN, FUTURISTIC
-                createPossibleTechLevels(false, false, false, false, true, true, true);
-                break;
-            case LASERS:
-                officialItemName = "Lasers";
-                // base price = 80  -120
-                basePrice = produceBasePrice(80, 120);
-                // only available in MODERN, FUTURISTIC
-                createPossibleTechLevels(false, false, false, false, false, true, true);
-                break;
-            case PHASE_BEAMS:
-                officialItemName = "Phase Beams";
-                // base price = 180 - 250
-                basePrice = produceBasePrice(180, 250);
-                // only available in FUTURISTIC
-                createPossibleTechLevels(false, false, false, false, false, false, true);
-                break;
-            case FUEL:
-                officialItemName = "Fuel";
-                // base price = 1 - 30
-                basePrice = produceBasePrice(1, 30);
-                // available in tech levels AGRICULTURE - FUTURISTIC inclusive
-                createPossibleTechLevels(false, true, true, true, true, true, true);
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + good);
+        case FOOD:
+            officialItemName = "Food";
+            // base price = 1 - 30
+            basePrice = produceBasePrice(1, 30);
+            // available in all tech levels
+            createPossibleTechLevels(true, true, true, true, true, true, true);
+            break;
+        case MEDICINE:
+            officialItemName = "Medicine";
+            // base price = 10 - 50
+            basePrice = produceBasePrice(10, 50);
+            // not available in PRE_AG, AGRICULTURE
+            createPossibleTechLevels(false, false, true, true, true, true, true);
+            break;
+        case WEAPONS:
+            officialItemName = "Weapons";
+            // base price = 30 - 70
+            basePrice = produceBasePrice(30, 70);
+            // available in all tech levels
+            createPossibleTechLevels(true, true, true, true, true, true, true);
+            break;
+        case GOLD:
+            officialItemName = "Gold";
+            // base price = 100 - 200
+            basePrice = produceBasePrice(100, 200);
+            // not available in PRE-AG, AGRICULTURE
+            createPossibleTechLevels(false, false, true, true, true, true, true);
+            break;
+        case WOOD:
+            officialItemName = "Wood";
+            // base price = 1 - 30
+            basePrice = produceBasePrice(1, 30);
+            // not available in FUTURISTIC
+            createPossibleTechLevels(true, true, true, true, true, true, false);
+            break;
+        case COMPUTERS:
+            officialItemName = "Computers";
+            // base price = 40 - 100
+            basePrice = produceBasePrice(40, 100);
+            // only available in MODERN, FUTURISTIC
+            createPossibleTechLevels(false, false, false, false, false, true, true);
+            break;
+        case ROBOTS:
+            officialItemName = "Robots";
+            // base price = 60 - 120
+            basePrice = produceBasePrice(60, 120);
+            // only available in MODERN, FUTURISTIC
+            createPossibleTechLevels(false, false, false, false, false, true, true);
+            break;
+        case COTTON:
+            officialItemName = "Cotton";
+            // base price = 10 - 30
+            basePrice = produceBasePrice(10, 30);
+            // only available in MEDIEVAL - FUTURISTIC inclusive
+            createPossibleTechLevels(false, false, true, true, true, true, false);
+            break;
+        case MACHINE_GUNS:
+            officialItemName = "Machine Guns";
+            // base price = 70 - 100
+            basePrice = produceBasePrice(70, 100);
+            // only available in INDUSTRIAL, MODERN, FUTURISTIC
+            createPossibleTechLevels(false, false, false, false, true, true, true);
+            break;
+        case LASERS:
+            officialItemName = "Lasers";
+            // base price = 80  -120
+            basePrice = produceBasePrice(80, 120);
+            // only available in MODERN, FUTURISTIC
+            createPossibleTechLevels(false, false, false, false, false, true, true);
+            break;
+        case PHASE_BEAMS:
+            officialItemName = "Phase Beams";
+            // base price = 180 - 250
+            basePrice = produceBasePrice(180, 250);
+            // only available in FUTURISTIC
+            createPossibleTechLevels(false, false, false, false, false, false, true);
+            break;
+        case FUEL:
+            officialItemName = "Fuel";
+            // base price = 1 - 30
+            basePrice = produceBasePrice(1, 30);
+            // available in tech levels AGRICULTURE - FUTURISTIC inclusive
+            createPossibleTechLevels(false, true, true, true, true, true, true);
+            break;
+        default:
+            throw new IllegalStateException("Unexpected value: " + good);
         }
     }
 
@@ -136,7 +136,7 @@ public class MarketItem {
      *
      * Values of 0 in the specific index indicates non-availability, 1 otherwise
      *
-     * @param pre_ag whether the item is present in a tech level of PRE_AG
+     * @param preAg whether the item is present in a tech level of PRE_AG
      * @param agriculture whether the item is present in a tech level of
      *                 AGRICULTURE
      * @param medieval whether the item is present in a tech level of MEDIEVAL
@@ -146,11 +146,11 @@ public class MarketItem {
      * @param modern whether the item is present in a tech level of MODERN
      * @param futuristic whether the item is present in a tech level of FUTURISTIC
      * */
-    private void createPossibleTechLevels(boolean pre_ag, boolean agriculture, boolean medieval,
+    private void createPossibleTechLevels(boolean preAg, boolean agriculture, boolean medieval,
                                           boolean renaissance, boolean industrial, boolean modern,
                                           boolean futuristic) {
         possibleTechLevels = new boolean[7];
-        possibleTechLevels[0] = pre_ag;
+        possibleTechLevels[0] = preAg;
         possibleTechLevels[1] = agriculture;
         possibleTechLevels[2] = medieval;
         possibleTechLevels[3] = renaissance;
@@ -187,7 +187,7 @@ public class MarketItem {
      * @return the final price of item to be bought
      * */
     public int calculateItemPrice(Player player, double regionPriceMultiplier) {
-        return (int)(basePrice * regionPriceMultiplier
+        return (int) (basePrice * regionPriceMultiplier
                 * merchantPointsInflationIndex(player));
     }
 
@@ -198,7 +198,8 @@ public class MarketItem {
     /**
      * Gets the possibleTechLevels int list.
      *
-     * @returns possibleTechLevels */
+     * @return possibleTechLevels
+     */
     public boolean[] getPossibleTechLevels() {
         return possibleTechLevels;
     }
