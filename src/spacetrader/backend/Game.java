@@ -7,6 +7,8 @@ import spacetrader.backend.player.Player;
 public class Game {
     private Player player;
     private Difficulty difficulty;
+    private Region[] regions;
+    private Region currentRegion;
     private Universe universe;
     private String[] regionNames =
     {
@@ -21,7 +23,6 @@ public class Game {
         "Cygnus",
         "Leo"
     };
-
     /**
      * Creates a new game object with the selected game difficulty
      *
@@ -35,7 +36,6 @@ public class Game {
         // Sets the player's credits based on the game difficulty
         this.player.changeCredits(Game.getCredits(difficulty));
     }
-
     /**
      * Gets the game difficulty
      *
@@ -57,7 +57,13 @@ public class Game {
     }
 
     /**
-     * Gets the game regions
+     * Sets the game regions.
+     * */
+    public void setRegions(Region[] regions) {
+        this.regions = regions;
+    }
+    /**
+     * Gets the game regions.
      *
      * @return the game regions
      */
@@ -66,7 +72,14 @@ public class Game {
     }
 
     /**
-     * Gets the current region
+     * Sets the current region.
+     * */
+    public void setCurrentRegion(Region currentRegion) {
+        this.currentRegion = currentRegion;
+    }
+
+    /**
+     * Gets the current region.
      *
      * @return the current region
      */
@@ -184,6 +197,15 @@ public class Game {
         default:
             return 0;
         }
+    }
+
+    /**
+     * Gets the player
+     *
+     * @return the player
+     */
+    public Player getPlayer() {
+        return player;
     }
 
 }

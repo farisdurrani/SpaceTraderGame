@@ -42,12 +42,17 @@ public class Player {
      * Modify the player's credits
      *
      * @param newCredits credits to add to the player's credits
+     * @return boolean based on whether successfully added / subtracted
+     * credits or not can be used as a check to determine whether the player
+     * has enough credits to buy a selected good
      */
-    public void changeCredits(int newCredits) {
+    public boolean changeCredits(int newCredits) {
         if (newCredits + credits >= 0) {
             credits += newCredits;
+            return true;
         } else {
             credits = 0;
+            return false;
         }
     }
 

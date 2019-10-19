@@ -2,6 +2,8 @@ package spacetrader.ui;
 
 import spacetrader.backend.*;
 import spacetrader.backend.locations.Coordinate;
+import spacetrader.backend.locations.Market;
+import spacetrader.backend.locations.MarketItem;
 import spacetrader.backend.locations.Region;
 import spacetrader.backend.player.Player;
 
@@ -9,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -351,11 +354,49 @@ public class SpaceTrader {
         Region[] regions = game.getRegions();
         Region currentRegion = game.getCurrentRegion();
 
-        Components.addComponent(regionPanel, Components.createRegion(currentRegion), 0, 0,
-                new Insets(0, 0, 20, 0), 9, 1);
+        Components.addComponent(regionPanel, Components.createHeader1("Ship"),
+                2, 0, new Insets(0, 0, 30, 0),
+                2, 1);
+        Components.addComponent(regionPanel, Components.createHeader2("Fuel: "
+                        + game.getPlayer().getShip().getCurrentFuel()
+                        + "/" + game.getPlayer().getShip().getMaxFuelCapacity())
+                , 2, 1,
+                new Insets(0, 0, 0, 0),
+                2, 1);
+        Components.addComponent(regionPanel, Components.createHeader2(
+                "Credits: $" + game.getCredits()), 2, 2,
+                new Insets(0, 0, 0, 0),
+                2, 1);
+        Components.addComponent(regionPanel, Components.createHeader2(
+                "Cargo Usage: "
+                        + game.getPlayer().getShip().getCurrentUsedSpace()
+                        + "/" + game.getPlayer().getShip().getMaxCargoSpace())
+                , 2, 3,
+                new Insets(0, 0, 0, 0),
+                2, 1);
 
-        Components.addComponent(regionPanel, Components.createHeader1("Travel To:"), 0, 1,
-                new Insets(0, 0, 0, 0), 9, 1);
+        Components.addComponent(regionPanel,
+                Components.createRegion(currentRegion), 5, 0,
+                new Insets(0, 0, 20, 0), 2, 5);
+
+
+        // Button to go to Market
+        JButton market = Components.createButton("Market");
+        market.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // go to Market
+                displayPanel(createMarketPanel());
+            }
+        });
+        Components.addComponent(regionPanel,
+                market, 5, 2,
+                new Insets(10,0,20,0),2, 0);
+
+        Components.addComponent(regionPanel, Components.createHeader1(
+                "Select Region to Travel To:"), 0, 6,
+                new Insets(40, 0, 10, 0), 9, 1);
+
         int i = 0;
         for (Region region : regions) {
             if (region != currentRegion) {
@@ -372,13 +413,112 @@ public class SpaceTrader {
                         displayPanel(createRegionPanel());
                     }
                 });
-                Components.addComponent(regionPanel, regionButton, i++, 2, new Insets(0, 5, 0, 5));
+                Components.addComponent(regionPanel, regionButton, i++, 7,
+                        new Insets(0, 5, 0, 5));
             }
+
+            game.setCurrentRegion(currentRegion);
+            game.setRegions(regions);
+
         }
+
 
         return regionPanel;
     }
 
+    /**
+     * Creates the market panel for the current region displaying items to
+     * buy / sell
+     *
+     * @return the market panel for the current region
+     */
+    private JPanel createMarketPanel() {
+        JPanel marketPanel = new JPanel();
+        marketPanel.setLayout(new GridBagLayout());
+
+        Region currentRegion = game.getCurrentRegion();
+        Market currentMarket = new Market(currentRegion);
+
+        Components.addComponent(marketPanel,
+                Components.createRegion(currentRegion), 5, 0,
+                new Insets(0, 0, 20, 0), 3, 6);
+
+        JButton goBack = Components.createButton("BACK");
+        goBack.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                displayPanel(createRegionPanel());
+            }
+        });
+
+
+        Components.addComponent(marketPanel,goBack,0, 0,
+                new Insets(0, 0, 20, 0), 1, 1);
+
+        JLabel fuelInShip =  Components.createHeader2("Fuel: "
+                + game.getPlayer().getShip().getCurrentFuel()
+                + "/" + game.getPlayer().getShip().getMaxFuelCapacity());
+        Components.addComponent(marketPanel, fuelInShip, 0, 2, new Insets(0,0
+                ,0,0),1, 1);
+
+        JLabel creditsLeft =
+                Components.createHeader2("Credits: $" + game.getCredits());
+        Components.addComponent(marketPanel, creditsLeft, 0, 3, new Insets(0,
+                        0,0,0),
+                1, 1);
+
+        JLabel cargoUsage =  Components.createHeader2("Cargo Usage: "
+                        + game.getPlayer().getShip().getCurrentUsedSpace()
+                        + "/" + game.getPlayer().getShip().getMaxCargoSpace());
+        Components.addComponent(marketPanel, cargoUsage, 0, 4, new Insets(0,0
+                        ,0,0),1, 1);
+
+        ArrayList<MarketItem> marketItems = currentMarket.getMarketItemsInRegion();
+        // grid-y position in Market Panel
+        int y = 6;
+        for (MarketItem marketItem : marketItems) {
+
+            JLabel inventoryOfItem = Components.createHeader2("Inventory: "
+                    + marketItem.getAmountInShip());
+
+            // sets the fuel in inventory equal to current ship fuel amount
+            if (marketItem.getOfficialItemName().equals("Fuel")) {
+                marketItem.setAmountInShip(game.getPlayer().getShip().getCurrentFuel());
+                inventoryOfItem.setText("Fuel Tank: " + marketItem.getAmountInShip());
+            }
+
+            Components.addComponent(marketPanel,
+                    Components.createHeader2(marketItem.getOfficialItemName()), 0, y,
+                    new Insets(0,0,0,0), 1, 1);
+            int itemPrice = marketItem.calculateItemPrice(game.getPlayer(),
+                    currentMarket.getRegionPriceMultiplier());
+            Components.addComponent(marketPanel,
+                    Components.createHeader2("$" + itemPrice), 1, y,
+                    new Insets(0,0,0,0), 1, 1);
+
+            createSellBuyButton(marketPanel, marketItem, "Buy", 1
+                    , itemPrice,2, y, inventoryOfItem, fuelInShip
+                    , creditsLeft, cargoUsage);
+            createSellBuyButton(marketPanel, marketItem, "Buy", 10
+                    , itemPrice,3, y, inventoryOfItem, fuelInShip
+                    , creditsLeft, cargoUsage);
+            createSellBuyButton(marketPanel, marketItem, "Sell", 1
+                    , itemPrice,4, y, inventoryOfItem, fuelInShip
+                    , creditsLeft, cargoUsage);
+            createSellBuyButton(marketPanel, marketItem, "Sell", 10
+                    , itemPrice,5, y, inventoryOfItem, fuelInShip
+                    , creditsLeft, cargoUsage);
+
+            Components.addComponent(marketPanel, inventoryOfItem
+                    , 6, y, new Insets(0,0,0,0), 1, 1);
+
+            y++;
+        }
+
+
+
+        return marketPanel;
+    }
     /**
      * Sets the difficulty and updates all necessary values and labels.
      *
@@ -398,6 +538,144 @@ public class SpaceTrader {
             skills[i].setText(skills[i].getText().split(":")[0] + ": " + 0);
         }
     }
+
+    /** Creates a button to Sell or Buy an item for a specific amount given a
+     *  certain price in the Market Panel. This button will affect the cargo
+     *  space, amount of item in ship, credits, and fuel amount if fuel is
+     *  bought or sold.
+     *
+     * @param marketPanel the JPanel marketPanel
+     * @param marketItem the item to be bought or sold
+     * @param buyOrSell must either be "Buy" or "Sell"
+     * @param amount the amount of the item to be bought or sold
+     * @param itemPrice the final price of item
+     * @param positionX the grid-x position in the Market Panel grid layout
+     *                  of the button that will be placed in
+     * @param positionY the grid-y position in the Market Panel grid layout
+     *                  of the button that will be placed in
+     * @param inventoryOfItem the JLabel in Market Panel stating amount of
+     *                        item in ship
+     * @param fuelInShip the JLabel in Market Panel stating the current
+     *                   amount of fuel in the ship over its max capacity
+     * @param creditsLeft the JLabel in Market Panel stating the current
+     *                    credits
+     * @param cargoUsage the JLabel in Market Panel stating the current
+     *                    amount of cargo space used over the max capacity
+     */
+    private void createSellBuyButton (JPanel marketPanel, MarketItem marketItem,
+                                      String buyOrSell,
+                                      int amount, int itemPrice, int positionX,
+                                      int positionY, JLabel inventoryOfItem,
+                                      JLabel fuelInShip, JLabel creditsLeft,
+                                      JLabel cargoUsage) {
+
+        JButton buyOrSellButton =
+                Components.createButton(buyOrSell + " " + amount);
+        Components.addComponent(marketPanel, buyOrSellButton, positionX,
+                positionY, new Insets(0,0,0,0),1, 1);
+        buyOrSellButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                // *************************BUY********************************
+                if (buyOrSell.equals("Buy")) {
+
+                    boolean enoughSpace;
+                    boolean enoughCredits;
+                    boolean enoughFuelLeft;
+                    boolean reachedMaxFuelCapacity;
+
+                    reachedMaxFuelCapacity
+                            = game.getPlayer().getShip().getCurrentFuel()
+                            == game.getPlayer().getShip().getMaxFuelCapacity();
+
+                    /* Checking whether there is enough space in the ship. */
+                    // the currentUsedSpace in ship before initialization of
+                    // enoughSpace
+                    int lastCurrentSpace =
+                            game.getPlayer().getShip().getCurrentUsedSpace();
+                    enoughSpace =
+                            game.getPlayer().getShip().alterCurrentSpace(amount);
+                    // revert the latest change to currentSpace during
+                    // initialization of enoughSpace
+                    if (enoughSpace) {
+                        game.getPlayer().getShip().alterCurrentSpace(-amount);
+                    } else {
+                        game.getPlayer().getShip().alterCurrentSpace(lastCurrentSpace);
+                    }
+
+                    /* Checking whether there is enough credits. */
+                    // the current credits before initialization of
+                    // enoughCredits
+                    int lastCredits = game.getPlayer().getCredits();
+                    enoughCredits =
+                            game.getPlayer().changeCredits(-itemPrice * amount);
+                    // revert latest change to currentCredits during
+                    // initialization of enoughCredits
+                    if (enoughCredits) {
+                        game.getPlayer().changeCredits(itemPrice * amount);
+                    } else {
+                        game.getPlayer().changeCredits(lastCredits);
+                    }
+
+                    /* Checking whether there is enough capacity in fuel tank*/
+                    // if item is fuel, project the increase in fuel level
+                    // and see if it exceeds max fuel capacity
+                    if (marketItem.getOfficialItemName().equals("Fuel")) {
+                        int projectedFuelLevel =
+                                game.getPlayer().getShip().getCurrentFuel()
+                                        + amount;
+                        if (projectedFuelLevel
+                                > game.getPlayer().getShip().getMaxFuelCapacity()) {
+                            reachedMaxFuelCapacity = true;
+                        }
+                    }
+
+                    // if item is fuel, fuel does not take space in cargo
+                    if (marketItem.getOfficialItemName().equals("Fuel")
+                            && enoughCredits && !reachedMaxFuelCapacity) {
+
+                        marketItem.setAmountInShip(marketItem.getAmountInShip() + amount);
+                        game.getPlayer().getShip().alterCurrentFuel(amount);
+                        game.getPlayer().changeCredits(-itemPrice * amount);
+
+                    // else if item is not fuel, then check enoughSpace
+                    } else if (!marketItem.getOfficialItemName().equals("Fuel") && enoughCredits && enoughSpace) {
+                        marketItem.setAmountInShip(marketItem.getAmountInShip() + amount);
+                        game.getPlayer().getShip().alterCurrentSpace(amount);
+                        game.getPlayer().changeCredits(-itemPrice * amount);
+                    }
+
+                // ****************************SELL*****************************
+                } else if (buyOrSell.equals("Sell")) {
+                    int finalAmountInShip =
+                            marketItem.getAmountInShip() - amount;
+                    if (finalAmountInShip >= 0) {
+                        marketItem.setAmountInShip(finalAmountInShip);
+                        game.getPlayer().changeCredits(itemPrice * amount);
+                        game.getPlayer().getShip().alterCurrentSpace(-amount);
+                        if (marketItem.getOfficialItemName().equals("Fuel")) {
+                            game.getPlayer().getShip().alterCurrentFuel(-amount);
+                        }
+                    }
+                }
+
+                if (marketItem.getOfficialItemName().equals("Fuel")) {
+                    inventoryOfItem.setText("Fuel Tank: " + marketItem.getAmountInShip());
+                } else {
+                    inventoryOfItem.setText("Inventory: " + marketItem.getAmountInShip());
+                }
+                fuelInShip.setText("Fuel: "
+                        + game.getPlayer().getShip().getCurrentFuel()
+                        + "/" + game.getPlayer().getShip().getMaxFuelCapacity());
+                creditsLeft.setText("Credits: $" + game.getCredits());
+                cargoUsage.setText("Cargo Usage: "
+                        + game.getPlayer().getShip().getCurrentUsedSpace()
+                        + "/" + game.getPlayer().getShip().getMaxCargoSpace());
+            }
+        });
+    }
+
 
     /**
      * Starts the Space Trader GUI.

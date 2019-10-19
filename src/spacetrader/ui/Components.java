@@ -176,11 +176,18 @@ public class Components {
         JPanel regionPanel = new JPanel();
         regionPanel.setLayout(new GridBagLayout());
 
-        addComponent(regionPanel, createHeader1(region.getName()), 0, 0, new Insets(0, 0, 20, 0));
+        addComponent(regionPanel, createHeader1("Current Region"), 0, 0,
+                new Insets(0,0,20,0));
 
-        addComponent(regionPanel, createHeader2(region.getTechLevel().toString()), 0, 1,
+        addComponent(regionPanel, createHeader1(region.getName()), 0, 1,
+                new Insets(0, 0, 0, 0));
+
+        addComponent(regionPanel,
+                createHeader2(region.getTechLevel().toString()), 0, 2,
                 new Insets(0, 0, 10, 0));
-        addComponent(regionPanel, createHeader2(region.getCoordinate().toString()), 0, 2,
+        addComponent(regionPanel,
+                createHeader2("(" + region.getCoordinate().toString() + ")"),
+                0, 3,
                 new Insets(0, 0, 10, 0));
 
         return regionPanel;

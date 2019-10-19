@@ -1,5 +1,7 @@
 package spacetrader.backend.player;
 
+import spacetrader.backend.locations.Inventory;
+
 public class Ship {
     private String type;
     private int currentUsedSpace;
@@ -15,7 +17,6 @@ public class Ship {
         "Wasp",
         "Ladybug"
     };
-
     /**
      * Constructor for Ship that sets the type along with the variable changes
      * that the type entails
@@ -25,7 +26,7 @@ public class Ship {
         switch (shipType) {
         case STARTER:
             maxCargoSpace = 100;
-            maxFuelCapacity = 50;
+            maxFuelCapacity = 100;
             maxHealth = 50;
             break;
         case STARSHIP:
@@ -59,6 +60,14 @@ public class Ship {
     }
 
     /**
+     * Current space getter function
+     * @return current space as an int
+     */
+    public int getCurrentUsedSpace() {
+        return currentUsedSpace;
+    }
+
+    /**
      * Current fuel getter function
      * @return current fuel as an int
      */
@@ -67,19 +76,27 @@ public class Ship {
     }
 
     /**
+     * Maximum Fuel Capacity getter function
+     * @return maximum fuel capacity as an int
+     */
+    public int getMaxFuelCapacity() {
+        return maxFuelCapacity;
+    }
+
+    /**
+     * Maximum Cargo Space getter function
+     * @return maximum cargo space as an int
+     */
+    public int getMaxCargoSpace() {
+        return maxCargoSpace;
+    }
+
+    /**
      * Current health getter function
      * @return current health as an int
      */
     public int getCurrentHealth() {
         return currentHealth;
-    }
-
-    /**
-     * Current space getter function
-     * @return current sapce as an int
-     */
-    public int getCurrentUsedSpace() {
-        return currentUsedSpace;
     }
 
     /**

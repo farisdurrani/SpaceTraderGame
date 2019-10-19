@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class Universe {
     private Region[] regions;
-    private int currentRegion;
+    private int currentRegionIndex;
 
     /**
      * Creates a new Universe with regions specified by the region names
@@ -58,7 +58,7 @@ public class Universe {
      * @return the current region
      */
     public Region getCurrentRegion() {
-        return regions[currentRegion];
+        return regions[currentRegionIndex];
     }
 
     /**
@@ -70,7 +70,7 @@ public class Universe {
     public boolean goToRegion(Region region) {
         for (int i = 0; i < regions.length; i++) {
             if (region == regions[i]) {
-                currentRegion = i;
+                currentRegionIndex = i;
                 return true;
             }
         }
@@ -86,7 +86,7 @@ public class Universe {
     public double getDistance(Region region) {
         for (int i = 0; i < regions.length; i++) {
             if (region == regions[i]) {
-                return regions[currentRegion].distanceTo(region);
+                return regions[currentRegionIndex].distanceTo(region);
             }
         }
         return -1.0;
