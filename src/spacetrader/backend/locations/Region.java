@@ -4,6 +4,7 @@ public class Region {
     private String name;
     private Coordinate coordinate;
     private TechLevel techLevel;
+    private Market market;
 
     /**
      * Creates a new Region object
@@ -57,6 +58,13 @@ public class Region {
      */
     public TechLevel getTechLevel() {
         return techLevel;
+    }
+
+    public Market getMarket() {
+        if (market == null) {
+            market = new Market(this);
+        }
+        return market;
     }
 
     /**

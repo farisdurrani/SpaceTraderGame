@@ -1,7 +1,6 @@
 package spacetrader.ui;
 
 import spacetrader.backend.*;
-import spacetrader.backend.locations.Coordinate;
 import spacetrader.backend.locations.Market;
 import spacetrader.backend.locations.MarketItem;
 import spacetrader.backend.locations.Region;
@@ -425,14 +424,13 @@ public class SpaceTrader {
         JPanel marketPanel = new JPanel();
         marketPanel.setLayout(new GridBagLayout());
 
-        Region currentRegion = game.getCurrentRegion();
-        Market currentMarket = new Market(currentRegion);
+        Market currentMarket = game.getCurrentMarket();
 
         Components.addComponent(marketPanel, Components.createRegionPanel(game), 0, 0,
-                new Insets(0, 10, 0, 10), 1, 1, GridBagConstraints.PAGE_START);
+                new Insets(0, 0, 0, 10), 1, 1, GridBagConstraints.PAGE_START);
 
         Components.addComponent(marketPanel, Components.createShipPanel(game), 1, 0,
-                new Insets(0, 10, 0, 10), 1, 1, GridBagConstraints.PAGE_START);
+                new Insets(0, 10, 0, 0), 1, 1, GridBagConstraints.PAGE_START);
 
         ArrayList<MarketItem> marketItems = currentMarket.getMarketItemsInRegion();
         // grid-y position in Market Panel

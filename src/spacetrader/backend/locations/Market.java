@@ -15,9 +15,7 @@ public class Market {
     /** Used to determine availability of the MarketItem in different tech
      * levels. For example, phase beams are only available in Futuristic
      * regions. */
-    private int techLevelIndex = 99;
-
-    private MarketGoods[] marketGoods = MarketGoods.values();
+    private int techLevelIndex;
 
     /** Contains the market items in this region, restricted by the region's
      * tech level. */
@@ -26,47 +24,46 @@ public class Market {
     /**
      * Creates a Market object based on the current region's tech level.
      *
-     * @param currentRegion the region the player is currently in
+     * @param region the region the player is currently in
      * */
-    public Market(Region currentRegion) {
-        TechLevel techlevel = currentRegion.getTechLevel();
+    public Market(Region region) {
+        TechLevel techlevel = region.getTechLevel();
         if (techlevel.equals(TechLevel.PRE_AG)) {
             regionPriceMultiplier = 0.4;
             techLevelIndex = 0;
-            addMarketItems(techLevelIndex);
+            addMarketItems();
         } else if (techlevel.equals(TechLevel.AGRICULTURE)) {
             regionPriceMultiplier = 0.5;
             techLevelIndex = 1;
-            addMarketItems(techLevelIndex);
+            addMarketItems();
         } else if (techlevel.equals(TechLevel.MEDIEVAL)) {
             regionPriceMultiplier = 0.6;
             techLevelIndex = 2;
-            addMarketItems(techLevelIndex);
+            addMarketItems();
         } else if (techlevel.equals(TechLevel.RENAISSANCE)) {
             regionPriceMultiplier = 0.7;
             techLevelIndex = 3;
-            addMarketItems(techLevelIndex);
+            addMarketItems();
         } else if (techlevel.equals(TechLevel.INDUSTRIAL)) {
             regionPriceMultiplier = 0.8;
             techLevelIndex = 4;
-            addMarketItems(techLevelIndex);
+            addMarketItems();
         } else if (techlevel.equals(TechLevel.MODERN)) {
             regionPriceMultiplier = 0.9;
             techLevelIndex = 5;
-            addMarketItems(techLevelIndex);
+            addMarketItems();
         } else if (techlevel.equals(TechLevel.FUTURISTIC)) {
             regionPriceMultiplier = 1.0;
             techLevelIndex = 6;
-            addMarketItems(techLevelIndex);
+            addMarketItems();
         }
     }
 
-    private void addMarketItems(int techLevelIndex) {
-        for (MarketGoods good : marketGoods) {
+    private void addMarketItems() {
+        for (MarketGoods good : MarketGoods.values()) {
             MarketItem newItem = new MarketItem(good);
             // adds the market item if it exists in region's techLevel
-            int possible = newItem.getPossibleTechLevels()[techLevelIndex];
-            if (possible == 1) {
+            if (newItem.getPossibleTechLevels()[techLevelIndex]) {
                 marketItemsInRegion.add(newItem);
             }
         }

@@ -19,10 +19,8 @@ public class MarketItem {
      * 4 = industrial
      * 5 = modern
      * 6 = futuristic
-     *
-     * Values of 0 in the specific index indicates non-availability, 1 otherwise
-     * */
-    private int[] possibleTechLevels = {0,0,0,0,0,0,0};
+     **/
+    private boolean[] possibleTechLevels;
     /** Base price of item before merchant skill and region influences.*/
     private double basePrice;
 
@@ -31,93 +29,93 @@ public class MarketItem {
      * @param good the name of the market item to create
      **/
     MarketItem(MarketGoods good) {
-        switch (good.getCamelCaseName()) {
-            case "food":
+        switch (good) {
+            case FOOD:
                 officialItemName = "Food";
                 // base price = 1 - 30
                 basePrice = produceBasePrice(1, 30);
                 // available in all tech levels
-                createPossibleTechLevels(1,1,1,1,1,1,1);
+                createPossibleTechLevels(true, true, true, true, true, true, true);
                 break;
-            case "medicine":
+            case MEDICINE:
                 officialItemName = "Medicine";
                 // base price = 10 - 50
                 basePrice = produceBasePrice(10, 50);
                 // not available in PRE_AG, AGRICULTURE
-                createPossibleTechLevels(0,0,1,1,1,1,1);
+                createPossibleTechLevels(false, false, true, true, true, true, true);
                 break;
-            case "weapons":
+            case WEAPONS:
                 officialItemName = "Weapons";
                 // base price = 30 - 70
                 basePrice = produceBasePrice(30, 70);
                 // available in all tech levels
-                createPossibleTechLevels(1,1,1,1,1,1,1);
+                createPossibleTechLevels(true, true, true, true, true, true, true);
                 break;
-            case "gold":
+            case GOLD:
                 officialItemName = "Gold";
                 // base price = 100 - 200
                 basePrice = produceBasePrice(100, 200);
                 // not available in PRE-AG, AGRICULTURE
-                createPossibleTechLevels(0,0,1,1,1,1,1);
+                createPossibleTechLevels(false, false, true, true, true, true, true);
                 break;
-            case "wood":
+            case WOOD:
                 officialItemName = "Wood";
                 // base price = 1 - 30
                 basePrice = produceBasePrice(1, 30);
                 // not available in FUTURISTIC
-                createPossibleTechLevels(1,1,1,1,1,1,0);
+                createPossibleTechLevels(true, true, true, true, true, true, false);
                 break;
-            case "computers":
+            case COMPUTERS:
                 officialItemName = "Computers";
                 // base price = 40 - 100
                 basePrice = produceBasePrice(40, 100);
                 // only available in MODERN, FUTURISTIC
-                createPossibleTechLevels(0,0,0,0,0,1,1);
+                createPossibleTechLevels(false, false, false, false, false, true, true);
                 break;
-            case "robots":
+            case ROBOTS:
                 officialItemName = "Robots";
                 // base price = 60 - 120
                 basePrice = produceBasePrice(60, 120);
                 // only available in MODERN, FUTURISTIC
-                createPossibleTechLevels(0,0,0,0,0,1,1);
+                createPossibleTechLevels(false, false, false, false, false, true, true);
                 break;
-            case "cotton":
+            case COTTON:
                 officialItemName = "Cotton";
                 // base price = 10 - 30
                 basePrice = produceBasePrice(10, 30);
                 // only available in MEDIEVAL - FUTURISTIC inclusive
-                createPossibleTechLevels(0,0,1,1,1,1, 0);
+                createPossibleTechLevels(false, false, true, true, true, true, false);
                 break;
-            case "machineGuns":
+            case MACHINE_GUNS:
                 officialItemName = "Machine Guns";
                 // base price = 70 - 100
                 basePrice = produceBasePrice(70, 100);
                 // only available in INDUSTRIAL, MODERN, FUTURISTIC
-                createPossibleTechLevels(0,0,0,0,1,1,1);
+                createPossibleTechLevels(false, false, false, false, true, true, true);
                 break;
-            case "lasers":
+            case LASERS:
                 officialItemName = "Lasers";
                 // base price = 80  -120
                 basePrice = produceBasePrice(80, 120);
                 // only available in MODERN, FUTURISTIC
-                createPossibleTechLevels(0,0,0,0,0,1,1);
+                createPossibleTechLevels(false, false, false, false, false, true, true);
                 break;
-            case "phaseBeams":
+            case PHASE_BEAMS:
                 officialItemName = "Phase Beams";
                 // base price = 180 - 250
                 basePrice = produceBasePrice(180, 250);
                 // only available in FUTURISTIC
-                createPossibleTechLevels(0,0,0,0,0,0,1);
+                createPossibleTechLevels(false, false, false, false, false, false, true);
                 break;
-            case "fuel":
+            case FUEL:
                 officialItemName = "Fuel";
                 // base price = 1 - 30
                 basePrice = produceBasePrice(1, 30);
-                // available in tech levels AGRICULTURE - MODERN inclusive
-                createPossibleTechLevels(0,1,1,1,1,1,0);
+                // available in tech levels AGRICULTURE - FUTURISTIC inclusive
+                createPossibleTechLevels(false, true, true, true, true, true, true);
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + good.getCamelCaseName());
+                throw new IllegalStateException("Unexpected value: " + good);
         }
     }
 
@@ -128,7 +126,7 @@ public class MarketItem {
      * @param minPrice the minimum possible base price of good
      * @param maxPrice the maximum possible base price of good
      * @return a random base price for the good
-     * */
+     */
     private double produceBasePrice(int minPrice, int maxPrice) {
         return (Math.random() * ((maxPrice - minPrice) + 1)) + minPrice;
     }
@@ -148,11 +146,9 @@ public class MarketItem {
      * @param modern whether the item is present in a tech level of MODERN
      * @param futuristic whether the item is present in a tech level of FUTURISTIC
      * */
-    private void createPossibleTechLevels(int pre_ag, int agriculture,
-                                          int medieval,
-                                          int renaissance, int industrial,
-                                          int modern,
-                                          int futuristic) {
+    private void createPossibleTechLevels(boolean pre_ag, boolean agriculture, boolean medieval,
+                                          boolean renaissance, boolean industrial, boolean modern,
+                                          boolean futuristic) {
         possibleTechLevels[0] = pre_ag;
         possibleTechLevels[1] = agriculture;
         possibleTechLevels[2] = medieval;
@@ -215,7 +211,7 @@ public class MarketItem {
      * Gets the possibleTechLevels int list.
      *
      * @returns possibleTechLevels */
-    int[] getPossibleTechLevels() {
+    public boolean[] getPossibleTechLevels() {
         return possibleTechLevels;
     }
 

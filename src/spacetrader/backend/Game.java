@@ -1,5 +1,6 @@
 package spacetrader.backend;
 
+import spacetrader.backend.locations.Market;
 import spacetrader.backend.locations.Region;
 import spacetrader.backend.locations.Universe;
 import spacetrader.backend.player.Player;
@@ -85,6 +86,10 @@ public class Game {
      */
     public Region getCurrentRegion() {
         return universe.getCurrentRegion();
+    }
+
+    public Market getCurrentMarket() {
+        return universe.getCurrentRegion().getMarket();
     }
 
     public int getDistance(Region region) {
