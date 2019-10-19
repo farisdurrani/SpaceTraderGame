@@ -327,8 +327,17 @@ public class SpaceTrader {
         Components.addComponent(regionPanel, Components.createShipPanel(game), 2, 0,
                 new Insets(0, 10, 20, 0), 1, 1, GridBagConstraints.PAGE_START);
 
-        Components.addComponent(regionPanel, Components.createButton("Market"), 0, 1,
+        JButton marketButton = Components.createButton("Market");
+        marketButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Displays the market screen
+                displayPanel(createMarketPanel());
+            }
+        });
+        Components.addComponent(regionPanel, marketButton, 0, 1,
                 new Insets(30, 0, 0, 0), 1, 1);
+
         Components.addComponent(regionPanel, Components.createButton("Inventory"), 1, 1,
                 new Insets(30, 0, 0, 0), 1, 1);
 
@@ -419,37 +428,11 @@ public class SpaceTrader {
         Region currentRegion = game.getCurrentRegion();
         Market currentMarket = new Market(currentRegion);
 
-        Components.addComponent(marketPanel,
-                Components.createRegionPanel(game), 5, 0,
-                new Insets(0, 0, 20, 0), 3, 6);
+        Components.addComponent(marketPanel, Components.createRegionPanel(game), 0, 0,
+                new Insets(0, 10, 0, 10), 1, 1, GridBagConstraints.PAGE_START);
 
-        JButton goBack = Components.createButton("BACK");
-        goBack.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                displayPanel(createMainGamePanel());
-            }
-        });
-
-
-        Components.addComponent(marketPanel,goBack,0, 0,
-                new Insets(0, 0, 20, 0), 1, 1);
-
-        JLabel fuelInShip =  Components.createHeader2("Fuel: "
-                + game.getFuel());
-        Components.addComponent(marketPanel, fuelInShip, 0, 2, new Insets(0,0
-                ,0,0),1, 1);
-
-        JLabel creditsLeft =
-                Components.createHeader2("Credits: $" + game.getCredits());
-        Components.addComponent(marketPanel, creditsLeft, 0, 3, new Insets(0,
-                        0,0,0),
-                1, 1);
-
-        JLabel cargoUsage =  Components.createHeader2("Cargo Usage: "
-                        + game.getCapacity());
-        Components.addComponent(marketPanel, cargoUsage, 0, 4, new Insets(0,0
-                        ,0,0),1, 1);
+        Components.addComponent(marketPanel, Components.createShipPanel(game), 1, 0,
+                new Insets(0, 10, 0, 10), 1, 1, GridBagConstraints.PAGE_START);
 
         ArrayList<MarketItem> marketItems = currentMarket.getMarketItemsInRegion();
         // grid-y position in Market Panel
@@ -493,7 +476,15 @@ public class SpaceTrader {
             y++;
         }
 
-
+        JButton backButton = Components.createButton("BACK");
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Displays the region screen
+                displayPanel(createMainGamePanel());
+            }
+        });
+        Components.addComponent(marketPanel, backButton, 1, 2, new Insets(30, 0, 0, 0));
 
         return marketPanel;
     }
