@@ -410,14 +410,14 @@ public class SpaceTrader {
         Market currentMarket = new Market(currentRegion);
 
         Components.addComponent(marketPanel,
-                Components.createRegion(currentRegion), 5, 0,
+                Components.createRegionPanel(game), 5, 0,
                 new Insets(0, 0, 20, 0), 3, 6);
 
         JButton goBack = Components.createButton("BACK");
         goBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                displayPanel(createRegionPanel());
+                displayPanel(createMainGamePanel());
             }
         });
 
@@ -426,8 +426,7 @@ public class SpaceTrader {
                 new Insets(0, 0, 20, 0), 1, 1);
 
         JLabel fuelInShip =  Components.createHeader2("Fuel: "
-                + game.getPlayer().getShip().getCurrentFuel()
-                + "/" + game.getPlayer().getShip().getMaxFuelCapacity());
+                + game.getFuel());
         Components.addComponent(marketPanel, fuelInShip, 0, 2, new Insets(0,0
                 ,0,0),1, 1);
 
@@ -438,8 +437,7 @@ public class SpaceTrader {
                 1, 1);
 
         JLabel cargoUsage =  Components.createHeader2("Cargo Usage: "
-                        + game.getPlayer().getShip().getCurrentUsedSpace()
-                        + "/" + game.getPlayer().getShip().getMaxCargoSpace());
+                        + game.getCapacity());
         Components.addComponent(marketPanel, cargoUsage, 0, 4, new Insets(0,0
                         ,0,0),1, 1);
 
@@ -636,12 +634,10 @@ public class SpaceTrader {
                     inventoryOfItem.setText("Inventory: " + marketItem.getAmountInShip());
                 }
                 fuelInShip.setText("Fuel: "
-                        + game.getPlayer().getShip().getCurrentFuel()
-                        + "/" + game.getPlayer().getShip().getMaxFuelCapacity());
+                        + game.getCapacity());
                 creditsLeft.setText("Credits: $" + game.getCredits());
                 cargoUsage.setText("Cargo Usage: "
-                        + game.getPlayer().getShip().getCurrentUsedSpace()
-                        + "/" + game.getPlayer().getShip().getMaxCargoSpace());
+                        + game.getFuel());
             }
         });
     }

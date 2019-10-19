@@ -80,10 +80,6 @@ public class Ship {
         return currentFuel;
     }
 
-    public int getMaxFuelCapacity() {
-        return maxFuelCapacity;
-    }
-
     /**
      * Maximum Fuel Capacity getter function
      * @return maximum fuel capacity as an int
@@ -110,10 +106,6 @@ public class Ship {
      */
     public int getCurrentHealth() {
         return currentHealth;
-    }
-
-    public int getMaxCargoSpace() {
-        return maxCargoSpace;
     }
 
     public String getType() {
