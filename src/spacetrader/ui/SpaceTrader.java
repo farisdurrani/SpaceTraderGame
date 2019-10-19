@@ -512,7 +512,7 @@ public class SpaceTrader {
                 displayPanel(createMainGamePanel());
             }
         });
-        Components.addComponent(marketPanel, backButton, 3, y, new Insets(30, 0, 0, 0), 2, 1);
+        Components.addComponent(marketPanel, backButton, 2, y, new Insets(30, 0, 0, 0), 3, 1);
 
         return marketPanel;
     }
@@ -551,7 +551,7 @@ public class SpaceTrader {
                 displayPanel(createMainGamePanel());
             }
         });
-        Components.addComponent(inventoryPanel, backButton, 3, y, new Insets(30, 0, 0, 0), 2, 1);
+        Components.addComponent(inventoryPanel, backButton, 1, y, new Insets(30, 0, 0, 0), 1, 1);
 
         return inventoryPanel;
     }
