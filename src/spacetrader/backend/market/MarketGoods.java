@@ -1,4 +1,4 @@
-package spacetrader.backend.locations;
+package spacetrader.backend.market;
 
 /** Contains all possible goods sold at all markets. */
 public enum MarketGoods {

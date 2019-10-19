@@ -1,8 +1,8 @@
 package spacetrader.ui;
 
 import spacetrader.backend.*;
-import spacetrader.backend.locations.Market;
-import spacetrader.backend.locations.MarketItem;
+import spacetrader.backend.market.Market;
+import spacetrader.backend.market.MarketItem;
 import spacetrader.backend.locations.Region;
 import spacetrader.backend.player.Player;
 
@@ -10,7 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -432,13 +431,10 @@ public class SpaceTrader {
         Components.addComponent(marketPanel, Components.createShipPanel(game), 1, 0,
                 new Insets(0, 10, 0, 0), 1, 1, GridBagConstraints.PAGE_START);
 
-        ArrayList<MarketItem> marketItems = currentMarket.getMarketItemsInRegion();
-        // grid-y position in Market Panel
-        int y = 6;
-        for (MarketItem marketItem : marketItems) {
+        int y = 1;
+        for (MarketItem marketItem : currentMarket.getMarketItemsInRegion()) {
 
-            JLabel inventoryOfItem = Components.createHeader2("Inventory: "
-                    + marketItem.getAmountInShip());
+            JLabel inventoryOfItem = Components.createHeader2("Inventory: " + game.getCurrentCount(marketItem));
 
             // sets the fuel in inventory equal to current ship fuel amount
             if (marketItem.getOfficialItemName().equals("Fuel")) {

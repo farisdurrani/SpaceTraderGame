@@ -1,8 +1,9 @@
 package spacetrader.backend;
 
-import spacetrader.backend.locations.Market;
+import spacetrader.backend.market.Market;
 import spacetrader.backend.locations.Region;
 import spacetrader.backend.locations.Universe;
+import spacetrader.backend.market.MarketItem;
 import spacetrader.backend.player.Player;
 
 public class Game {
@@ -90,6 +91,10 @@ public class Game {
 
     public Market getCurrentMarket() {
         return universe.getCurrentRegion().getMarket();
+    }
+
+    public int getCost(MarketItem item) {
+        return item.calculateItemPrice(player, universe.getCurrentRegion().getMarket().getRegionPriceMultiplier());
     }
 
     public int getDistance(Region region) {
@@ -189,6 +194,28 @@ public class Game {
         return player.getShip().getType();
     }
 
+    public int getCurrentCount(MarketItem item) {
+        return player.getShip().getCurrentCount(item);
+    }
+
+    public boolean buyItem(MarketItem item, int quantity) {
+        int cost = getCost(item) * quantity;
+        if (cost < player.getCredits() && player.getShip().addItem(item, quantity)) {
+            player.changeCredits(-1 * cost);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean sellItem(MarketItem item, int quantity) {
+        if (player.getShip().removeItem(item, quantity)) {
+            int cost = getCost(item) * quantity;
+            player.changeCredits(cost);
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Gets the starting skill points for a given difficulty
      *
@@ -225,15 +252,6 @@ public class Game {
         default:
             return 0;
         }
-    }
-
-    /**
-     * Gets the player
-     *
-     * @return the player
-     */
-    public Player getPlayer() {
-        return player;
     }
 
 }

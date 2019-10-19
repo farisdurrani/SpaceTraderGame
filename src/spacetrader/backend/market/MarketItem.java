@@ -1,4 +1,4 @@
-package spacetrader.backend.locations;
+package spacetrader.backend.market;
 
 import spacetrader.backend.player.Player;
 
@@ -8,8 +8,6 @@ public class MarketItem {
 
     /** Name of item. */
     private String officialItemName;
-    /** Amount in ship cargo. */
-    private int amountInShip = 0;
     /**
      * Shows which Tech Levels can this item be found. Indexes in array:
      * 0 = pre-ag
@@ -23,6 +21,7 @@ public class MarketItem {
     private boolean[] possibleTechLevels;
     /** Base price of item before merchant skill and region influences.*/
     private double basePrice;
+    private int size;
 
     /** Creates market items.
      *
@@ -190,21 +189,8 @@ public class MarketItem {
                 * merchantPointsInflationIndex(player));
     }
 
-    /**
-     * Gets the current amount of the item in ship.
-     *
-     * @return current amount of item in ship*/
-    public int getAmountInShip() {
-        return amountInShip;
-    }
-
-    /**
-     * Alters the current amount of item in ship.
-     * NOTE: Fuel can be set in two ways via this class or via Ship class.
-     *
-     * @param amountInShip the new amount of item in ship*/
-    public void setAmountInShip(int amountInShip) {
-        this.amountInShip = amountInShip;
+    public int getSize() {
+        return size;
     }
 
     /**

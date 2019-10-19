@@ -1,11 +1,10 @@
 package spacetrader.backend.player;
 
-import spacetrader.backend.locations.Inventory;
+import spacetrader.backend.market.MarketItem;
 
 public class Ship {
     private String type;
-    private int currentUsedSpace;
-    private int maxCargoSpace;
+    private Inventory inventory;
     private int currentFuel;
     private int maxFuelCapacity;
     private int currentHealth;
@@ -25,41 +24,40 @@ public class Ship {
     public Ship(ShipType shipType) {
         switch (shipType) {
         case STARTER:
-            maxCargoSpace = 100;
+            inventory = new Inventory(100);
             maxFuelCapacity = 100;
             maxHealth = 50;
             type = "Starter";
             break;
         case STARSHIP:
-            maxCargoSpace = 500;
+            inventory = new Inventory(500);
             maxFuelCapacity = 500;
             maxHealth = 500;
             type = "Starship";
             break;
         case JET:
-            maxCargoSpace = 100;
+            inventory = new Inventory(100);
             maxFuelCapacity = 100;
             maxHealth = 100;
             type = "Jet";
             break;
         case WASP:
-            maxCargoSpace = 100;
+            inventory = new Inventory(100);
             maxFuelCapacity = 200;
             maxHealth = 50;
             type = "Wasp";
             break;
         case LADYBUG:
-            maxCargoSpace = 200;
+            inventory = new Inventory(200);
             maxFuelCapacity = 50;
             maxHealth = 150;
             type = "Ladybug";
             break;
         default:
-            maxCargoSpace = 0;
+            inventory = new Inventory(0);
             maxFuelCapacity = 0;
             maxHealth = 0;
         }
-        currentUsedSpace = 0;
         currentFuel = maxFuelCapacity;
         currentHealth = maxHealth;
     }
@@ -69,7 +67,7 @@ public class Ship {
      * @return current space as an int
      */
     public int getCurrentUsedSpace() {
-        return currentUsedSpace;
+        return inventory.getUsedSpace();
     }
 
     /**
@@ -97,7 +95,7 @@ public class Ship {
      * @return maximum cargo space as an int
      */
     public int getMaxCargoSpace() {
-        return maxCargoSpace;
+        return inventory.getSize();
     }
 
     /**
@@ -131,42 +129,29 @@ public class Ship {
         }
     }
 
-    /**
-     * Function to alter the health; can add or subtract
-     * @param variable amount that the health should be affected
-     * @return boolean based on whether successfully added health or not
-     * can be used as a check to determine whether the player has died
-     * or made it max health
-     */
-    public boolean alterCurrentHealth(int variable) {
-        if (currentHealth + variable > maxHealth) {
-            currentHealth = maxHealth;
-            return true;
-        } else if (currentHealth + variable < 0) {
-            return false;
-        } else {
-            currentHealth += variable;
-            return true;
-        }
+    public int getCurrentCount(MarketItem item) {
+        return inventory.getCurrentCount(item);
     }
 
-    /**
-     * Function to alter the space; can add or subtract
-     * @param variable amount that the space should be affected
-     * @return boolean based on whether successfully affected the amount of
-     * space that is left or not can be used as a check to determine whether
-     * the player cannot add any more items or there's max space available
-     */
-    public boolean alterCurrentSpace(int variable) {
-        if (currentUsedSpace + variable > maxCargoSpace) {
-            currentUsedSpace = maxCargoSpace;
-            return true;
-        } else if (currentUsedSpace + variable < 0) {
-            currentUsedSpace = 0;
+    public boolean addItem(MarketItem item, int quantity) {
+        if (item.getOfficialItemName().equals("Fuel")) {
+            if (currentFuel + quantity <= maxFuelCapacity) {
+                currentFuel += quantity;
+                return true;
+            }
             return false;
-        } else {
-            currentUsedSpace += variable;
-            return true;
         }
+        return inventory.addItem(item, quantity);
+    }
+
+    public boolean removeItem(MarketItem item, int quantity) {
+        if (item.getOfficialItemName().equals("Fuel")) {
+            if (currentFuel - quantity >= 0) {
+                currentFuel -= quantity;
+                return true;
+            }
+            return false;
+        }
+        return inventory.removeItem(item, quantity);
     }
 }

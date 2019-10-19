@@ -1,5 +1,7 @@
 package spacetrader.backend.locations;
 
+import spacetrader.backend.market.Market;
+
 public class Region {
     private String name;
     private Coordinate coordinate;
