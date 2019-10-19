@@ -393,6 +393,16 @@ public class SpaceTrader {
         Components.addComponent(regionPanel, travelPanel, 2, 0, new Insets(0, 10, 0, 0),
                 GridBagConstraints.PAGE_START);
 
+        JButton backButton = Components.createButton("BACK");
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Displays the region screen
+                displayPanel(createMainGamePanel());
+            }
+        });
+        Components.addComponent(regionPanel, backButton, 1, 2, new Insets(30, 0, 0, 0));
+
         return regionPanel;
     }
 

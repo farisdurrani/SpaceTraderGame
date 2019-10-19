@@ -17,14 +17,20 @@ public enum MarketGoods {
 
     private String camelCaseName;
 
-    /** Provides a camel case version of the enum.
-     * @param camelCaseName the enum in camel case*/
+    /**
+     * Provides a camel case version of the enum.
+     *
+     * @param camelCaseName the enum in camel case
+     **/
     MarketGoods(String camelCaseName) {
         this.camelCaseName = camelCaseName;
     }
 
-    /** Camel case names of enums setter.
-     * @return camel case names of enums */
+    /**
+     * Camel case names of enums setter.
+     *
+     * @return camel case names of enums
+     **/
     public String getCamelCaseName() {
         return camelCaseName;
     }
