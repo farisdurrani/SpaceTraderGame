@@ -64,4 +64,9 @@ public class Inventory {
         }
         return false;
     }
+
+    public boolean removeAllItems() {
+        items.clear();
+        return true;
+    }
 }

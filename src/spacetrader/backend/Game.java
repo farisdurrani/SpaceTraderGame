@@ -9,6 +9,7 @@ import spacetrader.backend.player.Player;
 import java.util.HashMap;
 
 public class Game {
+
     private Player player;
     private Difficulty difficulty;
     private Universe universe;
@@ -104,12 +105,24 @@ public class Game {
         if (fuelCost < 0) {
             return false;
         }
-
         if (player.getShip().getCurrentFuel() >= fuelCost) {
             player.getShip().alterCurrentFuel(-1 * fuelCost);
             return universe.goToRegion(region);
         }
         return false;
+    }
+
+    /**
+     * Moves the player to the previous region after successfully fleeing
+     * from NPCs.
+     *
+     * @param previousRegion the previous region before player encounters NPC
+     * @return true if the player successfully travels to the given region, false otherwise
+     */
+    public boolean goToPreviousRegion(Region previousRegion) {
+        int fuelCost = getFuelCost(previousRegion);
+        player.getShip().alterCurrentFuel(fuelCost);
+        return universe.goToRegion(previousRegion);
     }
 
     /**
@@ -176,6 +189,10 @@ public class Game {
 
     public String getCapacity() {
         return player.getShip().getCurrentUsedSpace() + "/" + player.getShip().getMaxCargoSpace();
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     public String getShipType() {

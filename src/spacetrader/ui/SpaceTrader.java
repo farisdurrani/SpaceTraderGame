@@ -1,6 +1,7 @@
 package spacetrader.ui;
 
 import spacetrader.backend.*;
+import spacetrader.backend.NPC.Bandit;
 import spacetrader.backend.market.Market;
 import spacetrader.backend.market.MarketItem;
 import spacetrader.backend.locations.Region;
@@ -389,10 +390,21 @@ public class SpaceTrader {
                 regionButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        // 0 - 0.25: Proceed without encountering any NPC
+                        // 0.25 - 0.50: Encounters Bandits
+                        // 0.50 - 0.75: ...
+                        // 0.75 - 1.00: ...
+                        double encounterNPCProbability = Math.random();
                         // Moves to a new region
                         if (game.goToRegion(region)) {
-                            // Displays the next region screen
-                            displayPanel(createMainGamePanel());
+                            if (encounterNPCProbability > 0.0
+                                    && encounterNPCProbability <= 1.00) {
+                                displayPanel(createNPCPanel(region,
+                                        currentRegion));
+                            } else {
+                                // Displays the next region screen
+                                displayPanel(createMainGamePanel());
+                            }
                         } else {
                             // Displays an error message
                             Components.addComponent(regionPanel, notEnoughFuelError, 1, 1,
@@ -419,6 +431,118 @@ public class SpaceTrader {
         Components.addComponent(regionPanel, backButton, 1, 2, new Insets(30, 0, 0, 0));
 
         return regionPanel;
+    }
+
+    private JPanel createNPCPanel(Region region, Region previousRegion) {
+        JPanel npcPanel = new JPanel();
+        npcPanel.setLayout(new GridBagLayout());
+
+        Bandit bandit = new Bandit(game);
+
+        JLabel banditEncountered = Components.createHeader1("Warning! "
+                + "Bandit encountered!");
+        JLabel banditWantsMoney = Components.createHeader2("Bandit is "
+                + "demanding $" + bandit.getMoneyDemanded()
+                + ". If you don't have enough money, you can surrender all of "
+                + "the items you bought.");
+
+        JButton payBandit = Components.createButton("Pay Bandit");
+        payBandit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (game.getCredits() >= bandit.getMoneyDemanded()) {
+                    game.getPlayer().changeCredits(-1 * bandit.getMoneyDemanded());
+                    JOptionPane.showMessageDialog(frame,
+                            "You have paid the Bandit $"
+                                    + bandit.getMoneyDemanded());
+                } else if (game.getPlayer().getShip().getCurrentUsedSpace() > 0) {
+                    game.getPlayer().getShip().removeAllItems();
+                    JOptionPane.showMessageDialog(frame,
+                            "Because you are not able to pay the "
+                                    + "Bandit, you have lost all of "
+                                    + "your inventory.");
+                } else {
+                    // ship gets damaged
+                    game.getPlayer().getShip().alterCurrentHealth(
+                            -1 * (int) (Math.sqrt(bandit.getDamageCaused())));
+                    JOptionPane.showMessageDialog(frame,
+                            "Your ship has suffered damage by Bandit.");
+                }
+                // Displays the next region screen
+                displayPanel(createMainGamePanel());
+            }
+        });
+
+        JButton escapeBandit = Components.createButton("Attempt to Flee");
+        escapeBandit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (game.getPilotPoints() > bandit.getFlyLevel()) {
+                    // successfully evades Bandit
+                    game.goToPreviousRegion(previousRegion);
+                    displayPanel(createMainGamePanel());
+                    JOptionPane.showMessageDialog(frame,
+                            "You have successfully evaded the Bandit.");
+                } else {
+                    // ship gets damaged
+                    game.getPlayer().getShip().alterCurrentHealth(
+                            -1 * bandit.getDamageCaused());
+                    // player loses all credits
+                    game.getPlayer().changeCredits(-1 * game.getCredits());
+                    displayPanel(createMainGamePanel());
+                    JOptionPane.showMessageDialog(frame,
+                            "You failed to evade. Bandit damaged "
+                                    + "your ship by " + bandit.getDamageCaused()
+                                    + " points and " + "you've lost all "
+                                    + "credits.",
+                            "Failed to Evade",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        JButton fightBandit = Components.createButton("Attempt to Fight");
+        fightBandit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (game.getFighterPoints() > bandit.getStrengthLevel()) {
+                    // successfully evades Bandit
+                    game.goToPreviousRegion(previousRegion);
+                    displayPanel(createMainGamePanel());
+                    JOptionPane.showMessageDialog(frame,
+                            "You have successfully evaded the Bandit.");
+                } else {
+                    // ship gets damaged
+                    game.getPlayer().getShip().alterCurrentHealth(
+                            -1 * bandit.getDamageCaused());
+                    // player loses all credits
+                    game.getPlayer().changeCredits(-1 * game.getCredits());
+                    displayPanel(createMainGamePanel());
+                    JOptionPane.showMessageDialog(frame,
+                            "You lost. Bandit damaged "
+                                    + "your ship by " + bandit.getDamageCaused()
+                                    + " points and " + "you've lost all "
+                                    + "credits.",
+                            "Failed to Evade",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        Components.addComponent(npcPanel, banditEncountered, 1, 0,
+                new Insets(0, 0, 0, 0), 3, 1);
+        Components.addComponent(npcPanel, banditWantsMoney, 1, 1,
+                new Insets(0, 0, 0, 0), 3, 1);
+        Components.addComponent(npcPanel, payBandit, 2, 2,
+                new Insets(0, 0, 0, 0));
+        Components.addComponent(npcPanel, escapeBandit, 2, 3,
+                new Insets(0, 0, 0, 0));
+        Components.addComponent(npcPanel, fightBandit, 2, 4,
+                new Insets(0, 0, 0, 0));
+        Components.addComponent(npcPanel, Components.createShipPanel(game), 1
+                , 2, new Insets(0, 0, 0, 0), 1, 4);
+
+        return npcPanel;
     }
 
     /**

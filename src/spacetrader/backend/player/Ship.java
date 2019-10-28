@@ -27,31 +27,31 @@ public class Ship {
         switch (shipType) {
         case STARTER:
             inventory = new Inventory(100);
-            maxFuelCapacity = 100;
+            maxFuelCapacity = 200;
             maxHealth = 50;
             type = "Starter";
             break;
         case STARSHIP:
             inventory = new Inventory(500);
-            maxFuelCapacity = 500;
+            maxFuelCapacity = 1000;
             maxHealth = 500;
             type = "Starship";
             break;
         case JET:
             inventory = new Inventory(100);
-            maxFuelCapacity = 100;
+            maxFuelCapacity = 200;
             maxHealth = 100;
             type = "Jet";
             break;
         case WASP:
             inventory = new Inventory(100);
-            maxFuelCapacity = 200;
+            maxFuelCapacity = 400;
             maxHealth = 50;
             type = "Wasp";
             break;
         case LADYBUG:
             inventory = new Inventory(200);
-            maxFuelCapacity = 50;
+            maxFuelCapacity = 100;
             maxHealth = 150;
             type = "Ladybug";
             break;
@@ -113,7 +113,7 @@ public class Ship {
     }
 
     /**
-     * Function to alter the fuel; can add or subtract
+     * Function to alter the fuel; can add or subtract.
      * @param variable amount that the fuel should be affected
      * @return boolean based on whether successfully fueled up or not
      * can be used as a check to determine whether the player can travel
@@ -127,6 +127,24 @@ public class Ship {
             return false;
         } else {
             currentFuel += variable;
+            return true;
+        }
+    }
+
+    /**
+     * Function to alter the health; can add or subtract.
+     * @param variable amount that the health should be affected
+     * @return boolean based on whether successfully altered health up or not
+     * can be used as a check to determine whether the player is still alive
+     */
+    public boolean alterCurrentHealth(int variable) {
+        if (currentHealth + variable > maxHealth) {
+            currentHealth = maxHealth;
+            return true;
+        } else if (currentHealth +  variable < 0) {
+            return false;
+        } else {
+            currentHealth += variable;
             return true;
         }
     }
@@ -162,5 +180,9 @@ public class Ship {
             return false;
         }
         return inventory.removeItem(item, quantity);
+    }
+
+    public boolean removeAllItems() {
+        return inventory.removeAllItems();
     }
 }
