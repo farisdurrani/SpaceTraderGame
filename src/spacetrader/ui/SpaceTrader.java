@@ -397,8 +397,8 @@ public class SpaceTrader {
                         double encounterNPCProbability = Math.random();
                         // Moves to a new region
                         if (game.goToRegion(region)) {
-                            if (encounterNPCProbability > 0.0
-                                    && encounterNPCProbability <= 1.00) {
+                            if (encounterNPCProbability > 0.25
+                                    && encounterNPCProbability <= 0.50) {
                                 displayPanel(createNPCPanel(region,
                                         currentRegion));
                             } else {
