@@ -216,6 +216,15 @@ public class Game {
         return false;
     }
 
+    public int addItem(MarketItem item, int quantity) {
+        int itemsAdded = 0;
+        while (quantity > 0 && player.getShip().addItem(item, quantity)) {
+            quantity--;
+            itemsAdded++;
+        }
+        return itemsAdded;
+    }
+
     public boolean sellItem(MarketItem item, int quantity) {
         if (player.getShip().removeItem(item, quantity)) {
             int cost = getCost(item) * quantity;

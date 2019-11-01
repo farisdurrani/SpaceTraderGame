@@ -27,7 +27,7 @@ public class MarketItem {
      *
      * @param good the name of the market item to create
      **/
-    MarketItem(MarketGoods good) {
+    public MarketItem(MarketGoods good) {
         size = 1;
         switch (good) {
         case FOOD:

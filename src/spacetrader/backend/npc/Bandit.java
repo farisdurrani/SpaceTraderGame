@@ -1,4 +1,4 @@
-package spacetrader.backend.NPC;
+package spacetrader.backend.npc;
 
 import spacetrader.backend.Game;
 
@@ -28,17 +28,13 @@ public class Bandit {
     private BufferedImage gasMask;
 
     public Bandit(Game game) throws IOException {
-        moneyDemanded = (int) (Math.random()
-                * Game.getCredits(game.getDifficulty()));
+        moneyDemanded = (int) (Math.random() * Game.getCredits(game.getDifficulty()));
         strengthLevel = Math.random() * (game.getFighterPoints()
-                        + Math.sqrt(game.getFighterPoints()));
-        flyLevel = Math.random() * (game.getPilotPoints()
-                        + Math.sqrt(game.getPilotPoints()));
-        damageCaused = (int) (Math.random()
-                * (game.getPlayer().getShip().getMaxHealth()));
+                + Math.sqrt(game.getFighterPoints()));
+        flyLevel = Math.random() * (game.getPilotPoints() + Math.sqrt(game.getPilotPoints()));
+        damageCaused = (int) (Math.random() * (game.getPlayer().getShip().getMaxHealth()));
         creditsAwarded = (int) (strengthLevel * 10);
-        gasMask = ImageIO.read(this.getClass().getResource(
-                "gas_mask.png"));
+        gasMask = ImageIO.read(this.getClass().getResource("gas_mask.png"));
     }
 
     public int getMoneyDemanded() {
