@@ -407,7 +407,7 @@ public class SpaceTrader {
                                     ex.printStackTrace();
                                 }
                             } else if (encounterNPCProbability >= 0.5
-                                    && encounterNPCProbability < 0.5) {
+                                    && encounterNPCProbability < 0.75) {
                                 displayPanel(createTraderPanel());
                             } else {
                                 // Displays the next region screen
@@ -591,7 +591,8 @@ public class SpaceTrader {
                 Components.addComponent(traderPanel,
                         Components.createHeader3("The Trader is offering " + trader.getItemCount()
                                 + " " + trader.getItemName() + " for $" + trader.getItemCost()),
-                        0, 1, new Insets(10, 0, 10, 0));
+                        0, 2, new Insets(10, 0, 10, 0));
+                displayPanel(traderPanel);
             }
         });
         Components.addComponent(traderPanel, negotiate, 0, 4, new Insets(10, 0, 10, 0));
@@ -612,7 +613,7 @@ public class SpaceTrader {
                     game.getPlayer().getShip().alterCurrentHealth(-1 * trader.getDamageCaused());
                     displayPanel(createMainGamePanel());
                     JOptionPane.showMessageDialog(frame, "You failed to rob the Trader. The Trader"
-                                    + "damaged your ship by " + trader.getDamageCaused()
+                                    + " damaged your ship by " + trader.getDamageCaused()
                                     + " health points.");
                 }
             }

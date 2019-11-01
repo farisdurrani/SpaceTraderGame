@@ -64,7 +64,7 @@ public class Trader {
     }
 
     public boolean negotiate() {
-        boolean negotiated = Math.random() >= negotiationChance;
+        boolean negotiated = Math.random() < negotiationChance;
         if (negotiated) {
             itemCost /= 2;
         } else {
@@ -78,7 +78,7 @@ public class Trader {
     }
 
     public boolean rob() {
-        boolean negotiated = Math.random() >= negotiationChance;
+        boolean negotiated = Math.random() < negotiationChance;
         if (negotiated) {
             itemCost /= 2;
         } else {
