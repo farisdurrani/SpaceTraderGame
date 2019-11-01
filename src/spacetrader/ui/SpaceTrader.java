@@ -402,12 +402,12 @@ public class SpaceTrader {
                             if (encounterNPCProbability >= 0.25
                                     && encounterNPCProbability < 0.5) {
                                 try {
-                                    displayPanel(createBanditPanel(region, currentRegion));
+                                    displayPanel(createBanditPanel(currentRegion));
                                 } catch (IOException ex) {
                                     ex.printStackTrace();
                                 }
-                            } else if (encounterNPCProbability >= 0.5 && encounterNPCProbability < 0.5) {
-
+                            } else if (encounterNPCProbability >= 0.5 && encounterNPCProbability < 0.5 || true) {
+                                displayPanel(createTraderPanel());
                             } else {
                                 // Displays the next region screen
                                 displayPanel(createMainGamePanel());
@@ -440,15 +440,15 @@ public class SpaceTrader {
         return regionPanel;
     }
 
-    private JPanel createBanditPanel(Region region, Region previousRegion) throws IOException {
+    private JPanel createBanditPanel(Region previousRegion) throws IOException {
 
         JPanel banditPanel = new JPanel();
         banditPanel.setLayout(new GridBagLayout());
 
         Bandit bandit = new Bandit(game);
 
-        JLabel currentCredits = Components.createHeader3("Credits: $" + String.valueOf(game.getCredits()));
-        JLabel currentHealth = Components.createHeader3("Health: " + String.valueOf(game.getHealth()));
+        JLabel currentCredits = Components.createHeader3("Credits: $" + game.getCredits());
+        JLabel currentHealth = Components.createHeader3("Health: " + game.getHealth());
         JLabel banditEncountered = Components.createHeader1("Warning! Bandit encountered!");
         JLabel banditWantsMoney = Components.createHeader2("Bandit is demanding $" + bandit.getMoneyDemanded() + ". If you don't have enough money, you can surrender all of the items you bought.");
         JLabel gasMaskLabel = new JLabel(new ImageIcon(bandit.getGasMask()));
@@ -536,18 +536,17 @@ public class SpaceTrader {
         return banditPanel;
     }
 
-    private JPanel createTraderPanel(Region region) {
+    private JPanel createTraderPanel() {
 
         JPanel traderPanel = new JPanel();
         traderPanel.setLayout(new GridBagLayout());
 
         Trader trader = new Trader(game);
 
-        Components.addComponent(traderPanel, Components.createHeader2("Credits: $" + String.valueOf(game.getCredits())), 0, 0, new Insets(0, 0, 0, 0));
-        Components.addComponent(traderPanel, Components.createHeader1("Trader encountered!"), 0, 0, new Insets(0, 0, 0, 0));
-        JLabel traderOffer = Components.createHeader3("The Trader is offering " + trader.getItemCount() + " " + trader.getItemName() + " for $" + trader.getItemCost());
-        Components.addComponent(traderPanel, traderOffer, 0, 1, new Insets(0, 0, 0, 0));
         Components.addComponent(traderPanel, new JLabel(new ImageIcon(trader.getIcon())), 0, 0, new Insets(0, 0, 0, 0));
+        Components.addComponent(traderPanel, Components.createHeader1("Trader encountered!"), 0, 1, new Insets(0, 0, 0, 0));
+        JLabel traderOffer = Components.createHeader3("The Trader is offering " + trader.getItemCount() + " " + trader.getItemName() + " for $" + trader.getItemCost());
+        Components.addComponent(traderPanel, traderOffer, 0, 2, new Insets(0, 0, 0, 0));
 
         JLabel notEnoughCreditsError = Components.createError("Not Enough Credits!");
         JButton buyItems = Components.createButton("Buy Items");
@@ -559,13 +558,13 @@ public class SpaceTrader {
                     displayPanel(createMainGamePanel());
                 } else {
                     // Displays an error message
-                    Components.addComponent(traderPanel, notEnoughCreditsError, 1, 1,
+                    Components.addComponent(traderPanel, notEnoughCreditsError, 0, 8,
                             new Insets(30, 0, 0, 0));
                     displayPanel(traderPanel);
                 }
             }
         });
-        Components.addComponent(traderPanel, buyItems, 0, 0, new Insets(0, 0, 0, 0));
+        Components.addComponent(traderPanel, buyItems, 0, 3, new Insets(0, 0, 0, 0));
 
         JButton negotiate = Components.createButton("Attempt to Negotiate the Price (" + trader.getNegotiationChance() + ")");
         negotiate.addActionListener(new ActionListener() {
@@ -581,7 +580,7 @@ public class SpaceTrader {
                 Components.addComponent(traderPanel, Components.createHeader3("The Trader is offering " + trader.getItemCount() + " " + trader.getItemName() + " for $" + trader.getItemCost()), 0, 1, new Insets(0, 0, 0, 0));
             }
         });
-        Components.addComponent(traderPanel, negotiate, 0, 0, new Insets(0, 0, 0, 0));
+        Components.addComponent(traderPanel, negotiate, 0, 4, new Insets(0, 0, 0, 0));
 
         JButton robTrader = Components.createButton("Attempt to Rob the Trader (" + trader.getRobChance() + ")");
         robTrader.addActionListener(new ActionListener() {
@@ -601,7 +600,7 @@ public class SpaceTrader {
                 }
             }
         });
-        Components.addComponent(traderPanel, robTrader, 0, 0, new Insets(0, 0, 0, 0));
+        Components.addComponent(traderPanel, robTrader, 0, 5, new Insets(0, 0, 0, 0));
 
         JButton ignore = Components.createButton("Continue to Region");
         ignore.addActionListener(new ActionListener() {
@@ -611,7 +610,9 @@ public class SpaceTrader {
                 displayPanel(createMainGamePanel());
             }
         });
-        Components.addComponent(traderPanel, ignore, 0, 0, new Insets(0, 0, 0, 0));
+        Components.addComponent(traderPanel, ignore, 0, 6, new Insets(0, 0, 0, 0));
+
+        Components.addComponent(traderPanel, Components.createHeader2("Credits: $" + game.getCredits()), 0, 7, new Insets(0, 0, 0, 0));
 
         return traderPanel;
     }

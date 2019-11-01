@@ -33,7 +33,7 @@ public class Trader {
         damageCaused = (int) (Math.random() * (game.getPlayer().getShip().getMaxHealth()));
 
         try {
-            icon = ImageIO.read(this.getClass().getResource("trader_icon.svg"));
+            icon = ImageIO.read(this.getClass().getResource("trader_icon.png"));
         } catch (Exception e) {
             icon = null;
         }
