@@ -397,18 +397,22 @@ public class SpaceTrader {
                         // 0.50 - 0.75: Encounters Trader
                         // 0.75 - 1.00: ...
                         double encounterNPCProbability = Math.random();
+                        double encounterBandit;
+                        double encounterTrader;
+                        double encounterPolice;
                         // Moves to a new region
                         if (game.goToRegion(region)) {
-                            if (encounterNPCProbability >= 0.25
-                                    && encounterNPCProbability < 0.5) {
+                            int encounter = game.encounter();
+                            if (encounter == Game.BANDIT_ENCOUNTER) {
                                 try {
                                     displayPanel(createBanditPanel(currentRegion));
                                 } catch (IOException ex) {
                                     ex.printStackTrace();
                                 }
-                            } else if (encounterNPCProbability >= 0.5
-                                    && encounterNPCProbability < 0.75) {
+                            } else if (encounter == Game.TRADER_ENCOUNTER) {
                                 displayPanel(createTraderPanel());
+                            } else if (encounter == Game.POLICE_ENCOUNTER) {
+                                displayPanel(createPolicePanel());
                             } else {
                                 // Displays the next region screen
                                 displayPanel(createMainGamePanel());
@@ -484,8 +488,8 @@ public class SpaceTrader {
         escapeBandit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                game.goToPreviousRegion(previousRegion);
-                if (game.getPilotPoints() > bandit.getFlyLevel()) {
+                if (game.getPilotPoints() > bandit.getFlyLevel()
+                        && game.goToRegion(previousRegion)) {
                     // successfully evades Bandit
                     displayPanel(createMainGamePanel());
                     JOptionPane.showMessageDialog(frame,
@@ -634,6 +638,11 @@ public class SpaceTrader {
                 + game.getCredits()), 0, 7, new Insets(10, 0, 10, 0));
 
         return traderPanel;
+    }
+
+    public JPanel createPolicePanel() {
+        //TODO: Fill in Police display here
+        return null;
     }
 
     /**

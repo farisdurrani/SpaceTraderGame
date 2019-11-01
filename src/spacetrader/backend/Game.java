@@ -9,6 +9,10 @@ import spacetrader.backend.player.Player;
 import java.util.HashMap;
 
 public class Game {
+    public static final int NO_ENCOUNTER = 0;
+    public static final int BANDIT_ENCOUNTER = 1;
+    public static final int TRADER_ENCOUNTER = 2;
+    public static final int POLICE_ENCOUNTER = 3;
 
     private Player player;
     private Difficulty difficulty;
@@ -26,6 +30,7 @@ public class Game {
         "Cygnus",
         "Leo"
     };
+
     /**
      * Creates a new game object with the selected game difficulty
      *
@@ -112,17 +117,40 @@ public class Game {
         return false;
     }
 
-    /**
-     * Moves the player to the previous region after successfully fleeing
-     * from NPCs.
-     *
-     * @param previousRegion the previous region before player encounters NPC
-     * @return true if the player successfully travels to the given region, false otherwise
-     */
-    public boolean goToPreviousRegion(Region previousRegion) {
-        int fuelCost = getFuelCost(previousRegion);
-        player.getShip().alterCurrentFuel(fuelCost);
-        return universe.goToRegion(previousRegion);
+    public int encounter() {
+        double banditEncounter;
+        double traderEncounter;
+        double policeEncounter;
+        switch (difficulty) {
+        case EASY:
+            banditEncounter = 0.15; // 15% chance to encounter a Bandit
+            traderEncounter = 0.45; // 30% chance to encounter a Trader
+            policeEncounter = 0.60; // 15% chance to encounter a Police
+            break;
+        case MEDIUM:
+            banditEncounter = 0.20; // 20% chance to encounter a Bandit
+            traderEncounter = 0.40; // 20% chance to encounter a Trader
+            policeEncounter = 0.60; // 20% chance to encounter a Police
+            break;
+        case HARD:
+            banditEncounter = 0.25; // 25% chance to encounter a Bandit
+            traderEncounter = 0.35; // 10% chance to encounter a Trader
+            policeEncounter = 0.60; // 25% chance to encounter a Police
+            break;
+        default:
+            banditEncounter = 0.0;
+            traderEncounter = 0.0;
+            policeEncounter = 0.0;
+        }
+        double encounter = Math.random();
+        if (encounter < banditEncounter) {
+            return BANDIT_ENCOUNTER;
+        } else if (encounter < traderEncounter) {
+            return TRADER_ENCOUNTER;
+        } else if (encounter < policeEncounter) {
+            return POLICE_ENCOUNTER;
+        }
+        return NO_ENCOUNTER;
     }
 
     /**
