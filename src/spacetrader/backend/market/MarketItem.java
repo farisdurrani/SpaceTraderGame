@@ -98,7 +98,7 @@ public class MarketItem {
             // base price = 80  -120
             basePrice = produceBasePrice(80, 120);
             // only available in MODERN, FUTURISTIC
-            createPossibleTechLevels(false, false, false, false, false, true, true);
+            createPossibleTechLevels(false, false, false, false, false, false, true);
             break;
         case PHASE_BEAMS:
             officialItemName = "Phase Beams";

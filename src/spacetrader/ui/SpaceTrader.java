@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -399,8 +400,12 @@ public class SpaceTrader {
                         if (game.goToRegion(region)) {
                             if (encounterNPCProbability > 0.25
                                     && encounterNPCProbability <= 0.50) {
-                                displayPanel(createNPCPanel(region,
-                                        currentRegion));
+                                try {
+                                    displayPanel(createBanditPanel(region,
+                                            currentRegion));
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
                             } else {
                                 // Displays the next region screen
                                 displayPanel(createMainGamePanel());
@@ -433,25 +438,35 @@ public class SpaceTrader {
         return regionPanel;
     }
 
-    private JPanel createNPCPanel(Region region, Region previousRegion) {
-        JPanel npcPanel = new JPanel();
-        npcPanel.setLayout(new GridBagLayout());
+    private JPanel createBanditPanel(Region region, Region previousRegion)
+            throws IOException {
+
+        JPanel banditPanel = new JPanel();
+        banditPanel.setLayout(new GridBagLayout());
 
         Bandit bandit = new Bandit(game);
 
+        JLabel currentCredits =
+                Components.createHeader3("Credits: $"
+                        + String.valueOf(game.getCredits()));
+        JLabel currentHealth =
+                Components.createHeader3("Health: "
+                        + String.valueOf(game.getHealth()));
         JLabel banditEncountered = Components.createHeader1("Warning! "
                 + "Bandit encountered!");
         JLabel banditWantsMoney = Components.createHeader2("Bandit is "
                 + "demanding $" + bandit.getMoneyDemanded()
                 + ". If you don't have enough money, you can surrender all of "
                 + "the items you bought.");
+        JLabel gasMaskLabel = new JLabel(new ImageIcon(bandit.getGasMask()));
 
         JButton payBandit = Components.createButton("Pay Bandit");
         payBandit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (game.getCredits() >= bandit.getMoneyDemanded()) {
-                    game.getPlayer().changeCredits(-1 * bandit.getMoneyDemanded());
+                    game.getPlayer().changeCredits(-1
+                            * bandit.getMoneyDemanded());
                     JOptionPane.showMessageDialog(frame,
                             "You have paid the Bandit $"
                                     + bandit.getMoneyDemanded());
@@ -463,10 +478,13 @@ public class SpaceTrader {
                                     + "your inventory.");
                 } else {
                     // ship gets damaged
+                    int damage = (int) (Math.sqrt(bandit.getDamageCaused()));
                     game.getPlayer().getShip().alterCurrentHealth(
-                            -1 * (int) (Math.sqrt(bandit.getDamageCaused())));
+                            -1 * damage);
                     JOptionPane.showMessageDialog(frame,
-                            "Your ship has suffered damage by Bandit.");
+                            "You are unable to give anything to Bandit. "
+                                    + "Your ship has been damaged by "
+                                    + damage + "points.");
                 }
                 // Displays the next region screen
                 displayPanel(createMainGamePanel());
@@ -477,9 +495,9 @@ public class SpaceTrader {
         escapeBandit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                game.goToPreviousRegion(previousRegion);
                 if (game.getPilotPoints() > bandit.getFlyLevel()) {
                     // successfully evades Bandit
-                    game.goToPreviousRegion(previousRegion);
                     displayPanel(createMainGamePanel());
                     JOptionPane.showMessageDialog(frame,
                             "You have successfully evaded the Bandit.");
@@ -507,10 +525,12 @@ public class SpaceTrader {
             public void actionPerformed(ActionEvent e) {
                 if (game.getFighterPoints() > bandit.getStrengthLevel()) {
                     // successfully evades Bandit
-                    game.goToPreviousRegion(previousRegion);
+                    game.getPlayer().changeCredits(bandit.getCreditsAwarded());
                     displayPanel(createMainGamePanel());
                     JOptionPane.showMessageDialog(frame,
-                            "You have successfully evaded the Bandit.");
+                            "You have successfully defeated the Bandit and "
+                                    + "earned $" + bandit.getCreditsAwarded()
+                                    + " as a reward.");
                 } else {
                     // ship gets damaged
                     game.getPlayer().getShip().alterCurrentHealth(
@@ -529,20 +549,24 @@ public class SpaceTrader {
             }
         });
 
-        Components.addComponent(npcPanel, banditEncountered, 1, 0,
-                new Insets(0, 0, 0, 0), 3, 1);
-        Components.addComponent(npcPanel, banditWantsMoney, 1, 1,
-                new Insets(0, 0, 0, 0), 3, 1);
-        Components.addComponent(npcPanel, payBandit, 2, 2,
+        Components.addComponent(banditPanel, gasMaskLabel, 0, 0,
                 new Insets(0, 0, 0, 0));
-        Components.addComponent(npcPanel, escapeBandit, 2, 3,
+        Components.addComponent(banditPanel, banditEncountered, 0, 1,
                 new Insets(0, 0, 0, 0));
-        Components.addComponent(npcPanel, fightBandit, 2, 4,
+        Components.addComponent(banditPanel, banditWantsMoney, 0, 2,
                 new Insets(0, 0, 0, 0));
-        Components.addComponent(npcPanel, Components.createShipPanel(game), 1
-                , 2, new Insets(0, 0, 0, 0), 1, 4);
+        Components.addComponent(banditPanel, payBandit, 0, 3,
+                new Insets(10, 0, 10, 0));
+        Components.addComponent(banditPanel, escapeBandit, 0, 4,
+                new Insets(10, 0, 10, 0));
+        Components.addComponent(banditPanel, fightBandit, 0, 5,
+                new Insets(10, 0, 10, 0));
+        Components.addComponent(banditPanel, currentCredits, 0, 6,
+                new Insets(0, 0, 0, 0));
+        Components.addComponent(banditPanel, currentHealth, 0, 7,
+                new Insets(0, 0, 0, 0));
 
-        return npcPanel;
+        return banditPanel;
     }
 
     /**
