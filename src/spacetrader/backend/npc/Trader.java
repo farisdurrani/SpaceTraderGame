@@ -7,7 +7,6 @@ import spacetrader.backend.player.Player;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 public class Trader {
 
@@ -27,7 +26,8 @@ public class Trader {
         itemCost = item.calculateItemPrice(game.getPlayer(),
                 game.getCurrentRegion().getMarket().getRegionPriceMultiplier());
 
-        negotiationChance = (double) game.getMerchantPoints() / (1.0 + (double) game.getMerchantPoints());
+        negotiationChance = (double) game.getMerchantPoints()
+                / (1.0 + (double) game.getMerchantPoints());
         robChance = (double) game.getFighterPoints() / (1.0 + (double) game.getFighterPoints());
 
         damageCaused = (int) (Math.random() * (game.getPlayer().getShip().getMaxHealth()));
