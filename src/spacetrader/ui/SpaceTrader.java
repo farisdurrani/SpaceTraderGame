@@ -5,6 +5,7 @@ import spacetrader.backend.npc.Bandit;
 import spacetrader.backend.market.Market;
 import spacetrader.backend.market.MarketItem;
 import spacetrader.backend.locations.Region;
+import spacetrader.backend.npc.Police;
 import spacetrader.backend.npc.Trader;
 import spacetrader.backend.player.Player;
 
@@ -412,7 +413,11 @@ public class SpaceTrader {
                             } else if (encounter == Game.TRADER_ENCOUNTER) {
                                 displayPanel(createTraderPanel());
                             } else if (encounter == Game.POLICE_ENCOUNTER) {
-                                displayPanel(createPolicePanel());
+                                if (!game.getInventoryItems().isEmpty()) {
+                                    displayPanel(createPolicePanel(currentRegion));
+                                } else {
+                                    displayPanel(createMainGamePanel());
+                                }
                             } else {
                                 // Displays the next region screen
                                 displayPanel(createMainGamePanel());
@@ -640,9 +645,88 @@ public class SpaceTrader {
         return traderPanel;
     }
 
-    public JPanel createPolicePanel() {
-        //TODO: Fill in Police display here
-        return null;
+    public JPanel createPolicePanel(Region previousRegion) {
+        JPanel policePanel = new JPanel();
+        policePanel.setLayout(new GridBagLayout());
+
+        Police police = new Police(game);
+
+        JLabel policeEncountered = Components.createHeader1("Warning! Police encountered!");
+        JLabel policeDemand = Components.createHeader2("The Police are demanding "
+                + police.getDemandingItem() + ". Will you forfeit your item?");
+        JLabel policeIcon = new JLabel(new ImageIcon(police.getIcon()));
+
+        JButton forfeitItems = Components.createButton("Forfeit Items");
+        forfeitItems.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                game.getInventoryItems().remove(police.getDemandingItem());
+                JOptionPane.showMessageDialog(frame, "You have lost all of your "
+                        + police.getDemandingItem());
+
+                displayPanel(createMainGamePanel());
+            }
+        });
+
+        JButton escapePolice = Components.createButton("Attempt to Flee");
+        escapePolice.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (game.getPilotPoints() > police.getFleeThreshold()
+                        && game.goToRegion(previousRegion)) {
+                    displayPanel(createMainGamePanel());
+                    JOptionPane.showMessageDialog(frame,
+                            "You have successfully escaped.");
+                } else {
+                    game.getPlayer().getShip().alterCurrentHealth(-1 * police.getDamage());
+
+                    game.getInventoryItems().remove(police.getDemandingItem());
+                    JOptionPane.showMessageDialog(frame, "You have lost all of your "
+                            + police.getDemandingItem());
+
+                    game.getPlayer().changeCredits(-1 * (game.getCredits() / 2));
+                    displayPanel(createMainGamePanel());
+                    JOptionPane.showMessageDialog(frame, "You failed to flee. Police damaged your "
+                                    + "ship by " + police.getDamage()
+                                    + " points, taken your item, "
+                                    + "and you've been fined half of your credits.", "Failed to Evade",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        JButton fightPolice = Components.createButton("Attempt to Fight");
+        fightPolice.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (game.getFighterPoints() > police.getFightThreshold()) {
+                    displayPanel(createMainGamePanel());
+                    JOptionPane.showMessageDialog(frame, "You have successfully defeated the "
+                            + "police and continued traveling.");
+                } else {
+                    game.getPlayer().getShip().alterCurrentHealth(-1 * police.getDamage());
+
+                    game.getInventoryItems().remove(police.getDemandingItem());
+
+                    game.getPlayer().changeCredits(-1 * (game.getCredits()));
+                    displayPanel(createMainGamePanel());
+                    JOptionPane.showMessageDialog(frame, "You lost. The police damaged your ship by "
+                                    + police.getDamage() + " points, you've lost your item, and you've lost all credits.",
+                            "Failed to Evade", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        Components.addComponent(policePanel, policeIcon, 0, 0, new Insets(0, 0, 0, 0));
+        Components.addComponent(policePanel, policeEncountered, 0, 1, new Insets(0, 0, 0, 0));
+        Components.addComponent(policePanel, policeDemand, 0, 2, new Insets(0, 0, 0, 0));
+        Components.addComponent(policePanel, forfeitItems, 0, 3, new Insets(10, 0, 10, 0));
+        Components.addComponent(policePanel, escapePolice, 0, 4, new Insets(10, 0, 10, 0));
+        Components.addComponent(policePanel, fightPolice, 0, 5, new Insets(10, 0, 10, 0));
+        //Components.addComponent(policePanel, policeDemand, 0, 6, new Insets(0, 0, 0, 0));
+        //Components.addComponent(policePanel, currentHealth, 0, 7, new Insets(0, 0, 0, 0));
+
+        return policePanel;
     }
 
     /**
