@@ -214,7 +214,7 @@ public class Components {
                 GridBagConstraints.LINE_START);
 
         // Creates and adds the configuration values to the panel
-        addComponent(playerPanel, createHeader2(game.getPlayerName(), Font.PLAIN), 3, 1,
+        addComponent(playerPanel, createHeader2(game.getPlayerName(), Font.PLAIN), 1, 1,
                 new Insets(10, 0, 0, 10), 1, 1, GridBagConstraints.LINE_END);
         addComponent(playerPanel, createHeader2(game.getDifficulty().toString().charAt(0)
                                 + game.getDifficulty().toString().substring(1).toLowerCase(),
