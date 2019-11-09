@@ -393,10 +393,6 @@ public class SpaceTrader {
                 regionButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        // 0 - 0.25: Proceed without encountering any NPC
-                        // 0.25 - 0.50: Encounters Bandits
-                        // 0.50 - 0.75: Encounters Trader
-                        // 0.75 - 1.00: ...
                         double encounterNPCProbability = Math.random();
                         double encounterBandit;
                         double encounterTrader;

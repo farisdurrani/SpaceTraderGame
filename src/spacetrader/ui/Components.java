@@ -271,6 +271,7 @@ public class Components {
     public static JPanel createShipPanel(Game game) {
         JPanel gamePanel = new JPanel();
         gamePanel.setLayout(new GridBagLayout());
+        JButton repairShip = Components.createButton("Repair");
 
         addComponent(gamePanel, createHeader1("Ship"), 0, 0, new Insets(0, 0, 20, 0), 2, 1);
 
@@ -282,6 +283,8 @@ public class Components {
                 new Insets(10, 0, 0, 10), GridBagConstraints.LINE_START);
         addComponent(gamePanel, createHeader2("Capacity:"), 0, 4,
                 new Insets(10, 0, 0, 10), GridBagConstraints.LINE_START);
+        addComponent(gamePanel, repairShip, 0, 5,
+                new Insets(10, 0, 0, 10), 2, 1, GridBagConstraints.CENTER);
 
         addComponent(gamePanel, createHeader2(game.getShipType(), Font.PLAIN), 1, 1,
                 new Insets(10, 0, 0, 10), GridBagConstraints.LINE_END);
