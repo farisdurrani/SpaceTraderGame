@@ -326,7 +326,8 @@ public class SpaceTrader {
         Components.addComponent(regionPanel, Components.createRegionPanel(game), 1, 0,
                 new Insets(0, 10, 20, 10), 1, 1, GridBagConstraints.PAGE_START);
 
-        Components.addComponent(regionPanel, Components.createShipPanel(game), 2, 0,
+        Components.addComponent(regionPanel, Components.createShipPanel(game,
+                frame), 2, 0,
                 new Insets(0, 10, 20, 0), 1, 1, GridBagConstraints.PAGE_START);
 
         JButton marketButton = Components.createButton("Market");
@@ -375,7 +376,8 @@ public class SpaceTrader {
         Components.addComponent(regionPanel, Components.createRegionPanel(game), 0, 0,
                 new Insets(0, 0, 0, 10), GridBagConstraints.PAGE_START);
 
-        Components.addComponent(regionPanel, Components.createShipPanel(game), 1, 0,
+        Components.addComponent(regionPanel, Components.createShipPanel(game,
+                frame), 1, 0,
                 new Insets(0, 10, 0, 10), 1, 1, GridBagConstraints.PAGE_START);
 
         JPanel travelPanel = new JPanel();
@@ -619,7 +621,8 @@ public class SpaceTrader {
                     displayPanel(createMainGamePanel());
                     JOptionPane.showMessageDialog(frame, "You failed to rob the Trader. The Trader"
                                     + " damaged your ship by " + trader.getDamageCaused()
-                                    + " health points.");
+                                    + " health points.", "Defeated",
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -743,7 +746,8 @@ public class SpaceTrader {
         Components.addComponent(marketPanel, Components.createRegionPanel(game), 2, 0,
                 new Insets(0, 0, 20, 10), 3, 1, GridBagConstraints.PAGE_START);
 
-        Components.addComponent(marketPanel, Components.createShipPanel(game), 5, 0,
+        Components.addComponent(marketPanel, Components.createShipPanel(game,
+                frame), 5, 0,
                 new Insets(0, 10, 20, 0), 2, 1, GridBagConstraints.PAGE_START);
 
         int y = 1;
@@ -837,7 +841,8 @@ public class SpaceTrader {
         Components.addComponent(inventoryPanel, Components.createRegionPanel(game), 1, 0,
                 new Insets(0, 0, 20, 10), 1, 1, GridBagConstraints.PAGE_START);
 
-        Components.addComponent(inventoryPanel, Components.createShipPanel(game), 2, 0,
+        Components.addComponent(inventoryPanel,
+                Components.createShipPanel(game, frame), 2, 0,
                 new Insets(0, 10, 20, 0), 1, 1, GridBagConstraints.PAGE_START);
 
         int y = 1;
