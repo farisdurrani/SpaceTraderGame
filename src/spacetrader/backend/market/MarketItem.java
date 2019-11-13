@@ -84,7 +84,7 @@ public class MarketItem {
             // base price = 10 - 30
             basePrice = produceBasePrice(10, 30);
             // only available in MEDIEVAL - FUTURISTIC inclusive
-            createPossibleTechLevels(false, false, true, true, true, true, false);
+            createPossibleTechLevels(false, false, true, true, true, false,false);
             break;
         case MACHINE_GUNS:
             officialItemName = "Machine Guns";

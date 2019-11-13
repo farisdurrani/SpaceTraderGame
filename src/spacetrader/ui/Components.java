@@ -7,8 +7,14 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Components {
+
+    /** Number of credits available. Made class-local to be accessed by
+     * playerPanel and modified by ShipPanel after repairing ship. */
+    private static JLabel credits;
 
     /**
      * Adds a component to the panel using the given Grid Bag Constants
@@ -199,6 +205,8 @@ public class Components {
     public static JPanel createPlayerPanel(Game game) {
         JPanel playerPanel = new JPanel();
         playerPanel.setLayout(new GridBagLayout());
+        credits = Components.createHeader2("$" + game.getCredits(),
+                Font.PLAIN);
 
         // Creates and adds the player display header to the panel
         addComponent(playerPanel, createHeader1("Player"), 0, 0, new Insets(0, 0, 20, 0), 2, 1);
@@ -232,8 +240,7 @@ public class Components {
         addComponent(playerPanel, createHeader2("Engineer: "
                         + game.getEngineerPoints(), Font.PLAIN), 1, 6, new Insets(2, 0, 0, 10),
                 GridBagConstraints.LINE_END);
-        addComponent(playerPanel, createHeader2("$"
-                        + game.getCredits(), Font.PLAIN), 1, 7, new Insets(10, 0, 0, 10),
+        addComponent(playerPanel, credits, 1, 7, new Insets(10, 0, 0, 10),
                 GridBagConstraints.LINE_END);
 
         return playerPanel;
@@ -268,9 +275,80 @@ public class Components {
         return regionPanel;
     }
 
-    public static JPanel createShipPanel(Game game) {
+    /**
+     * Creates the ship panel for the current ship. Includes button to
+     * repair ship.
+     * Cost to repair = approx. health amount to be restored / Math.sqrt
+     * (Engineer skill) current region's inflation index * difficulty level
+     * (0.5 or 1.0 or 1.5)
+     *
+     * @param game the current game
+     * @param frame the current frame
+     * */
+    public static JPanel createShipPanel(Game game, JFrame frame) {
         JPanel gamePanel = new JPanel();
+        JLabel health = Components.createHeader2(game.getHealth(), Font.PLAIN);
         gamePanel.setLayout(new GridBagLayout());
+
+        JButton repairShip = Components.createButton("Repair");
+        repairShip.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                double currentHealth =
+                        game.getPlayer().getShip().getCurrentHealth();
+                double maxHealth = game.getPlayer().getShip().getMaxHealth();
+                double healthToRestore = maxHealth - currentHealth;
+                double difficultyIndex;
+                switch (game.getDifficulty()) {
+                    case HARD:
+                        difficultyIndex = 1.5;
+                        break;
+                    case MEDIUM:
+                        difficultyIndex = 1.0;
+                        break;
+                    case EASY:
+                        difficultyIndex = 0.5;
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: "
+                                + game.getDifficulty());
+                }
+                double engSkill;
+                if (game.getPlayer().getEngineerPoints() == 0) {
+                    // if engSkill is 0, multiply costRepairShip by 1.5
+                    engSkill = Math.pow(2 / 3.0, 2);
+                } else {
+                    engSkill = game.getPlayer().getEngineerPoints();
+                }
+                double regionInflationIndex =
+                        game.getCurrentMarket().getRegionPriceMultiplier() + 0.3;
+                int costRepairShip = (int) (
+                        (Math.random() + 0.5) * (healthToRestore
+                        / Math.sqrt(engSkill) * regionInflationIndex
+                        * difficultyIndex));
+
+                int repairShipDialog = JOptionPane.showConfirmDialog(frame,
+                        "Do you want to repair ship for $"
+                                + costRepairShip + "?", "Repair Ship?",
+                        JOptionPane.YES_NO_OPTION);
+                if (repairShipDialog == JOptionPane.YES_OPTION) {
+                    if (game.getCredits() >= costRepairShip) {
+                        game.getPlayer().getShip().alterCurrentHealth((int)
+                                (maxHealth - currentHealth));
+                        game.getPlayer().changeCredits(-1 * costRepairShip);
+                        JOptionPane.showMessageDialog(frame,
+                                "You have successfully repaired your ship.");
+                        health.setText(game.getHealth());
+                        credits.setText("$" + game.getCredits());
+                    } else {
+                        JOptionPane.showMessageDialog(frame,
+                                "You do not have enough credits.",
+                                "Not enough credits",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        });
 
         addComponent(gamePanel, createHeader1("Ship"), 0, 0, new Insets(0, 0, 20, 0), 2, 1);
 
@@ -282,12 +360,14 @@ public class Components {
                 new Insets(10, 0, 0, 10), GridBagConstraints.LINE_START);
         addComponent(gamePanel, createHeader2("Capacity:"), 0, 4,
                 new Insets(10, 0, 0, 10), GridBagConstraints.LINE_START);
+        addComponent(gamePanel, repairShip, 0, 5,
+                new Insets(10, 0, 0, 10), 2, 1, GridBagConstraints.CENTER);
 
         addComponent(gamePanel, createHeader2(game.getShipType(), Font.PLAIN), 1, 1,
                 new Insets(10, 0, 0, 10), GridBagConstraints.LINE_END);
         addComponent(gamePanel, createHeader2(game.getFuel(), Font.PLAIN), 1, 2,
                 new Insets(10, 0, 0, 10), GridBagConstraints.LINE_END);
-        addComponent(gamePanel, createHeader2(game.getHealth(), Font.PLAIN), 1, 3,
+        addComponent(gamePanel, health, 1, 3,
                 new Insets(10, 0, 0, 10), GridBagConstraints.LINE_END);
         addComponent(gamePanel, createHeader2(game.getCapacity(), Font.PLAIN), 1, 4,
                 new Insets(10, 0, 0, 10), GridBagConstraints.LINE_END);
