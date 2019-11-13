@@ -65,6 +65,14 @@ public class Inventory {
         return false;
     }
 
+    public boolean removeItem(String item) {
+        if (items.containsKey(item)) {
+            items.remove(item);
+            return true;
+        }
+        return false;
+    }
+
     public boolean removeAllItems() {
         items.clear();
         return true;

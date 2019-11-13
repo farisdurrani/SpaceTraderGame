@@ -262,6 +262,10 @@ public class Game {
         return false;
     }
 
+    public void removeItem(String item) {
+        player.getShip().removeItem(item);
+    }
+
     /**
      * Gets the starting skill points for a given difficulty
      *

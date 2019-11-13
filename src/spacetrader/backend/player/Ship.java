@@ -182,6 +182,10 @@ public class Ship {
         return inventory.removeItem(item, quantity);
     }
 
+    public boolean removeItem(String item) {
+        return inventory.removeItem(item);
+    }
+
     public boolean removeAllItems() {
         return inventory.removeAllItems();
     }

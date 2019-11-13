@@ -652,7 +652,7 @@ public class SpaceTrader {
         forfeitItems.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                game.getInventoryItems().remove(police.getDemandingItem());
+                game.removeItem(police.getDemandingItem());
                 JOptionPane.showMessageDialog(frame, "You have lost all of your "
                         + police.getDemandingItem());
 
@@ -672,7 +672,7 @@ public class SpaceTrader {
                 } else {
                     game.getPlayer().getShip().alterCurrentHealth(-1 * police.getDamage());
 
-                    game.getInventoryItems().remove(police.getDemandingItem());
+                    game.removeItem(police.getDemandingItem());
                     JOptionPane.showMessageDialog(frame, "You have lost all of your "
                             + police.getDemandingItem());
 
@@ -681,7 +681,8 @@ public class SpaceTrader {
                     JOptionPane.showMessageDialog(frame, "You failed to flee. Police damaged your "
                                     + "ship by " + police.getDamage()
                                     + " points, taken your item, "
-                                    + "and you've been fined half of your credits.", "Failed to Evade",
+                                    + "and you've been fined half of your credits.",
+                            "Failed to Evade",
                             JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -698,12 +699,14 @@ public class SpaceTrader {
                 } else {
                     game.getPlayer().getShip().alterCurrentHealth(-1 * police.getDamage());
 
-                    game.getInventoryItems().remove(police.getDemandingItem());
+                    game.removeItem(police.getDemandingItem());
 
                     game.getPlayer().changeCredits(-1 * (game.getCredits()));
                     displayPanel(createMainGamePanel());
-                    JOptionPane.showMessageDialog(frame, "You lost. The police damaged your ship by "
-                                    + police.getDamage() + " points, you've lost your item, and you've lost all credits.",
+                    JOptionPane.showMessageDialog(frame, "You lost. The police damaged"
+                                    + "your ship by "
+                                    + police.getDamage() + " points, you've lost your item,"
+                                    + "and you've lost all credits.",
                             "Failed to Evade", JOptionPane.ERROR_MESSAGE);
                 }
             }

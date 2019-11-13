@@ -78,13 +78,13 @@ public class Trader {
     }
 
     public boolean rob() {
-        boolean negotiated = Math.random() < negotiationChance;
-        if (negotiated) {
+        boolean robbed = Math.random() < robChance;
+        if (robbed) {
             itemCost /= 2;
         } else {
             itemCost *= 2;
         }
-        return negotiated;
+        return robbed;
     }
 
     public int getDamageCaused() {

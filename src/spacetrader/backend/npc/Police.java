@@ -4,7 +4,6 @@ import spacetrader.backend.Game;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.Random;
 import java.util.Set;
 
