@@ -115,7 +115,7 @@ public class MarketItem {
             createPossibleTechLevels(false, true, true, true, true, true, true);
             break;
         case UNIVERSE:
-            officialItemName = "Deed to the Universe";
+            officialItemName = "Universe";
             basePrice = 1000;
             // not available in any tech levels, must be put in a market by the universe
             createPossibleTechLevels(false, false, false, false, false, false, false);
@@ -215,5 +215,9 @@ public class MarketItem {
      * @return item name */
     public String getOfficialItemName() {
         return officialItemName;
+    }
+
+    protected void setOfficialItemName(String name) {
+        officialItemName = name;
     }
 }

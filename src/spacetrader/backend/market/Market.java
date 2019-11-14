@@ -70,8 +70,10 @@ public class Market {
         }
     }
 
-    public void addUniverseDeed() {
-        marketItemsInRegion.add(new MarketItem(MarketGoods.UNIVERSE));
+    public void addUniverseDeed(String playerName) {
+        MarketItem deed = new MarketItem(MarketGoods.UNIVERSE);
+        deed.setOfficialItemName(playerName + "'s Universe");
+        marketItemsInRegion.add(deed);
     }
 
     /** Gets the available market items in the region.

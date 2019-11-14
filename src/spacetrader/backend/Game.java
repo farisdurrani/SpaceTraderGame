@@ -58,7 +58,7 @@ public class Game {
      * starting universe
      */
     public void startGame() {
-        universe = new Universe(regionNames);
+        universe = new Universe(regionNames, player.getName());
 
         universe.goToRegion(universe.getRegionList()[(int) (Math.random()
                 * universe.getNumberOfRegions())]);

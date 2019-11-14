@@ -823,7 +823,7 @@ public class SpaceTrader {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (game.buyItem(marketItem, 1)) {
-                        if (marketItem.getOfficialItemName().equals("Deed to the Universe")) {
+                        if (marketItem.getOfficialItemName().contains("Universe")) {
                             displayPanel(createWinPanel());
                         } else {
                             displayPanel(createMarketPanel());
@@ -838,7 +838,7 @@ public class SpaceTrader {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (game.buyItem(marketItem, 10)) {
-                        if (marketItem.getOfficialItemName().equals("Deed to the Universe")) {
+                        if (marketItem.getOfficialItemName().contains("Universe")) {
                             displayPanel(createWinPanel());
                         } else {
                             displayPanel(createMarketPanel());

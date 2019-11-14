@@ -9,7 +9,7 @@ public class Universe {
      *
      * @param regionNames the names of the regions in the new universe
      */
-    public Universe(String[] regionNames) {
+    public Universe(String[] regionNames, String playerName) {
         regions = new Region[regionNames.length];
 
         for (int i = 0; i < regions.length; i++) {
@@ -37,7 +37,7 @@ public class Universe {
         while (regions[deedRegion].getTechLevel() == TechLevel.PRE_AG) {
             deedRegion = (int) (Math.random() * regions.length);
         }
-        regions[deedRegion].getMarket().addUniverseDeed();
+        regions[deedRegion].getMarket().addUniverseDeed(playerName);
     }
 
     /**
