@@ -30,6 +30,14 @@ public class Universe {
 
             regions[i] = new Region(regionNames[i], coordinate, techLevel);
         }
+
+        // Places the Universe Deed item in a random region with a Tech Level of Agriculture
+        // or higher
+        int deedRegion = (int) (Math.random() * regions.length);
+        while (regions[deedRegion].getTechLevel() == TechLevel.PRE_AG) {
+            deedRegion = (int) (Math.random() * regions.length);
+        }
+        regions[deedRegion].getMarket().addUniverseDeed();
     }
 
     /**

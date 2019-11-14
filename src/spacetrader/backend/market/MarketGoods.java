@@ -13,5 +13,6 @@ public enum MarketGoods {
     MACHINE_GUNS,
     LASERS,
     PHASE_BEAMS,
-    FUEL
+    FUEL,
+    UNIVERSE
 }

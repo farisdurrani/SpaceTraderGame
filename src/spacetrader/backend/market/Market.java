@@ -70,6 +70,10 @@ public class Market {
         }
     }
 
+    public void addUniverseDeed() {
+        marketItemsInRegion.add(new MarketItem(MarketGoods.UNIVERSE));
+    }
+
     /** Gets the available market items in the region.
      *
      * @return available market items in the region */
