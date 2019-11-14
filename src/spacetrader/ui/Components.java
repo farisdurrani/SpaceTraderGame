@@ -368,6 +368,7 @@ public class Components {
      *
      * @param game the current game
      * @param frame the current frame
+     * @return the ship panel
      * */
     public static JPanel createShipPanel(Game game, JFrame frame) {
         JPanel gamePanel = new JPanel();

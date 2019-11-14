@@ -8,6 +8,7 @@ public class Universe {
      * Creates a new Universe with regions specified by the region names
      *
      * @param regionNames the names of the regions in the new universe
+     * @param playerName the name of the player
      */
     public Universe(String[] regionNames, String playerName) {
         regions = new Region[regionNames.length];

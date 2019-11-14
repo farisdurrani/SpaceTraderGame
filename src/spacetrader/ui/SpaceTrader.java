@@ -518,19 +518,20 @@ public class SpaceTrader {
                             "You have successfully evaded the Bandit.");
                 } else {
                     // ship gets damaged
-                    if (!game.getPlayer().getShip().alterCurrentHealth(-1 * bandit.getDamageCaused())) {
+                    if (!game.getPlayer().getShip().alterCurrentHealth(-1
+                            * bandit.getDamageCaused())) {
                         game.getPlayer().changeCredits(-1 * game.getCredits());
                         displayPanel(createLossPanel());
-                        JOptionPane.showMessageDialog(frame, "You failed to evade. Bandit damaged your "
-                                        + "ship by " + bandit.getDamageCaused()
+                        JOptionPane.showMessageDialog(frame, "You failed to evade. Bandit damaged "
+                                        + "your ship by " + bandit.getDamageCaused()
                                         + " points and you've lost all credits.", "Failed to Evade",
                                 JOptionPane.ERROR_MESSAGE);
                     } else {
                         // player loses all credits
                         game.getPlayer().changeCredits(-1 * game.getCredits());
                         displayPanel(createMainGamePanel());
-                        JOptionPane.showMessageDialog(frame, "You failed to evade. Bandit damaged your "
-                                        + "ship by " + bandit.getDamageCaused()
+                        JOptionPane.showMessageDialog(frame, "You failed to evade. Bandit damaged "
+                                        + "your ship by " + bandit.getDamageCaused()
                                         + " points and you've lost all credits.", "Failed to Evade",
                                 JOptionPane.ERROR_MESSAGE);
                     }
@@ -551,18 +552,21 @@ public class SpaceTrader {
                             + " as a reward.");
                 } else {
                     //Check for loss
-                    if (!game.getPlayer().getShip().alterCurrentHealth(-1 * bandit.getDamageCaused())) {
-                        JOptionPane.showMessageDialog(frame, "You lost. Bandit damaged your ship by "
-                                        + bandit.getDamageCaused() + " points and you've lost all credits.",
+                    if (!game.getPlayer().getShip().alterCurrentHealth(-1
+                            * bandit.getDamageCaused())) {
+                        JOptionPane.showMessageDialog(frame, "You lost. Bandit damaged your ship "
+                                        + " by " + bandit.getDamageCaused() + " points and you've "
+                                        + "lost all credits.",
                                 "Failed to Evade", JOptionPane.ERROR_MESSAGE);
                         displayPanel(createLossPanel());
                     } else {
                         // player loses all credits
                         game.getPlayer().changeCredits(-1 * game.getCredits());
-                        displayPanel(createMainGamePanel());
-                        JOptionPane.showMessageDialog(frame, "You lost. Bandit damaged your ship by "
-                                        + bandit.getDamageCaused() + " points and you've lost all credits.",
+                        JOptionPane.showMessageDialog(frame, "You lost. Bandit damaged your ship "
+                                        + " by " + bandit.getDamageCaused() + " points and you've "
+                                        + "lost all credits.",
                                 "Failed to Evade", JOptionPane.ERROR_MESSAGE);
+                        displayPanel(createMainGamePanel());
                     }
 
                 }
@@ -651,15 +655,16 @@ public class SpaceTrader {
                             + trader.getItemName() + " from  the Trader.");
                 } else {
                     //Check for loss
-                    if (!game.getPlayer().getShip().alterCurrentHealth(-1 * trader.getDamageCaused())) {
+                    if (!game.getPlayer().getShip().alterCurrentHealth(-1
+                            * trader.getDamageCaused())) {
                         JOptionPane.showMessageDialog(frame, "Your ship's health has reached 0."
                             + "You have lost the game.");
                         displayPanel(createLossPanel());
                     } else {
                         // ship gets damaged
                         displayPanel(createMainGamePanel());
-                        JOptionPane.showMessageDialog(frame, "You failed to rob the Trader. The Trader"
-                                + " damaged your ship by " + trader.getDamageCaused()
+                        JOptionPane.showMessageDialog(frame, "You failed to rob the Trader. The "
+                                + " Trader damaged your ship by " + trader.getDamageCaused()
                                 + " health points.");
                     }
                 }
@@ -686,6 +691,7 @@ public class SpaceTrader {
     /**
      * Creates the police panel with options for action
      *
+     * @param previousRegion the region the player was previously in
      * @return the police panel with the given items for requested
      */
     public JPanel createPolicePanel(Region previousRegion) {
@@ -732,8 +738,8 @@ public class SpaceTrader {
 
                         game.getPlayer().changeCredits(-1 * (game.getCredits() / 2));
                         displayPanel(createMainGamePanel());
-                        JOptionPane.showMessageDialog(frame, "You failed to flee. Police damaged your "
-                                        + "ship by " + police.getDamage()
+                        JOptionPane.showMessageDialog(frame, "You failed to flee. Police damaged "
+                                        + "your ship by " + police.getDamage()
                                         + " points, taken your item, "
                                         + "and you've been fined half of your credits.",
                                 "Failed to Evade",
