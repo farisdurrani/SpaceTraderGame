@@ -115,6 +115,7 @@ public class SpaceTrader {
      * @return the initial configuration panel
      */
     private JPanel createConfigurationPanel() {
+
         // Creates the panel that will contain all of the content for the configuration panel
         JPanel configPanel = new JPanel();
         configPanel.setLayout(new GridBagLayout());
@@ -398,7 +399,7 @@ public class SpaceTrader {
                         // Moves to a new region
                         if (game.goToRegion(region)) {
                             int encounter = game.encounter();
-                            if (encounter == Game.BANDIT_ENCOUNTER) {
+                            if (true) {
                                 try {
                                     displayPanel(createBanditPanel(currentRegion));
                                 } catch (IOException ex) {
@@ -474,9 +475,13 @@ public class SpaceTrader {
                 } else {
                     // ship gets damaged
                     int damage = (int) (Math.sqrt(bandit.getDamageCaused()));
-                    game.getPlayer().getShip().alterCurrentHealth(-1 * damage);
-                    JOptionPane.showMessageDialog(frame, "You are unable to give anything to "
-                            + "Bandit. Your ship has been damaged by " + damage + "points.");
+                    if (!game.getPlayer().getShip().alterCurrentHealth(-1 * damage)) {
+                        displayPanel(createLossPanel());
+                    } else {
+                        game.getPlayer().getShip().alterCurrentHealth(-1 * damage);
+                        JOptionPane.showMessageDialog(frame, "You are unable to give anything to "
+                                + "Bandit. Your ship has been damaged by " + damage + "points.");
+                    }
                 }
                 // Displays the next region screen
                 displayPanel(createMainGamePanel());
@@ -519,14 +524,23 @@ public class SpaceTrader {
                             + "Bandit and earned $" + bandit.getCreditsAwarded()
                             + " as a reward.");
                 } else {
-                    // ship gets damaged
-                    game.getPlayer().getShip().alterCurrentHealth(-1 * bandit.getDamageCaused());
-                    // player loses all credits
-                    game.getPlayer().changeCredits(-1 * game.getCredits());
-                    displayPanel(createMainGamePanel());
-                    JOptionPane.showMessageDialog(frame, "You lost. Bandit damaged your ship by "
-                            + bandit.getDamageCaused() + " points and you've lost all credits.",
-                            "Failed to Evade", JOptionPane.ERROR_MESSAGE);
+                    //Check for loss
+                    if (!game.getPlayer().getShip().alterCurrentHealth(-1 * bandit.getDamageCaused())) {
+                        JOptionPane.showMessageDialog(frame, "You lost. Bandit damaged your ship by "
+                                        + bandit.getDamageCaused() + " points and you've lost all credits.",
+                                "Failed to Evade", JOptionPane.ERROR_MESSAGE);
+                        displayPanel(createLossPanel());
+                    } else {
+                        // ship gets damaged
+                        game.getPlayer().getShip().alterCurrentHealth(-1 * bandit.getDamageCaused());
+                        // player loses all credits
+                        game.getPlayer().changeCredits(-1 * game.getCredits());
+                        displayPanel(createMainGamePanel());
+                        JOptionPane.showMessageDialog(frame, "You lost. Bandit damaged your ship by "
+                                        + bandit.getDamageCaused() + " points and you've lost all credits.",
+                                "Failed to Evade", JOptionPane.ERROR_MESSAGE);
+                    }
+
                 }
             }
         });
@@ -612,12 +626,19 @@ public class SpaceTrader {
                             + game.addItem(trader.getItem(), trader.getItemCount()) + " "
                             + trader.getItemName() + " from  the Trader.");
                 } else {
-                    // ship gets damaged
-                    game.getPlayer().getShip().alterCurrentHealth(-1 * trader.getDamageCaused());
-                    displayPanel(createMainGamePanel());
-                    JOptionPane.showMessageDialog(frame, "You failed to rob the Trader. The Trader"
-                                    + " damaged your ship by " + trader.getDamageCaused()
-                                    + " health points.");
+                    //Check for loss
+                    if (!game.getPlayer().getShip().alterCurrentHealth(-1 * trader.getDamageCaused())) {
+                        JOptionPane.showMessageDialog(frame, "Your ship's health has reached 0."
+                            + "You have lost the game.");
+                        displayPanel(createLossPanel());
+                    } else {
+                        // ship gets damaged
+                        game.getPlayer().getShip().alterCurrentHealth(-1 * trader.getDamageCaused());
+                        displayPanel(createMainGamePanel());
+                        JOptionPane.showMessageDialog(frame, "You failed to rob the Trader. The Trader"
+                                + " damaged your ship by " + trader.getDamageCaused()
+                                + " health points.");
+                    }
                 }
             }
         });
@@ -639,6 +660,11 @@ public class SpaceTrader {
         return traderPanel;
     }
 
+    /**
+     * Creates the police panel with options for action
+     *
+     * @return the police panel with the given items for requested
+     */
     public JPanel createPolicePanel(Region previousRegion) {
         JPanel policePanel = new JPanel();
         policePanel.setLayout(new GridBagLayout());
@@ -672,20 +698,26 @@ public class SpaceTrader {
                     JOptionPane.showMessageDialog(frame,
                             "You have successfully escaped.");
                 } else {
-                    game.getPlayer().getShip().alterCurrentHealth(-1 * police.getDamage());
+                    if (!game.getPlayer().getShip().alterCurrentHealth(-1 * police.getDamage())) {
+                        JOptionPane.showMessageDialog(frame, "Your ship's health has reached 0."
+                                + "You have lost the game.");
+                        displayPanel(createLossPanel());
+                    } else {
+                        game.getPlayer().getShip().alterCurrentHealth(-1 * police.getDamage());
 
-                    game.removeItem(police.getDemandingItem());
-                    JOptionPane.showMessageDialog(frame, "You have lost all of your "
-                            + police.getDemandingItem());
+                        game.removeItem(police.getDemandingItem());
+                        JOptionPane.showMessageDialog(frame, "You have lost all of your "
+                                + police.getDemandingItem());
 
-                    game.getPlayer().changeCredits(-1 * (game.getCredits() / 2));
-                    displayPanel(createMainGamePanel());
-                    JOptionPane.showMessageDialog(frame, "You failed to flee. Police damaged your "
-                                    + "ship by " + police.getDamage()
-                                    + " points, taken your item, "
-                                    + "and you've been fined half of your credits.",
-                            "Failed to Evade",
-                            JOptionPane.ERROR_MESSAGE);
+                        game.getPlayer().changeCredits(-1 * (game.getCredits() / 2));
+                        displayPanel(createMainGamePanel());
+                        JOptionPane.showMessageDialog(frame, "You failed to flee. Police damaged your "
+                                        + "ship by " + police.getDamage()
+                                        + " points, taken your item, "
+                                        + "and you've been fined half of your credits.",
+                                "Failed to Evade",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         });
@@ -699,17 +731,23 @@ public class SpaceTrader {
                     JOptionPane.showMessageDialog(frame, "You have successfully defeated the "
                             + "police and continued traveling.");
                 } else {
-                    game.getPlayer().getShip().alterCurrentHealth(-1 * police.getDamage());
+                    if (!game.getPlayer().getShip().alterCurrentHealth(-1 * police.getDamage())) {
+                        JOptionPane.showMessageDialog(frame, "Your ship's health has reached 0."
+                                + "You have lost the game.");
+                        displayPanel(createLossPanel());
+                    } else {
+                        game.getPlayer().getShip().alterCurrentHealth(-1 * police.getDamage());
 
-                    game.removeItem(police.getDemandingItem());
+                        game.removeItem(police.getDemandingItem());
 
-                    game.getPlayer().changeCredits(-1 * (game.getCredits()));
-                    displayPanel(createMainGamePanel());
-                    JOptionPane.showMessageDialog(frame, "You lost. The police damaged"
-                                    + "your ship by "
-                                    + police.getDamage() + " points, you've lost your item,"
-                                    + "and you've lost all credits.",
-                            "Failed to Evade", JOptionPane.ERROR_MESSAGE);
+                        game.getPlayer().changeCredits(-1 * (game.getCredits()));
+                        displayPanel(createMainGamePanel());
+                        JOptionPane.showMessageDialog(frame, "You lost. The police damaged"
+                                        + "your ship by "
+                                        + police.getDamage() + " points, you've lost your item,"
+                                        + "and you've lost all credits.",
+                                "Failed to Evade", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         });
@@ -861,6 +899,38 @@ public class SpaceTrader {
         Components.addComponent(inventoryPanel, backButton, 1, y, new Insets(30, 0, 0, 0), 1, 1);
 
         return inventoryPanel;
+    }
+
+    /**
+     * Creates the welcome panel with all of the content necessary for the
+     * welcome screen.
+     *
+     * @return the Loss panel
+     */
+    private JPanel createLossPanel() {
+        JPanel endPanel = new JPanel();
+        endPanel.setLayout(new GridBagLayout());
+
+        Components.addComponent(endPanel, Components.createHeader1(
+                "GAME OVER"), 0, 0, new Insets(0, 0, 20, 0));
+
+        // Creates the start button
+        JButton retryButton = Components.createButton("Play Again");
+
+        // Adds a listener to start the game when the button is pressed
+        retryButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Displays the configuration screen
+                displayPanel(createWelcomePanel());
+            }
+        });
+
+        // Adds the start button to the panel
+        Components.addComponent(endPanel, retryButton, 0, 1,
+                new Insets(20, 0, 0, 0));
+
+        return endPanel;
     }
 
     /**
