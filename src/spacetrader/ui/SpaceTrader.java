@@ -753,7 +753,7 @@ public class SpaceTrader {
                             + "police and continued traveling.");
                 } else {
                     if (!game.getPlayer().getShip().alterCurrentHealth(-1 * police.getDamage())) {
-                        JOptionPane.showMessageDialog(frame, "Your ship's health has reached 0."
+                        JOptionPane.showMessageDialog(frame, "Your ship's health has reached 0. "
                                 + "You have lost the game.");
                         displayPanel(createLossPanel());
                     } else {
