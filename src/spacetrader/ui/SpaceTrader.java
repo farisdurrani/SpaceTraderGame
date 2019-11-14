@@ -75,6 +75,24 @@ public class SpaceTrader {
     }
 
     /**
+     * Clears the current window and displays a panel as the new content
+     *
+     * @param panel panel to be displayed
+     */
+    private void displayPanel(JScrollPane panel) {
+        // Removes the content from the previous screen
+        frame.getContentPane().removeAll();
+        frame.repaint();
+
+        // Sets the content to the next screen
+        frame.getContentPane().add(panel, BorderLayout.CENTER);
+        frame.setVisible(true);
+
+        // Focuses the name input
+        frame.transferFocusUpCycle();
+    }
+
+    /**
      * Creates the welcome panel with all of the content necessary for the
      * welcome screen.
      *
@@ -771,7 +789,7 @@ public class SpaceTrader {
      *
      * @return the market panel for the current region
      */
-    private JPanel createMarketPanel() {
+    private JScrollPane createMarketPanel() {
         JPanel marketPanel = new JPanel();
         marketPanel.setLayout(new GridBagLayout());
 
@@ -805,7 +823,11 @@ public class SpaceTrader {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (game.buyItem(marketItem, 1)) {
-                        displayPanel(createMarketPanel());
+                        if (marketItem.getOfficialItemName().equals("Deed to the Universe")) {
+                            displayPanel(createWinPanel());
+                        } else {
+                            displayPanel(createMarketPanel());
+                        }
                     }
                 }
             });
@@ -816,7 +838,11 @@ public class SpaceTrader {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (game.buyItem(marketItem, 10)) {
-                        displayPanel(createMarketPanel());
+                        if (marketItem.getOfficialItemName().equals("Deed to the Universe")) {
+                            displayPanel(createWinPanel());
+                        } else {
+                            displayPanel(createMarketPanel());
+                        }
                     }
                 }
             });
@@ -859,7 +885,8 @@ public class SpaceTrader {
         });
         Components.addComponent(marketPanel, backButton, 2, y, new Insets(30, 0, 0, 0), 3, 1);
 
-        return marketPanel;
+        return new JScrollPane(marketPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     }
 
     /**
@@ -902,9 +929,35 @@ public class SpaceTrader {
         return inventoryPanel;
     }
 
+    private JPanel createWinPanel() {
+        JPanel endPanel = new JPanel();
+        endPanel.setLayout(new GridBagLayout());
+
+        Components.addComponent(endPanel, Components.createHeader1(
+                "YOU WIN!"), 0, 0, new Insets(0, 0, 20, 0));
+
+        // Creates the start button
+        JButton retryButton = Components.createButton("Play Again");
+
+        // Adds a listener to start the game when the button is pressed
+        retryButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Displays the configuration screen
+                displayPanel(createWelcomePanel());
+            }
+        });
+
+        // Adds the start button to the panel
+        Components.addComponent(endPanel, retryButton, 0, 1,
+                new Insets(20, 0, 0, 0));
+
+        return endPanel;
+    }
+
     /**
-     * Creates the welcome panel with all of the content necessary for the
-     * welcome screen.
+     * Creates the loss panel with all of the content necessary for the
+     * loss screen.
      *
      * @return the Loss panel
      */

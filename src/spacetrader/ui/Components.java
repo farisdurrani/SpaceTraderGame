@@ -101,6 +101,90 @@ public class Components {
     }
 
     /**
+     * Adds a component to the panel using the given Grid Bag Constants
+     *
+     * @param panel the panel to add the component to
+     * @param component the component to add
+     * @param gridx the x position in the grid
+     * @param gridy the y position in the grid
+     * @param padding the grid padding
+     */
+    public static void addComponent(JScrollPane panel, JComponent component, int gridx, int gridy,
+                                    Insets padding) {
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = gridx;
+        c.gridy = gridy;
+        c.insets = padding;
+        panel.add(component, c);
+    }
+
+    /**
+     * Adds a component to the panel using the given Grid Bag Constants
+     *
+     * @param panel the panel to add the component to
+     * @param component the component to add
+     * @param gridx the x position in the grid
+     * @param gridy the y position in the grid
+     * @param padding the grid padding
+     * @param gridwidth the width in the grid
+     * @param gridheight the height in the grid
+     */
+    public static void addComponent(JScrollPane panel, JComponent component, int gridx, int gridy,
+                                    Insets padding, int gridwidth, int gridheight) {
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = gridx;
+        c.gridy = gridy;
+        c.insets = padding;
+        c.gridwidth = gridwidth;
+        c.gridheight = gridheight;
+        panel.add(component, c);
+    }
+
+    /**
+     * Adds a component to the panel using the given Grid Bag Constants
+     *
+     * @param panel the panel to add the component to
+     * @param component the component to add
+     * @param gridx the x position in the grid
+     * @param gridy the y position in the grid
+     * @param padding the grid padding
+     * @param gridwidth the width in the grid
+     * @param gridheight the height in the grid
+     * @param anchor the location to anchor the component
+     */
+    public static void addComponent(JScrollPane panel, JComponent component, int gridx, int gridy,
+                                    Insets padding, int gridwidth, int gridheight, int anchor) {
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = gridx;
+        c.gridy = gridy;
+        c.insets = padding;
+        c.gridwidth = gridwidth;
+        c.gridheight = gridheight;
+        c.anchor = anchor;
+        panel.add(component, c);
+    }
+
+    /**
+     * Adds a component to the panel using the given Grid Bag Constants
+     *
+     * @param panel the panel to add the component to
+     * @param component the component to add
+     * @param gridx the x position in the grid
+     * @param gridy the y position in the grid
+     * @param padding the grid padding
+     * @param anchor the location to anchor the component
+     */
+    public static void addComponent(JScrollPane panel, JComponent component, int gridx, int gridy,
+                                    Insets padding, int anchor) {
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = gridx;
+        c.gridy = gridy;
+        c.insets = padding;
+        c.anchor = anchor;
+        panel.add(component, c);
+    }
+
+    /**
      * Adds a component to the panel using the given custom Grid Bag constraints
      *
      * @param panel the panel to add the component to
