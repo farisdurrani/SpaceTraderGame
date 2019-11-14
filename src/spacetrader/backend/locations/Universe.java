@@ -37,6 +37,7 @@ public class Universe {
         while (regions[deedRegion].getTechLevel() == TechLevel.PRE_AG) {
             deedRegion = (int) (Math.random() * regions.length);
         }
+        System.out.println(regions[deedRegion].getName());
         regions[deedRegion].getMarket().addUniverseDeed(playerName);
     }
 

@@ -7,7 +7,8 @@ import spacetrader.backend.player.Player;
 public class MarketItem {
 
     /** Name of item. */
-    private String officialItemName;
+    protected String officialItemName;
+
     /**
      * Shows which Tech Levels can this item be found. Indexes in array:
      * 0 = pre-ag
@@ -84,7 +85,7 @@ public class MarketItem {
             // base price = 10 - 30
             basePrice = produceBasePrice(10, 30);
             // only available in MEDIEVAL - FUTURISTIC inclusive
-            createPossibleTechLevels(false, false, true, true, true, false,false);
+            createPossibleTechLevels(false, false, true, true, true, false, false);
             break;
         case MACHINE_GUNS:
             officialItemName = "Machine Guns";
@@ -215,9 +216,5 @@ public class MarketItem {
      * @return item name */
     public String getOfficialItemName() {
         return officialItemName;
-    }
-
-    protected void setOfficialItemName(String name) {
-        officialItemName = name;
     }
 }
