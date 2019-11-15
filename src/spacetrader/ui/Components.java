@@ -412,10 +412,17 @@ public class Components {
                         / Math.sqrt(engSkill) * regionInflationIndex
                         * difficultyIndex));
 
-                int repairShipDialog = JOptionPane.showConfirmDialog(frame,
-                        "Do you want to repair ship for $"
-                                + costRepairShip + "?", "Repair Ship?",
-                        JOptionPane.YES_NO_OPTION);
+                int repairShipDialog = 1;
+
+                if (currentHealth == maxHealth) {
+                    JOptionPane.showMessageDialog(frame,
+                            "Your ship is at maximum health.");
+                } else {
+                    repairShipDialog = JOptionPane.showConfirmDialog(frame,
+                            "Do you want to repair ship for $"
+                                    + costRepairShip + "?", "Repair Ship?",
+                            JOptionPane.YES_NO_OPTION);
+                }
                 if (repairShipDialog == JOptionPane.YES_OPTION) {
                     if (game.getCredits() >= costRepairShip) {
                         game.getPlayer().getShip().alterCurrentHealth((int)
