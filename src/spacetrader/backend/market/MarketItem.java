@@ -119,7 +119,8 @@ public class MarketItem {
             officialItemName = "Universe";
             basePrice = 1000;
             // not available in any tech levels, must be put in a market by the universe
-            createPossibleTechLevels(false, false, false, false, false, false, false);
+            createPossibleTechLevels(false, false, false, false, false, false,
+                    false);
             break;
         default:
             throw new IllegalStateException("Unexpected value: " + good);
