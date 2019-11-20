@@ -794,12 +794,12 @@ public class SpaceTrader {
                         game.getPlayer().changeCredits(-1 * (game.getCredits()));
                         displayPanel(createMainGamePanel());
                         JOptionPane.showMessageDialog(frame, "You lost. The police damaged"
-                                        + "your ship by " + police.getDamage()
+                                        + " your ship by " + police.getDamage()
                                         + " points, you've lost your item,"
                                         + " you've lost all credits, and "
                                         + "you've lost "
                                         + Police.PENALTY_FIGHT_POLICE
-                                        + "social credits for fighting.",
+                                        + " social credits for fighting.",
                                 "Failed to Evade", JOptionPane.ERROR_MESSAGE);
                     }
                 }
