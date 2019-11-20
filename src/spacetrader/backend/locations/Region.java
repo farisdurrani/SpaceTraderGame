@@ -1,12 +1,14 @@
 package spacetrader.backend.locations;
 
 import spacetrader.backend.market.Market;
+import spacetrader.backend.player.Player;
 
 public class Region {
     private String name;
     private Coordinate coordinate;
     private TechLevel techLevel;
     private Market market;
+    private Player player;
 
     /**
      * Creates a new Region object
@@ -15,11 +17,14 @@ public class Region {
      * @param x the x-coordinate of the region
      * @param y the y-coordinate of the region
      * @param techLevel the tech level of the region
+     * @param player the player
      */
-    public Region(String name, int x, int y, TechLevel techLevel) {
+    public Region(String name, int x, int y, TechLevel techLevel,
+                  Player player) {
         this.name = name;
         this.coordinate = new Coordinate(x, y);
         this.techLevel = techLevel;
+        this.player = player;
     }
 
     /**
@@ -28,11 +33,14 @@ public class Region {
      * @param name the name of the region
      * @param coordinate the coordinate of the region
      * @param techLevel the tech level of the region
+     * @param player the player
      */
-    public Region(String name, Coordinate coordinate, TechLevel techLevel) {
+    public Region(String name, Coordinate coordinate, TechLevel techLevel,
+                  Player player) {
         this.name = name;
         this.coordinate = coordinate;
         this.techLevel = techLevel;
+        this.player = player;
     }
 
     /**
@@ -62,9 +70,9 @@ public class Region {
         return techLevel;
     }
 
-    public Market getMarket() {
+    public Market getMarket(Player player) {
         if (market == null) {
-            market = new Market(techLevel);
+            market = new Market(techLevel, player);
         }
         return market;
     }

@@ -1,6 +1,7 @@
 package spacetrader.ui;
 
 import spacetrader.backend.Game;
+import spacetrader.backend.player.Player;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -15,6 +16,8 @@ public class Components {
     /** Number of credits available. Made class-local to be accessed by
      * playerPanel and modified by ShipPanel after repairing ship. */
     private static JLabel credits;
+    /** Number of social credits available. */
+    private static JLabel socialCredits;
 
     /**
      * Adds a component to the panel using the given Grid Bag Constants
@@ -291,6 +294,9 @@ public class Components {
         playerPanel.setLayout(new GridBagLayout());
         credits = Components.createHeader2("$" + game.getCredits(),
                 Font.PLAIN);
+        socialCredits =
+                Components.createHeader2(game.getSocialCredits() + "/"
+                        + Player.MAXSOCIALCREDITS, Font.PLAIN);
 
         // Creates and adds the player display header to the panel
         addComponent(playerPanel, createHeader1("Player"), 0, 0, new Insets(0, 0, 20, 0), 2, 1);
@@ -303,6 +309,9 @@ public class Components {
         addComponent(playerPanel, createHeader2("Skill Points:"), 0, 4, new Insets(10, 0, 0, 10),
                 1, 2, GridBagConstraints.LINE_START);
         addComponent(playerPanel, createHeader2("Credits:"), 0, 7, new Insets(10, 0, 0, 10),
+                GridBagConstraints.LINE_START);
+        addComponent(playerPanel, createHeader2("Social Credits:"), 0, 8,
+                new Insets(10, 0, 0, 10),
                 GridBagConstraints.LINE_START);
 
         // Creates and adds the configuration values to the panel
@@ -325,6 +334,8 @@ public class Components {
                         + game.getEngineerPoints(), Font.PLAIN), 1, 6, new Insets(2, 0, 0, 10),
                 GridBagConstraints.LINE_END);
         addComponent(playerPanel, credits, 1, 7, new Insets(10, 0, 0, 10),
+                GridBagConstraints.LINE_END);
+        addComponent(playerPanel, socialCredits, 1, 8, new Insets(10, 0, 0, 10),
                 GridBagConstraints.LINE_END);
 
         return playerPanel;

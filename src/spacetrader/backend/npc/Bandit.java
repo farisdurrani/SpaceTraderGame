@@ -26,6 +26,8 @@ public class Bandit {
     private int creditsAwarded;
     /** A general image of the bandit. */
     private BufferedImage gasMask;
+    /** Social credit reward for defeating bandit.*/
+    public static final int REWARD_DEFEAT_BANDIT = 300;
 
     public Bandit(Game game) throws IOException {
         moneyDemanded = (int) (Math.random() * Game.getCredits(game.getDifficulty()));

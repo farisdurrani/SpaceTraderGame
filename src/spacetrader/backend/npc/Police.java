@@ -14,6 +14,8 @@ public class Police {
 
     private int fleeThreshold;
     private int fightThreshold;
+    public static final int PENALTY_FLEE_POLICE = 100;
+    public static final int PENALTY_FIGHT_POLICE = 200;
 
     private int damage;
 

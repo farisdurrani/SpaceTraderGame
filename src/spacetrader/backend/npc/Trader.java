@@ -18,13 +18,15 @@ public class Trader {
     private int damageCaused;
     private BufferedImage icon;
     private Player player;
+    public static final int PENALTY_ROB_TRADER = 150;
 
     public Trader(Game game) {
         item = new MarketItem(MarketGoods.values()[(int) (Math.random()
                 * MarketGoods.values().length)]);
         itemCount = (int) (Math.random() * 25);
         itemCost = item.calculateItemPrice(game.getPlayer(),
-                game.getCurrentRegion().getMarket().getRegionPriceMultiplier());
+                game.getCurrentRegion().getMarket(game.getPlayer())
+                        .getRegionPriceMultiplier());
 
         negotiationChance = (double) game.getMerchantPoints()
                 / (1.0 + (double) game.getMerchantPoints());

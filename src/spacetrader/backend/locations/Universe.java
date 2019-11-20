@@ -1,5 +1,7 @@
 package spacetrader.backend.locations;
 
+import spacetrader.backend.player.Player;
+
 public class Universe {
     private Region[] regions;
     private int currentRegionIndex;
@@ -8,9 +10,9 @@ public class Universe {
      * Creates a new Universe with regions specified by the region names
      *
      * @param regionNames the names of the regions in the new universe
-     * @param playerName the name of the player
+     * @param player the player
      */
-    public Universe(String[] regionNames, String playerName) {
+    public Universe(String[] regionNames, Player player) {
         regions = new Region[regionNames.length];
 
         for (int i = 0; i < regions.length; i++) {
@@ -29,7 +31,8 @@ public class Universe {
             TechLevel techLevel = TechLevel.values()[(int) (Math.random()
                     * TechLevel.values().length)];
 
-            regions[i] = new Region(regionNames[i], coordinate, techLevel);
+            regions[i] = new Region(regionNames[i], coordinate, techLevel,
+                    player);
         }
 
         // Places the Universe Deed item in a random region with a Tech Level of Agriculture
@@ -39,7 +42,7 @@ public class Universe {
             deedRegion = (int) (Math.random() * regions.length);
         }
         System.out.println(regions[deedRegion].getName());
-        regions[deedRegion].getMarket().addUniverseDeed(playerName);
+        regions[deedRegion].getMarket(player).addUniverseDeed(player.getName());
     }
 
     /**

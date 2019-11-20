@@ -43,6 +43,8 @@ public class Game {
 
         // Sets the player's credits based on the game difficulty
         this.player.changeCredits(Game.getCredits(difficulty));
+        // Sets the player's social credits based on the game difficulty
+        this.player.changeSocialCredits(Game.getSocialCredits(difficulty));
     }
     /**
      * Gets the game difficulty
@@ -58,7 +60,7 @@ public class Game {
      * starting universe
      */
     public void startGame() {
-        universe = new Universe(regionNames, player.getName());
+        universe = new Universe(regionNames, player);
 
         universe.goToRegion(universe.getRegionList()[(int) (Math.random()
                 * universe.getNumberOfRegions())]);
@@ -83,12 +85,13 @@ public class Game {
     }
 
     public Market getCurrentMarket() {
-        return universe.getCurrentRegion().getMarket();
+        return universe.getCurrentRegion().getMarket(player);
     }
 
     public int getCost(MarketItem item) {
         return item.calculateItemPrice(player,
-                universe.getCurrentRegion().getMarket().getRegionPriceMultiplier());
+                universe.getCurrentRegion().getMarket(player)
+                        .getRegionPriceMultiplier());
     }
 
     public int getDistance(Region region) {
@@ -207,6 +210,15 @@ public class Game {
         return player.getCredits();
     }
 
+    /**
+     * Gets the player's social credits
+     *
+     * @return the player's social credits
+     */
+    public int getSocialCredits() {
+        return player.getSocialCredits();
+    }
+
     public String getFuel() {
         return player.getShip().getCurrentFuel() + "/" + player.getShip().getMaxFuelCapacity();
     }
@@ -301,6 +313,25 @@ public class Game {
             return 100;
         default:
             return 0;
+        }
+    }
+
+    /**
+     * Gets the starting social credits for a given difficulty
+     *
+     * @param difficulty the selected difficulty
+     * @return the starting social credits
+     */
+    private static int getSocialCredits(Difficulty difficulty) {
+        switch (difficulty) {
+            case EASY:
+                return Player.MAXSOCIALCREDITS;
+            case MEDIUM:
+                return (int) (700.0 / 850 * Player.MAXSOCIALCREDITS);
+            case HARD:
+                return (int) (500.0 / 850 * Player.MAXSOCIALCREDITS);
+            default:
+                return 0;
         }
     }
 

@@ -5,6 +5,8 @@ public class Player {
     private String name;
 
     private int credits;
+    private int socialCredits;
+    public static final int MAXSOCIALCREDITS = 850;
 
     private int pilotPoints;
     private int fighterPoints;
@@ -32,6 +34,7 @@ public class Player {
         this.engineerPoints = engineerPoints;
 
         this.credits = 0;
+        this.socialCredits = 0;
 
         this.ship = new Ship(ShipType.STARTER);
     }
@@ -52,6 +55,30 @@ public class Player {
             return true;
         } else {
             credits = 0;
+            return false;
+        }
+    }
+
+    /**
+     * Modify the player's social credits
+     *
+     * @param variable credits to add to the player's social credits
+     * @return boolean based on whether successfully added / subtracted
+     * credits or not can be used as a check to determine whether the player
+     * has enough credits to buy a selected good
+     */
+    public boolean changeSocialCredits(int variable) {
+        int finalSocialCredits = variable + socialCredits;
+        if (finalSocialCredits >= 0) {
+            if (finalSocialCredits > MAXSOCIALCREDITS) {
+                socialCredits = MAXSOCIALCREDITS;
+                return true;
+            } else {
+                socialCredits += variable;
+                return true;
+            }
+        } else {
+            socialCredits = 0;
             return false;
         }
     }
@@ -100,6 +127,24 @@ public class Player {
      */
     public int getCredits() {
         return credits;
+    }
+
+    /**
+     * Gets the current amount of social credits
+     *
+     * @return number of social credits
+     */
+    public int getSocialCredits() {
+        return socialCredits;
+    }
+
+    /**
+     * Gets the maximum amount of social credits
+     *
+     * @return maximum number of social credits
+     */
+    public int getMaxSocialCredits() {
+        return MAXSOCIALCREDITS;
     }
 
     /**

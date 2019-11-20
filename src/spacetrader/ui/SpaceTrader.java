@@ -546,11 +546,14 @@ public class SpaceTrader {
             public void actionPerformed(ActionEvent e) {
                 if (game.getFighterPoints() > bandit.getStrengthLevel()) {
                     // successfully evades Bandit
+                    int prevSC = game.getSocialCredits();
                     game.getPlayer().changeCredits(bandit.getCreditsAwarded());
+                    game.getPlayer().changeSocialCredits(Bandit.REWARD_DEFEAT_BANDIT);
                     displayPanel(createMainGamePanel());
                     JOptionPane.showMessageDialog(frame, "You have successfully defeated the "
                             + "Bandit and earned $" + bandit.getCreditsAwarded()
-                            + " as a reward.");
+                            + " and " + (game.getSocialCredits() - prevSC)
+                            + " social credits as a reward.");
                 } else {
                     //Check for loss
                     if (!game.getPlayer().getShip().alterCurrentHealth(-1
@@ -648,12 +651,16 @@ public class SpaceTrader {
         robTrader.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                game.getPlayer().changeSocialCredits(
+                        -1 * Trader.PENALTY_ROB_TRADER);
                 if (trader.rob()) {
                     // successfully evades Bandit
                     displayPanel(createMainGamePanel());
                     JOptionPane.showMessageDialog(frame, "You have successfully robbed "
                             + game.addItem(trader.getItem(), trader.getItemCount()) + " "
-                            + trader.getItemName() + " from  the Trader.");
+                            + trader.getItemName() + " from  the Trader "
+                            + "but also lost " + Trader.PENALTY_ROB_TRADER
+                            + " social credits for robbing.");
                 } else {
                     //Check for loss
                     if (!game.getPlayer().getShip().alterCurrentHealth(-1
@@ -664,9 +671,13 @@ public class SpaceTrader {
                     } else {
                         // ship gets damaged
                         displayPanel(createMainGamePanel());
-                        JOptionPane.showMessageDialog(frame, "You failed to rob the Trader. The "
+                        JOptionPane.showMessageDialog(frame, "You failed to rob the Trader. The"
                                 + " Trader damaged your ship by " + trader.getDamageCaused()
-                                + " health points.");
+                                + " health points and you've lost "
+                                + Trader.PENALTY_ROB_TRADER
+                                + " social credits for robbing.",
+                                 "Failed To Rob",
+                                JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }
@@ -722,11 +733,16 @@ public class SpaceTrader {
         escapePolice.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // lose 100 social credits if fleeing police
+                game.getPlayer().changeSocialCredits(
+                        -1 * Police.PENALTY_FLEE_POLICE);
                 if (game.getPilotPoints() > police.getFleeThreshold()
                         && game.goToRegion(previousRegion)) {
                     displayPanel(createMainGamePanel());
                     JOptionPane.showMessageDialog(frame,
-                            "You have successfully escaped.");
+                            "You have successfully escaped but lost "
+                                    + Police.PENALTY_FLEE_POLICE
+                                    + " social credits for fleeing.");
                 } else {
                     if (!game.getPlayer().getShip().alterCurrentHealth(-1 * police.getDamage())) {
                         JOptionPane.showMessageDialog(frame, "Your ship's health has reached 0."
@@ -735,14 +751,18 @@ public class SpaceTrader {
                     } else {
                         game.removeItem(police.getDemandingItem());
                         JOptionPane.showMessageDialog(frame, "You have lost all of your "
-                                + police.getDemandingItem());
+                                + police.getDemandingItem() + " and lost "
+                                + Police.PENALTY_FLEE_POLICE
+                                + " social credits for attempting to flee.");
 
                         game.getPlayer().changeCredits(-1 * (game.getCredits() / 2));
                         displayPanel(createMainGamePanel());
                         JOptionPane.showMessageDialog(frame, "You failed to flee. Police damaged "
                                         + "your ship by " + police.getDamage()
                                         + " points, taken your item, "
-                                        + "and you've been fined half of your credits.",
+                                        + "and you've been fined half of your credits"
+                                        + " and " + Police.PENALTY_FLEE_POLICE
+                                        + " social credits.",
                                 "Failed to Evade",
                                 JOptionPane.ERROR_MESSAGE);
                     }
@@ -754,10 +774,15 @@ public class SpaceTrader {
         fightPolice.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // lose social credits if fight police
+                game.getPlayer().changeSocialCredits(
+                        -1 * Police.PENALTY_FIGHT_POLICE);
                 if (game.getFighterPoints() > police.getFightThreshold()) {
                     displayPanel(createMainGamePanel());
                     JOptionPane.showMessageDialog(frame, "You have successfully defeated the "
-                            + "police and continued traveling.");
+                            + "police and continued traveling. You also lost "
+                            + Police.PENALTY_FIGHT_POLICE + "social credits "
+                            + "for fighting the police.");
                 } else {
                     if (!game.getPlayer().getShip().alterCurrentHealth(-1 * police.getDamage())) {
                         JOptionPane.showMessageDialog(frame, "Your ship's health has reached 0. "
@@ -769,9 +794,12 @@ public class SpaceTrader {
                         game.getPlayer().changeCredits(-1 * (game.getCredits()));
                         displayPanel(createMainGamePanel());
                         JOptionPane.showMessageDialog(frame, "You lost. The police damaged"
-                                        + "your ship by "
-                                        + police.getDamage() + " points, you've lost your item,"
-                                        + "and you've lost all credits.",
+                                        + "your ship by " + police.getDamage()
+                                        + " points, you've lost your item,"
+                                        + " you've lost all credits, and "
+                                        + "you've lost "
+                                        + Police.PENALTY_FIGHT_POLICE
+                                        + "social credits for fighting.",
                                 "Failed to Evade", JOptionPane.ERROR_MESSAGE);
                     }
                 }
