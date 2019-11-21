@@ -67,6 +67,7 @@ public class Inventory {
 
     public boolean removeItem(String item) {
         if (items.containsKey(item)) {
+            usedSpace -= items.get(item);
             items.remove(item);
             return true;
         }
