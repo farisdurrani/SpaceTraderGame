@@ -1,7 +1,6 @@
 package spacetrader.ui;
 
 import spacetrader.backend.*;
-import spacetrader.backend.market.MarketGoods;
 import spacetrader.backend.npc.Bandit;
 import spacetrader.backend.market.Market;
 import spacetrader.backend.market.MarketItem;
@@ -912,7 +911,7 @@ public class SpaceTrader {
                 System.out.println("buy and win");
                 JButton buyAndWin = Components.createButton(
                         "                             BUY AND WIN        "
-                + "              ");
+                    + "              ");
                 buyAndWin.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {

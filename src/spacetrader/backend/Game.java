@@ -324,14 +324,14 @@ public class Game {
      */
     private static int getSocialCredits(Difficulty difficulty) {
         switch (difficulty) {
-            case EASY:
-                return Player.MAXSOCIALCREDITS;
-            case MEDIUM:
-                return (int) (700.0 / 850 * Player.MAXSOCIALCREDITS);
-            case HARD:
-                return (int) (500.0 / 850 * Player.MAXSOCIALCREDITS);
-            default:
-                return 0;
+        case EASY:
+            return Player.MAXSOCIALCREDITS;
+        case MEDIUM:
+            return (int) (700.0 / 850 * Player.MAXSOCIALCREDITS);
+        case HARD:
+            return (int) (500.0 / 850 * Player.MAXSOCIALCREDITS);
+        default:
+            return 0;
         }
     }
 
