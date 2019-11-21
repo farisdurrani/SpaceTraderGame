@@ -852,77 +852,58 @@ public class SpaceTrader {
             Components.addComponent(marketPanel, Components.createHeader2("$" + itemPrice),
                     1, y, new Insets(0, 5, 0, 5));
 
-            if (!marketItem.getOfficialItemName().contains("Universe")) {
-
-                JButton buy1 = Components.createButton("Buy 1");
-                buy1.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (game.buyItem(marketItem, 1)) {
-                            if (marketItem.getOfficialItemName().contains("Universe")) {
-                                displayPanel(createWinPanel());
-                            } else {
-                                displayPanel(createMarketPanel());
-                            }
-                        }
-                    }
-                });
-
-                Components.addComponent(marketPanel, buy1, 2, y, new Insets(0, 5, 0, 5));
-
-                JButton buy10 = Components.createButton("Buy 10");
-                buy10.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (game.buyItem(marketItem, 10)) {
-                            if (marketItem.getOfficialItemName().contains("Universe")) {
-                                displayPanel(createWinPanel());
-                            } else {
-                                displayPanel(createMarketPanel());
-                            }
-                        }
-                    }
-                });
-                Components.addComponent(marketPanel, buy10, 3, y, new Insets(0, 5, 0, 5));
-
-                JButton sell1 = Components.createButton("Sell 1");
-                sell1.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (game.sellItem(marketItem, 1)) {
+            JButton buy1 = Components.createButton("Buy 1");
+            buy1.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (game.buyItem(marketItem, 1)) {
+                        if (marketItem.getOfficialItemName().contains("Universe")) {
+                            displayPanel(createWinPanel());
+                        } else {
                             displayPanel(createMarketPanel());
                         }
                     }
-                });
-                Components.addComponent(marketPanel, sell1, 4, y, new Insets(0, 5, 0, 5));
+                }
+            });
 
-                JButton sell10 = Components.createButton("Sell 10");
-                sell10.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (game.sellItem(marketItem, 10)) {
+            Components.addComponent(marketPanel, buy1, 2, y, new Insets(0, 5, 0, 5));
+
+            JButton buy10 = Components.createButton("Buy 10");
+            buy10.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (game.buyItem(marketItem, 10)) {
+                        if (marketItem.getOfficialItemName().contains("Universe")) {
+                            displayPanel(createWinPanel());
+                        } else {
                             displayPanel(createMarketPanel());
                         }
                     }
-                });
-                Components.addComponent(marketPanel, sell10, 5, y, new Insets(0, 5, 0, 5));
+                }
+            });
+            Components.addComponent(marketPanel, buy10, 3, y, new Insets(0, 5, 0, 5));
 
-            } else {
-                System.out.println("buy and win");
-                JButton buyAndWin = Components.createButton(
-                        "                             BUY AND WIN        "
-                    + "              ");
-                buyAndWin.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (game.sellItem(marketItem, 1)) {
-                            displayPanel(createMarketPanel());
-                        }
+            JButton sell1 = Components.createButton("Sell 1");
+            sell1.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (game.sellItem(marketItem, 1)) {
+                        displayPanel(createMarketPanel());
                     }
-                });
-                Components.addComponent(marketPanel, buyAndWin, 2, y,
-                        new Insets(0, 0, 0, 5), 4, 1);
-            }
+                }
+            });
+            Components.addComponent(marketPanel, sell1, 4, y, new Insets(0, 5, 0, 5));
+
+            JButton sell10 = Components.createButton("Sell 10");
+            sell10.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (game.sellItem(marketItem, 10)) {
+                        displayPanel(createMarketPanel());
+                    }
+                }
+            });
+            Components.addComponent(marketPanel, sell10, 5, y, new Insets(0, 5, 0, 5));
 
             Components.addComponent(marketPanel, inventoryOfItem, 6, y, new Insets(0, 0, 0, 0));
 
