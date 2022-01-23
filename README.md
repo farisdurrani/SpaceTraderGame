@@ -21,8 +21,9 @@ found in `Milestone 7 OOD Principles.pdf`.
 
 1. Install Java 14+
 2. Navigate to `out\production\SpaceTraderGame`
-3. Run the command `java spacetrader.ui.SpaceTrader`(alternatively, run on 
-   IntelliJ or Visual Studio Code)
+3. Run the command `java spacetrader.ui.SpaceTrader`
+
+> Alternatively, run on IntelliJ with the main class being `src\spacetrader\ui\SpaceTrader.java`
 
 ## Screenshots
 1. Upon running the program, the below welcome screen emerges:![](readme_assets/welcome.png)
