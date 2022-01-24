@@ -1,6 +1,6 @@
 # Space Trader Game
 A Java Swing application emulating the classic 
-[Space Trader](https://www.spronck.net/spacetrader/STFrames.html) game.
+[Space Trader](https://www.spronck.net/spacetrader/STFrames.html) game using Java Swing. A single player is able to buy and sell items, travel to planets, and interact with NPCs. The end culminates in the player dying, losing fuel and money, or immensed enough wealth to buy the whole Universe.
 
 CS 2340 - Fall 2019 - Team 78
 
